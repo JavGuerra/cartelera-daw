@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Direcciones</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<div class="container text-left">
+    <div class="row mt-5">
+        <h1 class="cartelera-h1">Listado de direcciones</h1>
+
+        <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(addresses)}">
+            Actualmente no hay ninguna dirección para mostrar.
+        </div>
+
+        <div class="col mt-3" th:if="${#lists.size(addresses) > 0}">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" >Dirección</th>
+                <!--    <th scope="col" >Cine</th>  -->
+                    <th scope="col" >CP</th>
+                    <th scope="col" >Ciudad</th>
+                    <th scope="col" >País</th>
+                    <th scope="col" >Opciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="address: ${addresses}">
+                    <td>
+                        <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${address.street}»|"
+                           th:text="${address.street}" role="button" th:href="@{/address/{id}(id=${address.id})}"></a>
+                    </td>
+                <!--    <td>
+                        <a class="btn btn-sm btn-light" th:text ="${cinema.name}"
+                           th:href="@{/cinema/{address}(address=${cinema.address})}"></a>
+                    </td>  -->
+                    <td th:text ="${address.postalCode}"></td>
+                    <td th:text ="${address.city}"></td>
+                    <td th:text ="${address.country}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" title="Ver dirección"
+                           th:href="@{/address/{id}(id=${address.id})}" role="button">Ver</a>
+                        <a class="btn btn-sm btn-outline-success" title="Editar dirección"
+                           th:href="@{/addresses/{id}/edit(id=${address.id})}"
+                           sec:authorize="isAuthenticated()" role="button">Editar</a>
+                        <a class="btn btn-sm btn-outline-danger" title="Borrar dirección"
+                           th:href="@{/addresses/{id}/delete(id=${address.id})}"
+                           sec:authorize="isAuthenticated()" role="button">Borrar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center">
+                Actualmente hay <span th:text="${#lists.size(addresses)}"></span> direcciones.
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a class="btn btn-outline-primary" th:href="@{/addresses/create}"
+           sec:authorize="isAuthenticated()" role="button">Crear nueva Dirección</a>
+        <a class="btn btn-outline-success" th:href="@{/}" role="button">Portada</a>
+    </div>
+</div>
+
+<div th:replace="~{footer :: footer}"></div>
+</body>
+</html>

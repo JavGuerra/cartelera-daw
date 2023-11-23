@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap');
+
+.cartelera-h1, th {
+    color: #808000ff;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.cartelera-h1 {
+    font-size: 3em;
+}
+
+.cartelera-btn {
+    font-size: 15px;
+}
+
+th {
+    font-size: x-large;
+    text-align: center;
+}
+
+td, .card-title, .card-text, .list-group-item, .form-label {
+    font-size: 18px;
+    text-align: center;
+}
+
+
+
+

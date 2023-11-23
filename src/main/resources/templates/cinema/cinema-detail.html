@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detalle de cine</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<div class="container text-center">
+    <div class="row mt-5">
+        <h1 class="cartelera-h1" th:text="${cinema.name}"></h1>
+        <div class="col">
+        </div>
+        <div class="col">
+            <div th:if="${error}">
+                <div class="alert alert-danger" role="alert">
+                    <p th:text="${error}"></p>
+                </div>
+                <a type="button" class="btn btn-primary" th:href="@{/cinemas}" role="button">Lista de cines</a>
+            </div>
+            <div class="card" th:if="${error} == null">
+                <img th:src="@{${cinema.image}}" class="card-img-top" th:alt="${cinema.name}"/>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="|Teléfono: ${cinema.phone}"></h5>
+                    <p class="card-text" th:text="|CIF: ${cinema.cif}"></p>
+                </div>
+
+                <h5 class="card-title">Salas</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"
+                        th:each="rooms: ${cinema.rooms}"
+                        th:text="|Sala ${rooms.roomNumber} ${rooms.film.title}">
+                    </li>
+                </ul>
+
+                <div class="card-footer">
+                    <a class="btn btn-outline-primary" title="Ver cines"
+                       th:href="@{/cinemas}" role="button">Cines</a>
+                    <a class="btn btn-outline-success" title="Editar cines"
+                       th:href="@{/cinemas/{id}/edit(id=${cinema.id})}"
+                       sec:authorize="isAuthenticated()" role="button">Editar</a>
+                    <button class="btn btn-outline-danger" title="Borrar cines"
+                            th:href="@{/cinemas/{id}/delete(id=${cinema.id})}"
+                       sec:authorize="isAuthenticated()" role="button">Borrar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{footer :: footer}"></div>
+</body>
+</html>
