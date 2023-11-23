@@ -1,0 +1,146 @@
+<!Doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formulario Film</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<div class="container text-center">
+    <div class="row mt-5">
+        <h1 class="cartelera-h1" th:if="${film.id}">Modificar «<span th:text="${film.title}"></span>»</h1>
+        <h1 class="cartelera-h1" th:if="${film.id} == null">Crear nueva película</h1>
+        <div class="col"></div>
+        <div class="col">
+            <div th:if="${error}">
+                <div class="alert alert-danger" role="alert">
+                    <p th:text="${error}"></p>
+                </div>
+                <a type="button" class="btn btn-primary" th:href="@{/films}">Volver</a>
+            </div>
+            <form th:if="${error} == null" th:action="@{/films}" method="POST" th:object="${film}">
+                <input type="hidden" id="id" name="id" th:field="*{id}"/>
+                <img class="mb-4" th:src="*{poster}" th:alt="*{title}"/>
+                <div class="mb-4">
+                    <label for="poster" class="form-label">Poster</label>
+                    <input type="text" class="form-control" id="poster" th:field="*{poster}">
+                </div>
+                <div class="mb-4">
+                    <label for="title" class="form-label">Título *</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="trailer" class="form-label">Tráiler</label>
+                    <input type="text" class="form-control" id="trailer" th:field="*{trailer}">
+                </div>
+                <div class="mb-4">
+                    <label for="duration" class="form-label">Duración</label>
+                    <input type="text" class="form-control" id="duration" th:field="*{duration}">
+                </div>
+                <div class="mb-4">
+                    <label for="year" class="form-label">Año</label>
+                    <input type="text" class="form-control" id="year" th:field="*{year}">
+                </div>
+                <div class="mb-4">
+                    <label for="country" class="form-label">País</label>
+                    <input type="text" class="form-control" id="country" th:field="*{country}">
+                </div>
+                <div class="mb-4">
+                    <label for="company" class="form-label">Compañía</label>
+                    <input type="text" class="form-control" id="company" th:field="*{company}">
+                </div>
+                <div class="mb-4">
+                    <label for="genders" class="form-label">Géneros</label>
+                    <select name="genders" class="form-control" id="genders" th:field="*{genders}" multiple>
+                        <option th:each="gender : ${T(cartelera.entities.enums.Gender).values()}"
+                                th:value="${gender.name()}" th:text="${gender}"></option>
+                    </select>
+                </div>
+                <label class="form-label">Clasificación</label>
+                <div class="form-inline d-flex justify-content-evenly mb-4">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="opt1" name="opt1" class="custom-control-input" value="ALL_AGES" th:field="*{classification}">
+                        <label class="custom-control-label" for="opt1">TP</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="opt2" name="opt2" class="custom-control-input" value="OLDER7" th:field="*{classification}">
+                        <label class="custom-control-label" for="opt2">+7</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="opt3" name="opt3" class="custom-control-input" value="OLDER12" th:field="*{classification}">
+                        <label class="custom-control-label" for="opt3">+12</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="opt4" name="opt4" class="custom-control-input" value="OLDER16" th:field="*{classification}">
+                        <label class="custom-control-label" for="opt4">+16</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="opt5" name="opt5" class="custom-control-input" value="OLDER18" th:field="*{classification}">
+                        <label class="custom-control-label" for="opt5">+18</label>
+                    </div>
+                </div>
+                <label class="form-label">Valoración</label>
+                <div class="form-inline d-flex justify-content-evenly mb-4">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option1" name="option1" class="custom-control-input" value="1" th:field="*{rating}">
+                        <label class="custom-control-label" for="option1">1</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option2" name="option2" class="custom-control-input" value="2" th:field="*{rating}">
+                        <label class="custom-control-label" for="option2">2</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option3" name="option3" class="custom-control-input" value="3" th:field="*{rating}">
+                        <label class="custom-control-label" for="option3">3</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option4" name="option4" class="custom-control-input" value="4" th:field="*{rating}">
+                        <label class="custom-control-label" for="option4">4</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option5" name="option5" class="custom-control-input" value="5" th:field="*{rating}">
+                        <label class="custom-control-label" for="option5">5</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="director" class="form-label">Director *</label>
+                    <input type="text" class="form-control" id="director" th:field="*{director}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="actor" class="form-label">Actor</label>
+                    <input type="text" class="form-control" id="actor" th:field="*{actor}">
+                </div>
+                <div class="mb-4">
+                    <label for="music" class="form-label">Música</label>
+                    <input type="text" class="form-control" id="music" th:field="*{music}">
+                </div>
+                <div class="mb-4">
+                    <label for="photography" class="form-label">Fotografía</label>
+                    <input type="text" class="form-control" id="photography" th:field="*{photography}">
+                </div>
+                <div class="mb-4">
+                    <label for="script" class="form-label">Guión</label>
+                    <input type="text" class="form-control" id="script" th:field="*{script}">
+                </div>
+                <div class="mb-4">
+                    <label for="synopsis" class="form-label">Sinopsis</label>
+                    <textarea rows = "5" cols = "60" class="form-control" id="synopsis" th:field="*{synopsis}"></textarea>
+                </div>
+
+                <a class="btn btn-outline-primary" th:href="@{/films}">Cancelar</a>
+                <button type="submit" class="btn btn-outline-success">Guardar</button>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+<div th:replace="~{footer :: footer}"></div>
+</body>
+</html>

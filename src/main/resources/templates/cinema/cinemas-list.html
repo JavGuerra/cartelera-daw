@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cines</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<div class="container text-left">
+    <div class="row mt-5">
+        <h1 class="cartelera-h1">Listado de cines</h1>
+
+        <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(cinemas)}">
+            Actualmente no hay ningún cine para mostrar.
+        </div>
+
+        <div class="col mt-3" th:if="${#lists.size(cinemas) > 0}">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Sitio web</th>
+                        <th scope="col">CIF</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cinema : ${cinemas}">
+                        <td>
+                            <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${cinema.name}»|"
+                               th:text="${cinema.name}" role="button" th:href="@{/cinema/{id}(id=${cinema.id})}"></a>
+                        </td>
+                        <td th:text="${cinema.phone}"></td>
+                        <td>
+                            <a th:if="${cinema.url} != ''" class="btn btn-sm btn-light cartelera-btn"
+                               role="button" th:href="@{${cinema.url}}" target="_blank">Visitar sitio</a>
+                        </td>
+                        <td th:text="${cinema.cif}"></td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary" title="Ver cine"
+                               th:href="@{/cinema/{id}(id=${cinema.id})}" role="button">Ver</a>
+                            <a class="btn btn-sm btn-outline-success"
+                               th:href="@{/cinemas/{id}/edit(id=${cinema.id})}" title="Editar cine"
+                               sec:authorize="isAuthenticated()" role="button">Editar</a>
+                            <a class="btn btn-sm btn-outline-danger"
+                               th:href="@{/cinemas/{id}/delete(id=${cinema.id})}" title="Borrar cine"
+                               sec:authorize="isAuthenticated()" role="button">Borrar</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    Actualmente hay <span th:text="${#lists.size(cinemas)}"></span> cines.
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a class="btn btn-outline-primary" th:href="@{/cinemas/create}"
+               sec:authorize="isAuthenticated()" role="button">Crear nuevo cine</a>
+            <a class="btn btn-outline-success" th:href="@{/}" role="button">Portada</a>
+        </div>
+    </div>
+
+    <div th:replace="~{footer :: footer}"></div>
+    </body>
+    </html>

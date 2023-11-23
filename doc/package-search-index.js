@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"cartelera"},{"l":"cartelera.config"},{"l":"cartelera.controllers"},{"l":"cartelera.entities"},{"l":"cartelera.entities.enums"},{"l":"cartelera.repositories"},{"l":"cartelera.services"},{"l":"cartelera.services.impl"},{"l":"cartelera.utils"}];updateSearchResults();

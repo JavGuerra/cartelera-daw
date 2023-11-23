@@ -1,0 +1,86 @@
+<!Doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formulario Sala</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<div class="container text-center">
+    <div class="row mt-5">
+        <h1 class="cartelera-h1" th:if="${room.id}">Modificar sala <span th:text="${room.roomNumber}"></span></h1>
+        <h1 class="cartelera-h1" th:if="${room.id} == null">Crear nueva sala</h1>
+        <div class="col"></div>
+        <div class="col">
+            <div th:if="${error}">
+                <div class="alert alert-danger" role="alert">
+                    <p th:text="${error}"></p>
+                </div>
+                <a type="button" class="btn btn-primary" th:href="@{/rooms}">Volver</a>
+            </div>
+            <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}">
+                <input type="hidden" id="id" name="id" th:field="*{id}"/>
+                <div class="mb-4">
+                    <label for="roomNumber" class="form-label">Número de Sala *</label>
+                    <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Seleccionar película</label>
+                    <select aria-label="Films" class="form-select" th:field="*{film}">
+                        <option th:if="${room.id} == null" selected value="0"></option>
+                        <option th:each="film : ${films}" th:value="${film.id}" th:text="${film.title}"></option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="premiere" class="form-label">Día de estreno</label>
+                    <input type="date" class="form-control" id="premiere" th:field="*{premiere}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Horarios</label>
+                    <select class="form-select" th:field="*{schedules}" multiple aria-label="multiple select example">
+                        <option value="" selected>Selecione las horas de pase de la película</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="22:00">22:00</option>
+                        <option value="22:30">22:30</option>
+                    </select>
+                </div>
+                <div class="form-check mb-4 text-start">
+                    <input class="form-check-input" type="checkbox" id="active" th:field="*{active}">
+                    <label class="form-check-label" for="active">Sala operativa *</label>
+                </div>
+                <div class="mb-4">
+                    <label for="capacity" class="form-label">Aforo</label>
+                    <input type="text" class="form-control" id="capacity" th:field="*{capacity}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Seleccionar cine</label>
+                    <select aria-label="Cinemas" class="form-select" th:field="*{cinema}">
+                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>
+                        <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
+                    </select>
+                </div>
+
+                <div class="mt-5">
+                    <a class="btn btn-outline-primary" th:href="@{/rooms}" role="button">Cancelar</a>
+                    <button type="submit" class="btn btn-outline-success" role="button">Guardar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+<div th:replace="~{footer :: footer}"></div>
+</body>
+</html>
