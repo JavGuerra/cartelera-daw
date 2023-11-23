@@ -1,13 +1,13 @@
-package proyecto2.demo;
+package com.carteleradaw.springboot.web.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CarteleraDeCineApplicationTests {
+class AppTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
