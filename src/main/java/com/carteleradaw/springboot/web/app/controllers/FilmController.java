@@ -6,10 +6,7 @@ import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
@@ -17,6 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Controller
+@RequestMapping("/films")
 public class FilmController {
 
     private final IFilmService filmService;
@@ -27,7 +25,7 @@ public class FilmController {
      * @param model Modelo.
      * @return Plantilla film-list.
      */
-    @GetMapping("/films")
+    @GetMapping("")
     public String findAll(Model model) {
         List<Film> films = filmService.findAll();
         model.addAttribute("films", films);
@@ -41,7 +39,7 @@ public class FilmController {
      * @param id Identificador.
      * @return Plantilla film-detail.
      */
-    @GetMapping("film/{id}")
+    @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         // List<Film> filmOpt = filmService.findByIdWithGender(id);
         if (!invalidPosNumber(id) && filmService.existsById(id)) {
@@ -74,7 +72,7 @@ public class FilmController {
      * @param model modelo.
      * @return Plantilla film-form.
      */
-    @GetMapping("films/create")
+    @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("film",new Film());
         return "film/film-form";
@@ -86,7 +84,7 @@ public class FilmController {
      * @param id Identificador.
      * @return Plantilla film-form.
      */
-    @GetMapping("films/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && filmService.existsById(id))
             model.addAttribute("film", filmService.findById(id).get());
@@ -99,7 +97,7 @@ public class FilmController {
      * @param film Película.
      * @return Plantilla films.
      */
-    @PostMapping("films")
+    @PostMapping("")
     public String saveForm(@ModelAttribute Film film) {
         filmService.save(film);
         return "redirect:/films";
@@ -110,7 +108,7 @@ public class FilmController {
      * @param id Identificador.
      * @return Plantilla films.
      */
-    @GetMapping("films/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
         if (!invalidPosNumber(id) && filmService.existsById(id)) filmService.deleteById(id);
         return "redirect:/films";

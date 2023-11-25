@@ -8,10 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +16,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 @AllArgsConstructor
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
     private final IUserService userService;
@@ -29,11 +27,11 @@ public class UserController {
      * @param model Modelo.
      * @return Plantilla users-list.
      */
-    @GetMapping("/users")
+    @GetMapping("")
     public String findAll(Model model) {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        return "user/users-list";
+        return "user/user-list";
     }
 
     /**
@@ -42,7 +40,7 @@ public class UserController {
      * @param id Identificador.
      * @return Plantilla user-detail.
      */
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && userService.existsById(id))
             model.addAttribute("user", userService.findById(id).get());
@@ -55,7 +53,7 @@ public class UserController {
      * @param model modelo.
      * @return Plantilla user-form.
      */
-    @GetMapping("users/create")
+    @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("user", new User());
         return "user/user-form";
@@ -67,7 +65,7 @@ public class UserController {
      * @param id Identificador.
      * @return Plantilla user-form.
      */
-    @GetMapping("users/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && userService.existsById(id))
             model.addAttribute("user", userService.findById(id).get());
@@ -80,7 +78,7 @@ public class UserController {
      * @param user Dirección.
      * @return Plantilla users.
      */
-    @PostMapping("users")
+    @PostMapping("")
     public String save(Model model, @ModelAttribute User user) {
 
         Long id = user.getId();
@@ -124,7 +122,7 @@ public class UserController {
      * @param id Identificador.
      * @return Plantilla users.
      */
-    @GetMapping("users/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
         if (!invalidPosNumber(id) && userService.existsById(id)) {
             Long loginId = null;

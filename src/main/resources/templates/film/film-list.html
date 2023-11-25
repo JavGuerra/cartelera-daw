@@ -44,14 +44,14 @@
                 <tr th:each="film: ${films}">
                     <td>
                         <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${film.title}»|"
-                           th:text="${film.title}" role="button" th:href="@{/film/{id}(id=${film.id})}"></a>
+                           th:text="${film.title}" role="button" th:href="@{/films/{id}(id=${film.id})}"></a>
                     </td>
                     <td th:text="${film.duration}"></td>
                     <td th:text="${film.classification}"></td>
                     <td width="350px" th:text="${film.company}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver película"
-                           th:href="@{/film/{id}(id=${film.id})}" role="button">Ver</a>
+                           th:href="@{/films/{id}(id=${film.id})}" role="button">Ver</a>
                         <a class="btn btn-sm btn-outline-success" title="Editar película"
                            th:href="@{/films/{id}/edit(id=${film.id})}"
                            sec:authorize="isAuthenticated()" role="button">Editar</a>

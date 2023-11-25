@@ -43,7 +43,7 @@
                     <td th:text="${rooms.premiere}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
-                           th:href="@{/room/{id}(id=${rooms.id})}" role="button">Ver</a>
+                           th:href="@{/rooms/{id}(id=${rooms.id})}" role="button">Ver</a>
                         <a class="btn btn-sm btn-outline-success" title="Editar sala"
                            th:href="@{/rooms/{id}/edit(id=${rooms.id})}"
                            sec:authorize="isAuthenticated()" role="button">Editar</a>

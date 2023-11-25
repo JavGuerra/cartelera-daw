@@ -7,10 +7,7 @@ import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +15,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
 
 @AllArgsConstructor
 @Controller
+@RequestMapping("/rooms")
 public class RoomController {
 
     private final IRoomService roomService;
@@ -29,11 +27,11 @@ public class RoomController {
      * @param model Modelo.
      * @return Plantilla rooms-list.
      */
-    @GetMapping("/rooms")
+    @GetMapping("")
     public String findAll(Model model) {
         List<Room> rooms = roomService.findAll();
         model.addAttribute("rooms", rooms);
-        return "room/rooms-list";
+        return "room/room-list";
     }
 
     /**
@@ -42,7 +40,7 @@ public class RoomController {
      * @param id Identificador.
      * @return Plantilla room-detail.
      */
-    @GetMapping("/room/{id}")
+    @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && roomService.existsById(id))
             model.addAttribute("room", roomService.findById(id).get());
@@ -56,10 +54,10 @@ public class RoomController {
      * @param id Identificador.
      * @return Plantilla rooms-list.
      */
-    @GetMapping("rooms/film/{id}")
+    @GetMapping("/film/{id}")
     public String findByFilmId(Model model, @PathVariable Long id) {
         model.addAttribute("rooms", roomService.findAllByFilmId(id));
-        return "room/rooms-list";
+        return "room/room-list";
     }
 
     /**
@@ -68,10 +66,10 @@ public class RoomController {
      * @param id Identificador.
      * @return Plantilla rooms-list.
      */
-    @GetMapping("rooms/cinema/{id}")
+    @GetMapping("/cinema/{id}")
     public String findByCinemaId(Model model, @PathVariable Long id) {
         model.addAttribute("rooms", roomService.findAllByCinemaId(id));
-        return "room/rooms-list";
+        return "room/room-list";
     }
 
     /**
@@ -79,7 +77,7 @@ public class RoomController {
      * @param model modelo.
      * @return Plantilla rooms-form.
      */
-    @GetMapping("rooms/create")
+    @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("room", new Room());
         model.addAttribute("cinemas", cinemaService.findAll());
@@ -93,7 +91,7 @@ public class RoomController {
      * @param id Identificador.
      * @return Plantilla room-form.
      */
-    @GetMapping("rooms/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && roomService.existsById(id)) {
             model.addAttribute("room", roomService.findById(id).get());
@@ -108,7 +106,7 @@ public class RoomController {
      * @param room Dirección.
      * @return Plantilla rooms.
      */
-    @PostMapping("/rooms")
+    @PostMapping("")
     public String saveForm(@ModelAttribute Room room) {
         roomService.save(room);
         return "redirect:/rooms";
@@ -119,7 +117,7 @@ public class RoomController {
      * @param id Identificador.
      * @return Plantilla rooms.
      */
-    @GetMapping("rooms/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
         if (!invalidPosNumber(id) && roomService.existsById(id)) roomService.deleteById(id);
         return "redirect:/rooms";

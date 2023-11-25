@@ -30,7 +30,7 @@
                     <h5 class="card-title">
                         <a class="btn btn-sm btn-outline-secondary"
                            th:text="${room.film.title}"
-                           th:href="@{/film/{id}(id=${room.film.id})}"></a>
+                           th:href="@{/films/{id}(id=${room.film.id})}"></a>
                     </h5>
                     <p class="card-text" th:text="|Estreno: ${room.premiere}"></p>
                     <p class="card-text" th:text="|Sesiones: ${room.schedules}|"></p>
@@ -48,7 +48,7 @@
                 <div class="card-footer">
                     <a class="btn btn-sm btn-outline-secondary mb-3" role="button"
                        th:text="${room.cinema.name}"
-                       th:href="@{/cinema/{id}(id=${room.cinema.id})}">
+                       th:href="@{/cinemas/{id}(id=${room.cinema.id})}">
                     </a>
                     <br />
                     <a class="btn btn-outline-primary" title="Ver salas"

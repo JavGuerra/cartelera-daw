@@ -35,7 +35,7 @@
                     <tr th:each="cinema : ${cinemas}">
                         <td>
                             <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${cinema.name}»|"
-                               th:text="${cinema.name}" role="button" th:href="@{/cinema/{id}(id=${cinema.id})}"></a>
+                               th:text="${cinema.name}" role="button" th:href="@{/cinemas/{id}(id=${cinema.id})}"></a>
                         </td>
                         <td th:text="${cinema.phone}"></td>
                         <td>
@@ -45,7 +45,7 @@
                         <td th:text="${cinema.cif}"></td>
                         <td>
                             <a class="btn btn-sm btn-outline-primary" title="Ver cine"
-                               th:href="@{/cinema/{id}(id=${cinema.id})}" role="button">Ver</a>
+                               th:href="@{/cinemas/{id}(id=${cinema.id})}" role="button">Ver</a>
                             <a class="btn btn-sm btn-outline-success"
                                th:href="@{/cinemas/{id}/edit(id=${cinema.id})}" title="Editar cine"
                                sec:authorize="isAuthenticated()" role="button">Editar</a>

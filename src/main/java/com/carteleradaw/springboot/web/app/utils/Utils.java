@@ -13,7 +13,7 @@ public abstract class Utils {
 
     /**
      * Compruba si el número introducido es un número positivo válido.
-     * @param num núimero.
+     * @param num número.
      * @return true si es válido / false en caso contrario.
      */
     public static boolean invalidPosNumber (Long num) {

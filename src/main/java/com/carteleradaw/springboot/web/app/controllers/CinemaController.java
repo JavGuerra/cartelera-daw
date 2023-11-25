@@ -7,10 +7,7 @@ import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +15,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
 
 @AllArgsConstructor
 @Controller
+@RequestMapping("/cinemas")
 public class CinemaController {
 
     private final ICinemaService cinemaService;
@@ -29,11 +27,11 @@ public class CinemaController {
      * @param model Modelo.
      * @return Plantilla cinemas-list.
      */
-    @GetMapping("/cinemas")
+    @GetMapping("")
     public String findAll(Model model) {
         List<Cinema> cinemas = cinemaService.findAll();
         model.addAttribute("cinemas", cinemas);
-        return "cinema/cinemas-list";
+        return "cinema/cinema-list";
     }
 
     /**
@@ -42,7 +40,7 @@ public class CinemaController {
      * @param id Identificador.
      * @return Plantilla cinema-detail.
      */
-    @GetMapping("cinema/{id}")
+    @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
             model.addAttribute("cinema", cinemaService.findById(id).get());
@@ -56,7 +54,7 @@ public class CinemaController {
      * @param model modelo.
      * @return Plantilla cinema-form.
      */
-    @GetMapping("cinemas/create")
+    @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("cinema", new Cinema());
         return "cinema/cinema-form";
@@ -68,7 +66,7 @@ public class CinemaController {
      * @param id Identificador.
      * @return Plantilla cinema-form.
      */
-    @GetMapping("cinemas/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id))
             model.addAttribute("cinema", cinemaService.findById(id).get());
@@ -81,7 +79,7 @@ public class CinemaController {
      * @param cinema Cine.
      * @return Plantilla cinemas.
      */
-    @PostMapping("cinemas")
+    @PostMapping("")
     public String saveForm(@ModelAttribute Cinema cinema) {
         addressService.save(cinema.getAddress());
         cinemaService.save(cinema);
@@ -93,7 +91,7 @@ public class CinemaController {
      * @param id Identificador.
      * @return Plantilla cinemas.
      */
-    @GetMapping("cinemas/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) cinemaService.deleteById(id);
         return "redirect:/cinemas";
