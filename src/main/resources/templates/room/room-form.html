@@ -31,9 +31,9 @@
                     <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}" required>
                 </div>
                 <div class="mb-4">
-                    <label class="form-label">Seleccionar película</label>
-                    <select aria-label="Films" class="form-select" th:field="*{film}">
-                        <option th:if="${room.id} == null" selected value="0"></option>
+                    <label class="form-label">Seleccionar película <span th:if="${room.id} == null">*</span></label>
+                    <select aria-label="Films" class="form-select" th:field="*{film}" th:required="required">
+<!--                        <option th:if="${room.id} == null" selected value="0"></option>-->
                         <option th:each="film : ${films}" th:value="${film.id}" th:text="${film.title}"></option>
                     </select>
                 </div>
@@ -57,16 +57,16 @@
                 </div>
                 <div class="form-check mb-4 text-start">
                     <input class="form-check-input" type="checkbox" id="active" th:field="*{active}">
-                    <label class="form-check-label" for="active">Sala operativa *</label>
+                    <label class="form-check-label" for="active">Sala operativa</label>
                 </div>
                 <div class="mb-4">
                     <label for="capacity" class="form-label">Aforo</label>
                     <input type="text" class="form-control" id="capacity" th:field="*{capacity}">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Seleccionar cine</label>
-                    <select aria-label="Cinemas" class="form-select" th:field="*{cinema}">
-                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>
+                    <label class="form-label">Seleccionar cine <span th:if="${room.id} == null">*</span></label>
+                    <select aria-label="Cinemas" class="form-select" th:field="*{cinema}" th:required="required">
+<!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
                         <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
                     </select>
                 </div>
