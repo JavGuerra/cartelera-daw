@@ -2,7 +2,7 @@
 
 # Proyecto final DAW «Cartelera»
 
-Diciembre 2023
+Junio 2024
 
 ## La práctica
 

@@ -39,7 +39,12 @@
                     <li class="list-group-item" th:text="|Actores: ${film.actor}|"></li>
                     <li class="list-group-item" th:text="|Sinopsis: ${film.synopsis}|"></li>
                     <li class="list-group-item" th:text="|Clasificación: ${film.classification}|"></li>
-                    <li class="list-group-item" th:text="|Género: ${film.genders}|"></li>
+                    <li class="list-group-item">
+                        <p class="card-text">Género:</p>
+                        <ul th:each="gender: ${film.genders}">
+                            <li th:text="${gender}"></li>
+                        </ul>
+                    </li>
                     <li class="list-group-item" th:text="|Duración: ${film.duration}|"></li>
                     <li class="list-group-item" th:text="|Año: ${film.year}|"></li>
                     <li class="list-group-item" th:text="|País: ${film.country}|"></li>

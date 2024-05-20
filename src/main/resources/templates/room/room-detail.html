@@ -34,7 +34,10 @@
                            th:href="@{/films/{id}(id=${room.film.id})}"></a>
                     </h5>
                     <p class="card-text" th:text="|Estreno: ${room.getPremiereFormated}"></p>
-                    <p class="card-text" th:text="|Sesiones: ${room.schedules}|"></p>
+                    <p class="card-text">Sesiones:</p>
+                    <ul th:each="schedule: ${room.schedules}">
+                        <li th:text="${schedule}"></li>
+                    </ul>
                 </div>
                 <ul class="list-group list-group-flush">
 

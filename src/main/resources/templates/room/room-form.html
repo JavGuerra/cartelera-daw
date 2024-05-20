@@ -25,6 +25,14 @@
                 <a type="button" class="btn btn-primary" th:href="@{/rooms}">Volver</a>
             </div>
             <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}">
+                <div class="mb-3">
+                    <label class="form-label"><span th:if="${room.id}">Cine</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
+                    <select aria-label="Cinemas" class="form-select"  th:field="*{cinema}" th:required="required" th:readonly="${room.id}">
+<!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
+                        <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
+                    </select>
+                </div>
+
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
                 <div class="mb-4">
                     <label for="roomNumber" class="form-label">Número de Sala *</label>
@@ -62,13 +70,6 @@
                 <div class="mb-4">
                     <label for="capacity" class="form-label">Aforo</label>
                     <input type="text" class="form-control" id="capacity" th:field="*{capacity}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label"><span th:if="${room.id}">Cine</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
-                    <select aria-label="Cinemas" class="form-select" th:field="*{cinema}" th:required="required">
-<!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
-                        <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
-                    </select>
                 </div>
 
                 <div class="mt-5">

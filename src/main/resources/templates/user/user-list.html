@@ -42,7 +42,7 @@
                     <td th:text="${user.email}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver usuario"
-                           th:href="@{/user/{id}(id=${user.id})}" role="button">Ver</a>
+                           th:href="@{/users/{id}(id=${user.id})}" role="button">Ver</a>
                         <a class="btn btn-sm btn-outline-success" title="Editar usuario"
                            th:href="@{/users/{id}/edit(id=${user.id})}"
                            sec:authorize="isAuthenticated()" role="button">Editar</a>
