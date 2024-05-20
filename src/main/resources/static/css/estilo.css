@@ -13,7 +13,7 @@
     font-size: 15px;
 }
 
-th {
+.cartelera-h2, th {
     font-size: x-large;
     text-align: center;
 }
@@ -21,6 +21,11 @@ th {
 td, .card-title, .card-text, .list-group-item, .form-label {
     font-size: 18px;
     text-align: center;
+}
+
+.poster {
+    width: 200px;
+    height: auto;
 }
 
 

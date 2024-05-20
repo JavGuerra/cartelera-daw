@@ -40,7 +40,7 @@
 <!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.film.title}"-->
 <!--                           role="button" th:href="@{/rooms/film/{id}(id=${rooms.film.id})}"></a>-->
                     </td>
-                    <td th:text="${rooms.premiere}"></td>
+                    <td th:text="${rooms.getPremiereFormated}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
                            th:href="@{/rooms/{id}(id=${rooms.id})}" role="button">Ver</a>

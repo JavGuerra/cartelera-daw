@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.FormatDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -44,6 +46,14 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
+
+    public Long getFilmId() {
+        return this.film.getId();
+    }
+
+    public String getPremiereFormated() {
+        return FormatDate(this.premiere);
+    }
 
     @Override
     public boolean equals(Object o) {

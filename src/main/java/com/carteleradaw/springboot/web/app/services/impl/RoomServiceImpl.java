@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
 
@@ -52,6 +50,25 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findAllByFilmId {}", id);
         if (invalidPosNumber(id)) return new ArrayList<>();
         return roomRepo.findAllByFilm_Id(id);
+    }
+
+    @Override
+    public List<Room> findAllByPremiereDescDistinct() {
+        log.info("findAllByPremiereDesc");
+
+        List<Room> rooms = roomRepo.findAllByPremiereDesc();
+        List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados
+        Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar filmId ya procesados
+
+        for (Room room : rooms) {
+            Long filmId = room.getFilmId();
+            if (!processedFilmIds.contains(filmId)) {
+                filteredRooms.add(room);
+                processedFilmIds.add(filmId);
+            }
+        }
+
+        return filteredRooms;
     }
 
     @Override

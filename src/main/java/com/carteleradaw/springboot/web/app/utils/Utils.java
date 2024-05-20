@@ -1,5 +1,9 @@
 package com.carteleradaw.springboot.web.app.utils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 public abstract class Utils {
 
     /**
@@ -28,5 +32,17 @@ public abstract class Utils {
     public static String firstCharUpercase (String str) {
         if (stringIsEmpty(str)) return str;
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+    /**
+     * Formatea una fecha en el formato "dd de MMMM de yyyy".
+     * @param inputDate La fecha en formato yyyy-MM-dd.
+     * @return La fecha formateada como "dd de MMMM de yyyy".
+     */
+    public static String FormatDate(LocalDate inputDate) {
+        DateTimeFormatter outputFormat =
+                DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", Locale.getDefault());
+        // Formatear la fecha de entrada al formato deseado
+        return inputDate.format(outputFormat);
     }
 }

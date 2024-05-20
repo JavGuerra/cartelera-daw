@@ -14,7 +14,8 @@
 
 <div class="container text-center">
     <div class="row mt-5">
-        <h1 class="cartelera-h1" th:text="|Sala ${room.roomNumber}|"></h1>
+        <h1 class="cartelera-h1" th:text="${room.cinema.name}"></h1>
+        <h2 class="cartelera-h2" th:text="|Sala ${room.roomNumber}|"></h2>
         <div class="col">
         </div>
         <div class="col">
@@ -32,7 +33,7 @@
                            th:text="${room.film.title}"
                            th:href="@{/films/{id}(id=${room.film.id})}"></a>
                     </h5>
-                    <p class="card-text" th:text="|Estreno: ${room.premiere}"></p>
+                    <p class="card-text" th:text="|Estreno: ${room.getPremiereFormated}"></p>
                     <p class="card-text" th:text="|Sesiones: ${room.schedules}|"></p>
                 </div>
                 <ul class="list-group list-group-flush">

@@ -42,6 +42,13 @@ public interface IRoomService {
     List<Room> findAllByFilmId(Long id);
 
     /**
+     * Obrtiene la lista de salas con películas distintas por orden de estreno.
+     *
+     * @return Lista de salas en orden de estreno descendente.
+     */
+    List<Room> findAllByPremiereDescDistinct();
+
+    /**
      * Guarda una sala.
      * @param room Sala.
      * @return La sala guardada.
