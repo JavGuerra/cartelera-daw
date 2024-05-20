@@ -18,10 +18,10 @@
     <div class="row mt-5">
         <h1 class="cartelera-h1">Extrenos</h1>
 
-        <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms)}">
+        <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(premieres)}">
             Actualmente no hay ninguna sala para mostrar.
         </div>
-        <div class="col col-lg-4 col-md-6 col-sm-12" th:if="${#lists.size(rooms) > 0}">
+        <div class="col col-lg-4 col-md-6 col-sm-12" th:if="${#lists.size(premieres) > 0}">
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -33,28 +33,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="rooms: ${rooms}">
+                <tr th:each="premiere: ${premieres}">
                     <td>
-                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.roomNumber}"
-                           role="button" th:href="@{/rooms/{id}(id=${rooms.cinema.id})}"></a>
+                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${premiere.roomNumber}"
+                           role="button" th:href="@{/rooms/{id}(id=${premiere.cinema.id})}"></a>
                     </td>
                     <td>
-                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.cinema.name}"
-                           role="button" th:href="@{/rooms/cinema/{id}(id=${rooms.cinema.id})}"></a>
+                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${premiere.cinema.name}"
+                           role="button" th:href="@{/rooms/cinema/{id}(id=${premiere.cinema.id})}"></a>
                     <td>
-                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.film}"
-                           role="button" th:href="@{/rooms/film/{id}(id=${rooms.film.id})}"></a>
+                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${premiere.film}"
+                           role="button" th:href="@{/rooms/film/{id}(id=${premiere.film.id})}"></a>
                     </td>
                     <td>
                         <a class="btn btn-sm btn-light cartelera-btn"
-                            role="button" th:href="@{/rooms/film/{id}(id=${rooms.film.id})}">
-                            <img class="poster card-img-top" th:src="${rooms.film.poster}" th:alt="${rooms.film}">
+                            role="button" th:href="@{/rooms/film/{id}(id=${premiere.film.id})}">
+                            <img class="poster card-img-top" th:src="${premiere.film.poster}" th:alt="${premiere.film}">
                         </a>
                     </td>
-                    <td th:text="${rooms.getPremiereFormated}"></td>
+                    <td th:text="${premiere.getPremiereFormated}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
-                           th:href="@{/rooms/{id}(id=${rooms.id})}" role="button">Ver</a>
+                           th:href="@{/rooms/{id}(id=${premiere.id})}" role="button">Ver</a>
                     </td>
                 </tr>
                 </tbody>

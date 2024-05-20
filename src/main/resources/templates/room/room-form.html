@@ -30,6 +30,10 @@
                     <label for="roomNumber" class="form-label">Número de Sala *</label>
                     <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}" required>
                 </div>
+                <div class="form-check mb-4 text-start">
+                    <input class="form-check-input" type="checkbox" id="active" th:field="*{active}">
+                    <label class="form-check-label" for="active">Sala operativa</label>
+                </div>
                 <div class="mb-4">
                     <label class="form-label">Seleccionar película <span th:if="${room.id} == null">*</span></label>
                     <select aria-label="Films" class="form-select" th:field="*{film}" th:required="required">
@@ -55,16 +59,12 @@
                         <option value="22:30">22:30</option>
                     </select>
                 </div>
-                <div class="form-check mb-4 text-start">
-                    <input class="form-check-input" type="checkbox" id="active" th:field="*{active}">
-                    <label class="form-check-label" for="active">Sala operativa</label>
-                </div>
                 <div class="mb-4">
                     <label for="capacity" class="form-label">Aforo</label>
                     <input type="text" class="form-control" id="capacity" th:field="*{capacity}">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Seleccionar cine <span th:if="${room.id} == null">*</span></label>
+                    <label class="form-label"><span th:if="${room.id}">Cine</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
                     <select aria-label="Cinemas" class="form-select" th:field="*{cinema}" th:required="required">
 <!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
                         <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>

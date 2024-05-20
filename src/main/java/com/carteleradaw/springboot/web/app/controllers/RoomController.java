@@ -94,9 +94,10 @@ public class RoomController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && roomService.existsById(id)) {
-            model.addAttribute("room", roomService.findById(id).get());
-            // model.addAttribute("cinemas", cinemaService.findAll());
-            model.addAttribute("cinemas", cinemaService.findById(id).get());
+            Room room = roomService.findById(id).get();
+            model.addAttribute("room", room);
+            Long cinemaId = room.getCinema().getId();
+            model.addAttribute("cinemas", cinemaService.findById(cinemaId).get());
             model.addAttribute("films", filmService.findAll());
         } else model.addAttribute("error", "Sala no encontrada.");
         return "room/room-form";

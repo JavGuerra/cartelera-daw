@@ -25,9 +25,9 @@ public class PremiereController {
      */
     @GetMapping("/")
     public String findAll(Model model) {
-        List<Room> rooms = roomService.findAllByPremiereDescDistinct();
-        if (rooms.size() > 6) rooms.subList(0, 6);
-        model.addAttribute("rooms", rooms);
+        List<Room> premieres = roomService.findAllByPremiereDescDistinct();
+        if (premieres.size() > 6) premieres.subList(0, 6);
+        model.addAttribute("premieres", premieres);
         // model.addAttribute("cities", addressService.citiesNames());
         return "index";
     }

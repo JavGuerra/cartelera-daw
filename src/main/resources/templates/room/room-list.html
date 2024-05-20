@@ -23,7 +23,8 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Nº sala</th>
+                    <th scope="col">Sala</th>
+                    <th scope="col">Activa</th>
                     <th scope="col">Cine</th>
                     <th scope="col">Película</th>
                     <th scope="col">Estreno</th>
@@ -31,24 +32,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="rooms: ${rooms}">
-                    <td th:text="${rooms.roomNumber}"></td>
-                    <td th:text="${rooms.cinema}">
+                <tr th:each="room: ${rooms}">
+                    <td th:text="${room.roomNumber}"></td>
+                    <td th:if="${room.active == true}">Sí</td>
+                    <td th:if="${room.active != true}">No</td>
+                    <td th:text="${room.cinema}">
 <!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.cinema.name}"-->
 <!--                           role="button" th:href="@{/rooms/cinema/{id}(id=${rooms.cinema.id})}"></a>-->
-                    <td th:text="${rooms.film}">
+                    <td th:text="${room.film}">
 <!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.film.title}"-->
 <!--                           role="button" th:href="@{/rooms/film/{id}(id=${rooms.film.id})}"></a>-->
                     </td>
-                    <td th:text="${rooms.getPremiereFormated}"></td>
+                    <td th:text="${room.getPremiereFormated}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
-                           th:href="@{/rooms/{id}(id=${rooms.id})}" role="button">Ver</a>
+                           th:href="@{/rooms/{id}(id=${room.id})}" role="button">Ver</a>
                         <a class="btn btn-sm btn-outline-success" title="Editar sala"
-                           th:href="@{/rooms/{id}/edit(id=${rooms.id})}"
+                           th:href="@{/rooms/{id}/edit(id=${room.id})}"
                            sec:authorize="isAuthenticated()" role="button">Editar</a>
                         <a class="btn btn-sm btn-outline-danger" title="Borrar sala"
-                           th:href="@{/rooms/{id}/delete(id=${rooms.id})}"
+                           th:href="@{/rooms/{id}/delete(id=${room.id})}"
                            sec:authorize="isAuthenticated()" role="button">Borrar</a>
                     </td>
                 </tr>
