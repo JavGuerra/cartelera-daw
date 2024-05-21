@@ -1,23 +1,28 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
 
 @AllArgsConstructor
+@Scope("session")
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
 
+    private final GlobalStateService globalStateService;
     private final IRoomService roomService;
     private final ICinemaService cinemaService;
     private final IFilmService filmService;
@@ -30,7 +35,11 @@ public class RoomController {
     @GetMapping("")
     public String findAll(Model model) {
         List<Room> rooms = roomService.findAll();
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        String selectedCity = globalStateService.getSelectedCity();
         model.addAttribute("rooms", rooms);
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
         return "room/room-list";
     }
 

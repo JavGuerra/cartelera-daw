@@ -1,21 +1,24 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.*;
-
 import java.util.List;
 import java.util.Set;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 @AllArgsConstructor
+@Scope("session")
 @Controller
 public class PremiereController {
 
+    private final GlobalStateService globalStateService;
     private final IRoomService roomService;
 
     /**
@@ -27,8 +30,26 @@ public class PremiereController {
     public String findAll(Model model) {
         List<Room> premieres = roomService.findAllByPremiereDescDistinct();
         if (premieres.size() > 6) premieres.subList(0, 6);
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        String selectedCity = globalStateService.getSelectedCity();
         model.addAttribute("premieres", premieres);
-        // model.addAttribute("cities", addressService.citiesNames());
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
         return "index";
+    }
+
+    /**
+     * Actualiza la variable de sesión selectedCity con el valor seleccionado.
+     * @param selectedCity.
+     * @return Plantilla index.
+     */
+    @PostMapping("/setCity")
+    public String setSelectedCity(@RequestParam("cities") String selectedCity, @RequestParam(value = "returnUrl", required = false) String returnUrl) {
+        globalStateService.setSelectedCity(selectedCity);
+        if (!stringIsEmpty(returnUrl)) {
+            return "redirect:" + returnUrl;
+        } else {
+            return "redirect:/";
+        }
     }
 }
