@@ -36,9 +36,9 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Sala</th>
-                    <th scope="col">Activa</th>
                     <th scope="col">Cine</th>
+                    <th scope="col">Sala</th>
+                    <th sec:authorize="isAuthenticated()" scope="col">Activa</th>
                     <th scope="col">Película</th>
                     <th scope="col">Estreno</th>
                     <th scope="col">Opciones</th>
@@ -46,12 +46,12 @@
                 </thead>
                 <tbody>
                 <tr th:each="room: ${rooms}">
-                    <td th:text="${room.roomNumber}"></td>
-                    <td th:if="${room.active == true}">Sí</td>
-                    <td th:if="${room.active != true}">No</td>
                     <td th:text="${room.cinema}">
 <!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.cinema.name}"-->
 <!--                           role="button" th:href="@{/rooms/cinema/{id}(id=${rooms.cinema.id})}"></a>-->
+                    <td th:text="${room.roomNumber}"></td>
+                    <td sec:authorize="isAuthenticated()" th:if="${room.active == true}">Sí</td>
+                    <td sec:authorize="isAuthenticated()" th:if="${room.active != true}">No</td>
                     <td th:text="${room.film}">
 <!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.film.title}"-->
 <!--                           role="button" th:href="@{/rooms/film/{id}(id=${rooms.film.id})}"></a>-->

@@ -92,6 +92,7 @@ public class CinemaController {
     public String saveForm(@ModelAttribute Cinema cinema) {
         addressService.save(cinema.getAddress());
         cinemaService.save(cinema);
+        globalStateService.updateCitiesNames();
         return "redirect:/cinemas";
     }
 
@@ -102,7 +103,10 @@ public class CinemaController {
      */
     @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
-        if (!invalidPosNumber(id) && cinemaService.existsById(id)) cinemaService.deleteById(id);
+        if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
+            cinemaService.deleteById(id);
+            globalStateService.updateCitiesNames();
+        }
         return "redirect:/cinemas";
     }
 }

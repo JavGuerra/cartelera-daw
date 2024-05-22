@@ -3,9 +3,7 @@ package com.carteleradaw.springboot.web.app.controllers;
 import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.services.IUserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -126,13 +124,8 @@ public class UserController {
     public String deleteById(@PathVariable Long id) {
         if (!invalidPosNumber(id) && userService.existsById(id)) {
             Long loginId = null;
-
             // Comprueba si hay un usuario logueado y, si es así, obtiene su id.
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null) {
-                User admin = (User) auth.getPrincipal();
-                loginId = admin.getId();
-            }
+            if (isAuth()) loginId = userAuth().get().getId();
 
             // Si el usuario está logueado y el usuario que queremos borrar NO es el mismo, borrarlo.
             if (!id.equals(loginId)) userService.deleteById(id);

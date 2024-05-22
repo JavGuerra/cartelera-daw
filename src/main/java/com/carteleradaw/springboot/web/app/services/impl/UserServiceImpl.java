@@ -1,7 +1,6 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.User;
-import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.UserRepository;
 import com.carteleradaw.springboot.web.app.services.IUserService;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,6 @@ import java.util.Optional;
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepo;
-    private final AddressRepository addressRepo;
 
     @Override
     public List<User> findAll() {

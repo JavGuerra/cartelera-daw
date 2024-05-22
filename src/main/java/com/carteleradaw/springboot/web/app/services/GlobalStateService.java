@@ -2,7 +2,6 @@ package com.carteleradaw.springboot.web.app.services;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ public class GlobalStateService {
     private final IAddressService addressService;
 
     // Suponiendo que HttpSession se inyecta directamente
-
     public GlobalStateService(HttpSession session, IAddressService addressService) {
         this.session = session;
         this.addressService = addressService;
@@ -55,6 +53,11 @@ public class GlobalStateService {
 
     public Set<String> getCitiesNames() {
         return (Set<String>) session.getAttribute("citiesNames");
+    }
+
+    public void updateCitiesNames() {
+        Set<String> newCitiesNames = addressService.citiesNames();
+        session.setAttribute("citiesNames", newCitiesNames);
     }
 
     // Método auxiliar para obtener HttpSession, si es necesario

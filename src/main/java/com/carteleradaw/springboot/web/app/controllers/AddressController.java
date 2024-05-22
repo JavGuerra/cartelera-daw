@@ -1,8 +1,10 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
+import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.IAddressService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,12 @@ import java.util.List;
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
 
 @AllArgsConstructor
+@Scope("session")
 @Controller
 @RequestMapping("/addresses")
 public class AddressController {
 
+    private final GlobalStateService globalStateService;
     private final IAddressService addressService;
 
     /**
@@ -78,6 +82,7 @@ public class AddressController {
     @PostMapping("")
     public String save(@ModelAttribute Address address) {
         addressService.save(address);
+        globalStateService.updateCitiesNames();
         return "redirect:/addresses";
     }
 
@@ -88,7 +93,10 @@ public class AddressController {
      */
     @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
-        if (!invalidPosNumber(id) && addressService.existsById(id)) addressService.deleteById(id);
+        if (!invalidPosNumber(id) && addressService.existsById(id)) {
+            addressService.deleteById(id);
+            globalStateService.updateCitiesNames();
+        }
         return "redirect:/addresses";
     }
 }

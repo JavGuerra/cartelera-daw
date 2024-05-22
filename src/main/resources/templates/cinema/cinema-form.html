@@ -75,8 +75,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="postalCode" class="form-label">Código Postal *</label>
-                    <input type="number" class="form-control" id="postalCode" th:field="*{address.postalCode}"
-                           step="1" min="1" max="999999" required>
+                    <input type="text" class="form-control" id="postalCode" th:field="*{address.postalCode}" maxlength="6" required>
                 </div>
                 <div class="mb-4">
                     <label for="city" class="form-label">Ciudad *</label>
