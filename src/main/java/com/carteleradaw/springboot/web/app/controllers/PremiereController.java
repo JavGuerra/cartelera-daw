@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
@@ -31,7 +32,7 @@ public class PremiereController {
     public String findAll(Model model) {
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
-        List<Room> premieres = roomService.findAllByPremiereDescDistinct();
+        List<Room> premieres = roomService.findAllByPremiereDescDistinct(selectedCity);
         if (premieres.size() > 6) premieres.subList(0, 6);
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);

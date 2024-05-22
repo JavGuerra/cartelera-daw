@@ -1,6 +1,7 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
+import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.IAddressService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
+import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
 
 @AllArgsConstructor
 @Scope("session")
@@ -52,8 +54,12 @@ public class CinemaController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
-            model.addAttribute("cinema", cinemaService.findById(id).get());
-            model.addAttribute("rooms", roomService.findAllByCinemaId(id));
+            Cinema cinema = cinemaService.findById(id).get();
+            List<Room> rooms = roomService.findAllByCinemaId(id);
+            // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas.
+            if (!isAuth()) rooms.removeIf(room -> !room.getActive());
+            model.addAttribute("cinema", cinema);
+            model.addAttribute("rooms", rooms);
         } else model.addAttribute("error", "Cine no encontrado.");
         return "cinema/cinema-detail";
     }

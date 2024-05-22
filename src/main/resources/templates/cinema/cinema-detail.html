@@ -34,7 +34,7 @@
                 <h5 class="card-title">Salas</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"
-                        th:each="room: ${cinema.rooms}">
+                        th:each="room: ${rooms}">
                         <a class="btn btn-sm btn-light cartelera-btn" th:href="@{/rooms/{id}(id=${room.id})}" th:text="|Sala ${room.roomNumber} ${room.film.title}|"></a>
                     </li>
                 </ul>

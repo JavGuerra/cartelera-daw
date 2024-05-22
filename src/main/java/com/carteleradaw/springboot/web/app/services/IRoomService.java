@@ -50,10 +50,10 @@ public interface IRoomService {
 
     /**
      * Obrtiene la lista de salas con películas distintas por orden de estreno.
-     *
-     * @return Lista de salas en orden de estreno descendente.
+     * @param selectedCity Lista de salas en orden de estreno descendente.
+     * @return
      */
-    List<Room> findAllByPremiereDescDistinct();
+    List<Room> findAllByPremiereDescDistinct(String selectedCity);
 
     /**
      * Guarda una sala.

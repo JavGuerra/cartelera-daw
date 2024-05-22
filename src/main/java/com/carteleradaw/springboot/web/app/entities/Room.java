@@ -55,6 +55,10 @@ public class Room {
         return FormatDate(this.premiere);
     }
 
+    public String getCity() {
+        return this.cinema.getAddress().getCity();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

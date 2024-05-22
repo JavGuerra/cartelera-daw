@@ -37,7 +37,7 @@ public class RoomController {
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         List<Room> rooms = roomService.findAllByCity(selectedCity);
-        // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas
+        // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas.
         if (!isAuth()) rooms.removeIf(room -> !room.getActive());
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);

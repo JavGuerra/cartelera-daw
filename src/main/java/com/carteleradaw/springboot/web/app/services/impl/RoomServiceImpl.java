@@ -65,10 +65,12 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public List<Room> findAllByPremiereDescDistinct() {
+    public List<Room> findAllByPremiereDescDistinct(String selectedCity) {
         log.info("findAllByPremiereDesc");
 
         List<Room> rooms = roomRepo.findAllByPremiereDesc();
+        if (!stringIsEmpty(selectedCity)) rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
+
         List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados
         Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar filmId ya procesados
 

@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Salas</title>
+    <title>Exhibiciones</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
 </head>
@@ -27,7 +27,7 @@
     </form>
 
     <div class="row mt-5">
-        <h1 class="cartelera-h1">Listado de salas</h1>
+        <h1 class="cartelera-h1">Exhibiciones de películas</h1>
 
         <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms)}">
             Actualmente no hay ninguna sala para mostrar.
