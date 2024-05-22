@@ -1,6 +1,7 @@
 package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,19 @@ public interface IAddressService {
      * @return Lista de nombres de ciudades.
      */
     Set<String> citiesNames();
+
+    /**
+     * Obtiene una lista de direcciones y la información de sus cines asociados.
+     * @return Lista de direcciones y cines adociados.
+     */
+//    List<Address> findAllWithCinemaInfo();
+
+    /**
+     * Obtiene una dirección y la información de su cine asociado.
+     * @param id
+     * @return
+     */
+//    Address findByIdWithCinemaInfo(Long id);
 
     /**
      * Guarda una dirección.

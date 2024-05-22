@@ -1,5 +1,6 @@
 package com.carteleradaw.springboot.web.app.services;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 
 import java.util.List;
@@ -21,11 +22,17 @@ public interface IRoomService {
     boolean existsById(Long id);
 
     /**
-     * Obtiene una sala por si ID.
+     * Obtiene una sala por su ID.
      * @param id Identificador.
      * @return Opcionalmente, la sala indicada.
      */
     Optional<Room> findById(Long id);
+
+    /**
+     * Obtiene la lista de salas de una ciudad.
+     * @return Lista de salas de cine.
+     */
+    List<Room> findAllByCity(String city);
 
     /**
      * Obtiene la lista de salas de un cine por el ID del cine.

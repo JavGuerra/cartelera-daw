@@ -1,6 +1,7 @@
 package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.Film;
+import com.carteleradaw.springboot.web.app.entities.Room;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,13 @@ public interface IFilmService {
      */
     Optional<Film> findById(Long id);
 
-    // List<Film> findAllByRoomsCinemaAddressCityIgnoreCase(String city);
+    /**
+     * Obtiene la lista de películas de una ciudad.
+     * @return Lista de películas.
+     */
+    List<Film> findAllByCity(String city);
+
+
 
     /**
      * Guarda una película.

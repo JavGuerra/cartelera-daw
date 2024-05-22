@@ -1,7 +1,7 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.entities.Room;
+import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
@@ -34,12 +34,12 @@ public class RoomController {
      */
     @GetMapping("")
     public String findAll(Model model) {
-        List<Room> rooms = roomService.findAll();
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
-        model.addAttribute("rooms", rooms);
+        List<Room> rooms = roomService.findAllByCity(selectedCity);
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
+        model.addAttribute("rooms", rooms);
         return "room/room-list";
     }
 

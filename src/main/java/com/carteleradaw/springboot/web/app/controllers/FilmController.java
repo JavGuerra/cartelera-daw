@@ -1,9 +1,11 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Film;
+import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
+@Scope("session")
 @Controller
 @RequestMapping("/films")
 public class FilmController {
 
+    private final GlobalStateService globalStateService;
     private final IFilmService filmService;
     private final IRoomService roomService;
 
@@ -27,9 +32,12 @@ public class FilmController {
      */
     @GetMapping("")
     public String findAll(Model model) {
-        List<Film> films = filmService.findAll();
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        String selectedCity = globalStateService.getSelectedCity();
+        List<Film> films = filmService.findAllByCity(selectedCity);
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("films", films);
-        // model.addAttribute("cities", addressService.citiesNames());
         return "film/film-list";
     }
 
@@ -48,24 +56,6 @@ public class FilmController {
         } else model.addAttribute("error", "Película no encontrada.");
         return "film/film-detail";
     }
-
-//    @GetMapping("films/genders/{gender}")
-//    public String findByGender(Model model, @PathVariable String gender) {
-//        model.addAttribute("films", filmService.findAllByGenders(gender));
-//        return "film/film-list";
-//    }
-
-//    @GetMapping("/films/{city}")
-//    public String findAllByRoomsCinemaAddressCity(Model model, @PathVariable String city) {
-//        if (!stringIsEmpty(city) && addressService.existsCity(city.trim())) {
-//            city = firstCharUpercase(city.trim());
-//            List<Film> films = filmService.findAllByRoomsCinemaAddressCityIgnoreCase(city);
-//            model.addAttribute("city", city);
-//            if (!films.isEmpty()) model.addAttribute("films", films);
-//            else model.addAttribute("warning", "No hay películas en «" + city + "».");
-//        } else model.addAttribute("error", "Ciudad «" + city + "» no encontrada.");
-//        return "film/films-city";
-//    }
 
     /**
      * Crea una nueva película.

@@ -28,6 +28,12 @@ public interface ICinemaService {
     Optional<Cinema> findById(Long id);
 
     /**
+     * Obtiene la lista de cines de una ciudad.
+     * @return Lista de cines.
+     */
+    List<Cinema> findAllByCity(String city);
+
+    /**
      * Guarda un cine.
      * @param cinema Cine.
      * @return El cine guardado.

@@ -1,5 +1,6 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.FilmRepository;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
+import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 
 @Slf4j
 @AllArgsConstructor
@@ -42,12 +44,15 @@ public class FilmServiceImpl implements IFilmService {
         return filmRepo.findById(id);
     }
 
-//    @Override
-//    public List<Film> findAllByRoomsCinemaAddressCityIgnoreCase(String city) {
-//        log.info("findByRoomsCinemaAddressCityIgnoreCase {}", city);
-//        if (city == null || city.trim().isEmpty()) return new ArrayList<>();
-//        return filmRepo.findAllByRooms_Cinema_Address_CityIgnoreCase(city);
-//    }
+    @Override
+    public List<Film> findAllByCity(String city) {
+        log.info("findAllByCity {}", city);
+        if (stringIsEmpty(city)) {
+            return this.findAll();
+        } else {
+            return filmRepo.findByCityInFilms(city);
+        }
+    }
 
     @Override
     public Film save(Film film) {

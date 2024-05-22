@@ -11,7 +11,21 @@
 </head>
 <body>
 <div th:replace="~{navbar :: navbar}"></div>
+
 <div class="container text-left">
+
+    <form th:if="${error} == null" th:action="@{/setCity}" method="POST">
+        <input type="hidden" th:name="returnUrl" th:value="@{/films}">
+        <div class="form-group mb-3">
+            <label class="form-label" for="cities">Ciudad:</label>
+            <select class="form-control" id="cities" name="cities" aria-label="Ciudades">
+                <option value="" th:selected="${selectedCity == ''}">Todas las ciudades</option>
+                <option th:each="city : ${cities}" th:value="${city}" th:text="${city}" th:selected="${city == selectedCity}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-success" role="button">Enviar</button>
+    </form>
+
     <div class="row mt-5">
         <h1 class="cartelera-h1">Listado de películas</h1>
 

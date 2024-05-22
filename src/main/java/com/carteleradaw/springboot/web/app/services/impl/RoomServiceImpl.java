@@ -1,5 +1,6 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
+import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 
 @Slf4j
 @AllArgsConstructor
@@ -36,6 +38,16 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findById {}", id);
         if (invalidPosNumber(id)) return Optional.empty();
         return roomRepo.findById(id);
+    }
+
+    @Override
+    public List<Room> findAllByCity(String city) {
+        log.info("findAllByCity {}", city);
+        if (stringIsEmpty(city)) {
+            return this.findAll();
+        } else {
+            return roomRepo.findByCityInRooms(city);
+        }
     }
 
     @Override

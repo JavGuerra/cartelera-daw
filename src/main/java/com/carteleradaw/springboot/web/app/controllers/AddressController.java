@@ -25,6 +25,7 @@ public class AddressController {
      */
     @GetMapping("")
     public String findAll(Model model) {
+        // List<Address> addresses = addressService.findAllWithCinemaInfo();
         List<Address> addresses = addressService.findAll();
         model.addAttribute("addresses", addresses);
         return "address/address-list";

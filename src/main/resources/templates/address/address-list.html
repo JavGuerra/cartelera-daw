@@ -24,8 +24,8 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th scope="col" >Cine</th>
                     <th scope="col" >Dirección</th>
-                <!--    <th scope="col" >Cine</th>  -->
                     <th scope="col" >CP</th>
                     <th scope="col" >Ciudad</th>
                     <th scope="col" >País</th>
@@ -34,14 +34,21 @@
                 </thead>
                 <tbody>
                 <tr th:each="address: ${addresses}">
+
+
+                    <td></td>
+<!--                    <td th:text ="${address.cinema.name}"></td>-->
+
+                    <!--    <td>
+        <a class="btn btn-sm btn-light" th:text ="${cinema.name}"
+           th:href="@{/cinema/{address}(address=${cinema.address})}"></a>
+    </td>  -->
+
+
                     <td>
                         <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${address.street}»|"
                            th:text="${address.street}" role="button" th:href="@{/addresses/{id}(id=${address.id})}"></a>
                     </td>
-                <!--    <td>
-                        <a class="btn btn-sm btn-light" th:text ="${cinema.name}"
-                           th:href="@{/cinema/{address}(address=${cinema.address})}"></a>
-                    </td>  -->
                     <td th:text ="${address.postalCode}"></td>
                     <td th:text ="${address.city}"></td>
                     <td th:text ="${address.country}"></td>

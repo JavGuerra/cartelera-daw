@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
+import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -43,6 +43,16 @@ public class CinemaServiceImpl implements ICinemaService {
         log.info("findById {}", id);
         if (invalidPosNumber(id)) return Optional.empty();
         return cinemaRepo.findById(id);
+    }
+
+    @Override
+    public List<Cinema> findAllByCity(String city) {
+        log.info("findAllByCity {}", city);
+        if (stringIsEmpty(city)) {
+            return this.findAll();
+        } else {
+            return cinemaRepo.findByCity(city);
+        }
     }
 
     @Override

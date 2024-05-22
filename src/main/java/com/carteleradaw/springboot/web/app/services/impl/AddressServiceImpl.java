@@ -55,6 +55,14 @@ public class AddressServiceImpl implements IAddressService {
         return citiesNames;
     }
 
+//    public List<Address> findAllWithCinemaInfo() {
+//        return addressRepo.findAllWithCinemaInfo();
+//    }
+
+//    public Address findByIdWithCinemaInfo(Long id) {
+//        return addressRepo.findByIdWithCinemaInfo(id);
+//    }
+
     @Override
     public Address save(Address address) {
         log.info("save {}", address);
