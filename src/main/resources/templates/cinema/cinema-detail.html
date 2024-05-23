@@ -26,12 +26,15 @@
             </div>
             <div class="card" th:if="${error} == null">
                 <img th:src="@{${cinema.image}}" class="card-img-top" th:alt="${cinema.name}"/>
+                <p class="card-text" th:text="|CIF: ${cinema.cif}"></p>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="|Teléfono: ${cinema.phone}"></h5>
-                    <p class="card-text" th:text="|CIF: ${cinema.cif}"></p>
+                    <h4 class="card-title">Contacto:</h4>
+                    <p class="card-text" th:text="|Dirección: ${cinema.address.street}"></p>
+                    <p class="card-text" th:text="|Ciudad: ${cinema.address.postalCode} ${cinema.address.city}"></p>
+                    <p class="card-text" th:text="|Teléfono: ${cinema.phone}"></p>
                 </div>
 
-                <h5 class="card-title">Salas</h5>
+                <h4 class="card-title">Salas:</h4>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"
                         th:each="room: ${rooms}">

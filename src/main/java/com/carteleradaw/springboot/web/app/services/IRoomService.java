@@ -49,9 +49,16 @@ public interface IRoomService {
     List<Room> findAllByFilmId(Long id);
 
     /**
+     * Obtiene la lista de las salas de una ciudad que exhiben la misma película.
+     * @param id identificador.
+     * @param selectedCity ciudad seleccionada.
+     * @return Lista de salas que contienen la misma película en la ciudad.
+     */
+    List<Room> findAllByFilmAndCity(Long id, String selectedCity);
+    /**
      * Obrtiene la lista de salas con películas distintas por orden de estreno.
-     * @param selectedCity Lista de salas en orden de estreno descendente.
-     * @return
+     * @param selectedCity ciudad seleccionada.
+     * @return Lista de salas en orden de estreno descendente.
      */
     List<Room> findAllByPremiereDescDistinct(String selectedCity);
 

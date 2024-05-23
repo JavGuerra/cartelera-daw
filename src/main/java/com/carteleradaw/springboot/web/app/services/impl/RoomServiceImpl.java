@@ -64,16 +64,28 @@ public class RoomServiceImpl implements IRoomService {
         return roomRepo.findAllByFilm_Id(id);
     }
 
+    public List<Room> findAllByFilmAndCity(Long id, String selectedCity) {
+        log.info("findAllByFilmAndCity {}", id);
+        if (invalidPosNumber(id)) return new ArrayList<>();
+        List<Room> rooms = this.findAllByFilmId(id);
+        if (stringIsEmpty(selectedCity)) return rooms;
+        rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
+        return rooms;
+    }
+
     @Override
     public List<Room> findAllByPremiereDescDistinct(String selectedCity) {
         log.info("findAllByPremiereDesc");
 
-        List<Room> rooms = roomRepo.findAllByPremiereDesc();
+        List<Room> rooms = roomRepo.findAllActiveByPremiereDesc();
+
+        // Borra las salas de otras ciudades.
         if (!stringIsEmpty(selectedCity)) rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
 
         List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados
         Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar filmId ya procesados
 
+        // Elimina repeticiones, quedándose con el extreno más actual.
         for (Room room : rooms) {
             Long filmId = room.getFilmId();
             if (!processedFilmIds.contains(filmId)) {

@@ -54,7 +54,7 @@
                 </ul>
                 <div class="card-footer">
                     <a class="btn btn-outline-primary" title="Ver películas"
-                       th:href="@{/films}" role="button">Películas</a>
+                       th:href="@{/rooms/film/{id}(id=${film.id})}" role="button">Exhibiciones</a>
                     <a class="btn btn-outline-success" title="Editar película"
                        th:href="@{/films/{id}/edit(id=${film.id})}"
                        sec:authorize="isAuthenticated()" role="button">Editar</a>

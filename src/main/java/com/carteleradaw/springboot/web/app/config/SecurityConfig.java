@@ -26,8 +26,8 @@ public class  SecurityConfig {
             .requestMatchers(HttpMethod.GET,"/addresses/create").authenticated()
             .requestMatchers(HttpMethod.GET,"/addresses/{id}/edit").authenticated()
             .requestMatchers(HttpMethod.GET,"/addresses/{id}/delete").authenticated()
-            .requestMatchers(HttpMethod.GET,"/addresses/**").permitAll()
-            .requestMatchers(HttpMethod.GET,"/address/**").permitAll()
+            .requestMatchers(HttpMethod.GET,"/addresses/**").authenticated()
+            .requestMatchers(HttpMethod.GET,"/address/**").authenticated()
 
             .requestMatchers(HttpMethod.GET,"/cinemas/create").authenticated()
             .requestMatchers(HttpMethod.GET,"/cinemas/{id}/edit").authenticated()
@@ -50,8 +50,8 @@ public class  SecurityConfig {
             .requestMatchers(HttpMethod.GET,"/users/create").permitAll()
             .requestMatchers(HttpMethod.GET,"/users/{id}/edit").authenticated()
             .requestMatchers(HttpMethod.GET,"/users/{id}/delete").authenticated()
-            .requestMatchers(HttpMethod.GET,"/users/**").permitAll()
-            .requestMatchers(HttpMethod.GET,"/user/**").permitAll()
+            .requestMatchers(HttpMethod.GET,"/users/**").authenticated()
+            .requestMatchers(HttpMethod.GET,"/user/**").authenticated()
 
             .anyRequest().permitAll()
 

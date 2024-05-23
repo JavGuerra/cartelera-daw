@@ -66,7 +66,10 @@ public class FilmServiceImpl implements IFilmService {
         if (invalidPosNumber(id)) return;
         // desasociar film de rooms
         List<Room> rooms = roomRepo.findAllByFilm_Id(id);
-        for (Room room : rooms) room.setFilm(null);
+        for (Room room : rooms) {
+            room.setFilm(null);
+            room.setActive(false);
+        }
 
         filmRepo.deleteById(id);
     }

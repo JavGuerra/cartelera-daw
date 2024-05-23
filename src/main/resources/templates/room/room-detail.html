@@ -28,11 +28,12 @@
             <div class="card">
                 <img th:src="@{${room.film.poster}}" class="card-img-top" th:alt="${room.film.title}"/>
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <p class="card-text" th:text="|Resumen: ${room.film.synopsis}"></p>
+                    <p class="card-text">
                         <a class="btn btn-sm btn-outline-secondary"
-                           th:text="${room.film.title}"
+                           th:text="|+info: ${room.film.title}|"
                            th:href="@{/films/{id}(id=${room.film.id})}"></a>
-                    </h5>
+                    </p>
                     <p class="card-text" th:text="|Estreno: ${room.getPremiereFormated}"></p>
                     <p class="card-text">Sesiones:</p>
                     <ul th:each="schedule: ${room.schedules}">
@@ -40,11 +41,8 @@
                     </ul>
                 </div>
                 <ul class="list-group list-group-flush">
-
-             <!--   <li class="list-group-item" th:text="|Sesiones: ${#time.format(room.schedules, 'hh:mm')}|"></li>  -->
-
                     <li class="list-group-item" th:text="|Aforo: ${room.capacity}|"></li>
-                    <li class="list-group-item">
+                    <li class="list-group-item" sec:authorize="isAuthenticated()">
                         <span th:if="${room.active}" class="badge text-bg-success">Disponible</span>
                         <span th:if="${room.active} == false" class="badge text-bg-danger">No disponible</span>
                     </li>

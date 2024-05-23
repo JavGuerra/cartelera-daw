@@ -36,27 +36,38 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+                    <th scope="col">Película</th>
+                    <th scope="col">Clasif.</th>
+                    <th scope="col">Rating</th>
                     <th scope="col">Cine</th>
                     <th scope="col">Sala</th>
                     <th sec:authorize="isAuthenticated()" scope="col">Activa</th>
-                    <th scope="col">Película</th>
-                    <th scope="col">Estreno</th>
+                    <th sec:authorize="isAuthenticated()" scope="col">Estreno</th>
                     <th scope="col">Opciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="room: ${rooms}">
-                    <td th:text="${room.cinema}">
-<!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.cinema.name}"-->
-<!--                           role="button" th:href="@{/rooms/cinema/{id}(id=${rooms.cinema.id})}"></a>-->
+                    <td th:if="${room.film != null}">
+                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${room.film}"
+                           role="button" th:href="@{/rooms/film/{id}(id=${room.film.id})}"></a>
+                    </td>
+                    <td th:if="${room.film == null}">---</td>
+                    <td th:text="${room.film?.classification?: '---'}"></td>
+                    <td th:if="${room.film!= null}">
+                        <div th:if="${room.film.rating >= 0}">
+                            <p><span th:text="${room.film?.rating?: ''}">0</span>/5 <span th:text="${'⭐' * room.film.rating.intValue()}"></span></p>
+                        </div>
+                    </td>
+                    <td th:if="${room.film == null}">---</td>
+                    <td>
+                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${room.cinema.name}"
+                           role="button" th:href="@{/cinemas/{id}(id=${room.cinema.id})}"></a>
+                    </td>
                     <td th:text="${room.roomNumber}"></td>
                     <td sec:authorize="isAuthenticated()" th:if="${room.active == true}">Sí</td>
                     <td sec:authorize="isAuthenticated()" th:if="${room.active != true}">No</td>
-                    <td th:text="${room.film}">
-<!--                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${rooms.film.title}"-->
-<!--                           role="button" th:href="@{/rooms/film/{id}(id=${rooms.film.id})}"></a>-->
-                    </td>
-                    <td th:text="${room.getPremiereFormated}"></td>
+                    <td sec:authorize="isAuthenticated()" th:text="${room.getPremiereFormated}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
                            th:href="@{/rooms/{id}(id=${room.id})}" role="button">Ver</a>

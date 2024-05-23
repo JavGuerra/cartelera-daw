@@ -33,16 +33,6 @@
             Actualmente no hay ninguna película para mostrar.
         </div>
 
-<!--        <form th:if="${not #lists.isEmpty(cities)}" th:action="@{/films/} + ${city}" method="GET">-->
-<!--            <p>Elija una ciudad:</p>-->
-<!--            <div class="mb-4">-->
-<!--                <select name="city" aria-label="Ciudades" class="form-select" th:field="*{cities}">-->
-<!--                    <option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <button type="submit" class="btn btn-outline-info">Listar</button>-->
-<!--        </form>-->
-
         <div class="col mt-3" th:if="${#lists.size(films) > 0}">
             <table class="table table-hover">
                 <thead>
@@ -56,13 +46,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="film: ${films}">
-                    <td>
-                        <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${film.title}»|"
-                           th:text="${film.title}" role="button" th:href="@{/films/{id}(id=${film.id})}"></a>
-                    </td>
+                    <td th:text="${film.title}"></td>
                     <td th:text="${film.duration}"></td>
                     <td th:text="${film.classification}"></td>
-                    <td width="350px" th:text="${film.company}"></td>
+                    <td th:text="${film.company}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver película"
                            th:href="@{/films/{id}(id=${film.id})}" role="button">Ver</a>

@@ -38,24 +38,24 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Salas</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Web</th>
                         <th scope="col">Teléfono</th>
-                        <th scope="col">Sitio web</th>
-                        <th scope="col">CIF</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="cinema : ${cinemas}">
-                        <td>
-                            <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${cinema.name}»|"
-                               th:text="${cinema.name}" role="button" th:href="@{/cinemas/{id}(id=${cinema.id})}"></a>
-                        </td>
-                        <td th:text="${cinema.phone}"></td>
+                        <td th:text="${cinema.name}"></td>
+                        <td th:text="${#lists.size(cinema.rooms)}"></td>
+                        <td th:text="${cinema.address.city}"></td>
                         <td>
                             <a th:if="${cinema.url} != ''" class="btn btn-sm btn-light cartelera-btn"
-                               role="button" th:href="@{${cinema.url}}" target="_blank">Visitar sitio</a>
+                               role="button" th:href="@{${cinema.url}}" target="_blank">Visitar</a>
                         </td>
-                        <td th:text="${cinema.cif}"></td>
+                        <td th:text="${cinema.phone}"></td>
+
                         <td>
                             <a class="btn btn-sm btn-outline-primary" title="Ver cine"
                                th:href="@{/cinemas/{id}(id=${cinema.id})}" role="button">Ver</a>
