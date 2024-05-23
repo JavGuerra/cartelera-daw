@@ -47,7 +47,10 @@
                 </thead>
                 <tbody>
                     <tr th:each="cinema : ${cinemas}">
-                        <td th:text="${cinema.name}"></td>
+                        <td>
+                            <a class="btn btn-sm btn-light cartelera-btn" th:text="${cinema.name}"
+                               role="button" th:href="@{/rooms/cinema/{id}(id=${cinema.id})}"></a>
+                        </td>
                         <td th:text="${#lists.size(cinema.rooms)}"></td>
                         <td th:text="${cinema.address.city}"></td>
                         <td>

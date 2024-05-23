@@ -1,5 +1,6 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
@@ -96,8 +97,10 @@ public class CinemaController {
      */
     @PostMapping("")
     public String saveForm(@ModelAttribute Cinema cinema) {
-        addressService.save(cinema.getAddress());
+        Address address = cinema.getAddress();
+        addressService.save(address);
         cinemaService.save(cinema);
+        globalStateService.setSelectedCity(address.getCity());
         globalStateService.updateCitiesNames();
         return "redirect:/cinemas";
     }

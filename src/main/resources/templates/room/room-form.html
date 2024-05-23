@@ -50,8 +50,8 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="premiere" class="form-label">Día de estreno</label>
-                    <input type="date" class="form-control" id="premiere" th:field="*{premiere}">
+                    <label for="premiere" class="form-label">Día de estreno *</label>
+                    <input type="date" class="form-control" id="premiere" th:field="*{premiere}" th:required="required">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Horarios</label>

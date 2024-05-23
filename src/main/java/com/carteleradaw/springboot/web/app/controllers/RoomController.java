@@ -85,7 +85,14 @@ public class RoomController {
      */
     @GetMapping("/cinema/{id}")
     public String findByCinemaId(Model model, @PathVariable Long id) {
-        model.addAttribute("rooms", roomService.findAllByCinemaId(id));
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
+        String selectedCity = globalStateService.getSelectedCity();
+        List<Room> rooms = roomService.findAllByCinemaId(id);
+        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
+        model.addAttribute("rooms", rooms);
         return "room/room-list";
     }
 

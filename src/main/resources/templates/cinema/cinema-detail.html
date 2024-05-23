@@ -36,9 +36,11 @@
 
                 <h4 class="card-title">Salas:</h4>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"
-                        th:each="room: ${rooms}">
-                        <a class="btn btn-sm btn-light cartelera-btn" th:href="@{/rooms/{id}(id=${room.id})}" th:text="|Sala ${room.roomNumber} ${room.film.title}|"></a>
+                    <li class="list-group-item" th:each="room: ${rooms}">
+                        <a th:if="${room.film != null}" class="btn btn-sm btn-light cartelera-btn"
+                           th:href="@{/rooms/{id}(id=${room.id})}" th:text="|Sala ${room.roomNumber} - ${room.film.title}|"></a>
+                        <span th:if="${room.film != null}" th:text="${room.active? '' : ' - Inactiva'}"></span>
+                        <span th:if="${room.film == null}" th:text="|Sala ${room.roomNumber} - Inactiva|"></span>
                     </li>
                 </ul>
 

@@ -6,9 +6,11 @@ import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
+import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +18,14 @@ import java.util.Optional;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+@Scope("session")
 @Slf4j
 @AllArgsConstructor
 @Service
 
 public class CinemaServiceImpl implements ICinemaService {
 
+    private final GlobalStateService globalStateService;
     private final CinemaRepository cinemaRepo;
     private final RoomRepository roomRepo;
     private final AddressRepository addressRepo;
@@ -67,6 +71,7 @@ public class CinemaServiceImpl implements ICinemaService {
         if (invalidPosNumber(id) && !cinemaRepo.existsById(id)) return;
 
         Cinema cinema = findById(id).get();
+        String city = cinema.getAddress().getCity();
 
         // borrar todas las rooms asociadas
         List<Room> rooms = roomRepo.findAllByCinema_Id(id);
@@ -80,5 +85,11 @@ public class CinemaServiceImpl implements ICinemaService {
         }
 
         cinemaRepo.deleteById(id);
+
+        // Si ya no hay cines en una ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
+        if (findAllByCity(city).isEmpty()) {
+            globalStateService.setSelectedCity("");
+            globalStateService.updateCitiesNames();
+        }
     }
 }

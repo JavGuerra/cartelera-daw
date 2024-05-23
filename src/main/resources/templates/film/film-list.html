@@ -46,7 +46,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="film: ${films}">
-                    <td th:text="${film.title}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${film}"
+                           role="button" th:href="@{/rooms/film/{id}(id=${film.id})}"></a>
+                    </td>
                     <td th:text="${film.duration}"></td>
                     <td th:text="${film.classification}"></td>
                     <td th:text="${film.company}"></td>
