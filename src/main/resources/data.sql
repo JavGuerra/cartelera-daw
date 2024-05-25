@@ -4,7 +4,7 @@
 -- Volcado de datos para la tabla `address`
 --
 
-INSERT INTO `address` (`id`, `image`, `street`, `city`, `country`, `postal_code`) VALUES
+INSERT INTO `address` (`id`, `map`, `street`, `city`, `country`, `postal_code`) VALUES
 (1, 'https://cualbondi.com.ar/media/poi.webp/poi-cines-aana-san-juan.880x300.webp', 'C/ Callejón, 2', 'Alicante', 'España', '23654'),
 (2, 'https://www.pillalas.com/static/_s/img/cines/mapa_349566086E5F21EF.jpg', 'C/ Calle Cita, 5', 'Madrid', 'España', '41258'),
 (3, 'https://cualbondi.com.ar/media/poi/poi-cines-golem-baiona.500x500.png', 'C/ Carrerón, 3', 'Bayona', 'España', '96587'),

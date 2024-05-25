@@ -24,19 +24,19 @@
                 </div>
                 <a type="button" class="btn btn-primary" th:href="@{/cinemas}">Volver</a>
             </div>
-            <form th:if="${error} == null" th:action="@{/cinemas}" method="POST" th:object="${cinema}">
+            <form th:if="${error} == null" th:action="@{/cinemas/save}" method="POST" th:object="${cinema}">
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
                 <div class="mb-4">
                     <label for="cif" class="form-label">CIF *</label>
                     <input type="text" class="form-control" id="cif" th:field="*{cif}" required>
                 </div>
                 <div class="mb-4">
-                    <label for="image" class="form-label">Imagen</label>
-                    <input type="text" class="form-control" id="image" th:field="*{image}">
-                </div>
-                <div class="mb-4">
                     <label for="name" class="form-label">Nombre *</label>
                     <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="image" class="form-label">Imagen</label>
+                    <input type="text" class="form-control" id="image" th:field="*{image}">
                 </div>
                 <div class="mb-4">
                     <label for="url" class="form-label">Url</label>
@@ -70,8 +70,8 @@
                 <input type="hidden" id="address.id" name="address.id" th:field="*{address.id}"/>
 
                 <div class="mb-4">
-                    <label for="address" class="form-label">Dirección *</label>
-                    <input type="text" class="form-control" id="address" th:field="*{address.street}" required>
+                    <label for="street" class="form-label">Dirección *</label>
+                    <input type="text" class="form-control" id="street" th:field="*{address.street}" required>
                 </div>
                 <div class="mb-4">
                     <label for="postalCode" class="form-label">Código Postal *</label>
@@ -84,6 +84,10 @@
                 <div class="mb-4">
                     <label for="country" class="form-label">País *</label>
                     <input type="text" class="form-control" id="country" th:field="*{address.country}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="map" class="form-label">Mapa</label>
+                    <input type="text" class="form-control" id="map" th:field="*{address.map}">
                 </div>
 
                 <a class="btn btn-outline-primary" th:href="@{/cinemas}">Cancelar</a>

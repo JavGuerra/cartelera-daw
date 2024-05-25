@@ -2,6 +2,8 @@ package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,7 @@ public interface IRoomService {
      * Obtiene la lista de salas de una ciudad.
      * @return Lista de salas de cine.
      */
+    //List<Room> findAllByCity(String city);
     List<Room> findAllByCity(String city);
 
     /**

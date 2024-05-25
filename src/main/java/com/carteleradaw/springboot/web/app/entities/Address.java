@@ -15,8 +15,6 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String image;
-
     @Column(unique = true)
     private String street; // ( calle, número, escalera, piso )
 
@@ -26,6 +24,8 @@ public class Address {
     private String city;
 
     private String country;
+
+    private String map;
 
     @Override
     public String toString() {

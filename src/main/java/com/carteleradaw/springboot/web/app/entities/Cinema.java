@@ -18,13 +18,13 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String image;
-
     @Column(unique = true, nullable = false)
     private String cif;
 
     @Column(unique = true, nullable = false)
     private String name;
+
+    private String image;
 
     @Column(unique = true)
     private String url;
@@ -47,9 +47,22 @@ public class Cinema {
     @Column(unique = true)
     private String phone;
 
+    // El mío
     @OneToOne
     @JoinColumn(unique = true, name = "address_id")
     private Address address;
+
+//    @OneToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "address_id", nullable = false)
+//    private Address address;
+
+//    @OneToOne(optional = false, orphanRemoval = true)
+//    @JoinColumn(unique = true, name = "address_id", nullable = false)
+//    private Address address;
+
+//    @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
+//    @JoinColumn(unique = true, name = "address_id", nullable = false)
+//    private Address address;
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
     private Set<Room> rooms = new HashSet<>();

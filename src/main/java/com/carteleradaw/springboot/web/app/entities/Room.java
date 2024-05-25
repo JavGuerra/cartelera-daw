@@ -26,7 +26,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Byte roomNumber;
+    private Byte roomNumber; // Único, pero para cada cine.
 
     private Integer capacity;
 

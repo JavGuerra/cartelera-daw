@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
@@ -10,8 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
-import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
+import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -43,18 +41,25 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public List<Room> findAllByCity(String city) {
         log.info("findAllByCity {}", city);
+        List<Room> rooms;
         if (stringIsEmpty(city)) {
-            return this.findAll();
+            rooms = this.findAll();
         } else {
-            return roomRepo.findByCityInRooms(city);
+            rooms = roomRepo.findByCityInRooms(city);
         }
+        // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas.
+        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
+
+         return rooms;
     }
 
     @Override
     public List<Room> findAllByCinemaId(Long id) {
         log.info("findAllByCinemaId {}", id);
         if (invalidPosNumber(id)) return new ArrayList<>();
-        return roomRepo.findAllByCinema_Id(id);
+        List<Room> rooms = roomRepo.findAllByCinema_Id(id);
+        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
+        return rooms;
     }
 
     @Override
@@ -70,6 +75,7 @@ public class RoomServiceImpl implements IRoomService {
         List<Room> rooms = this.findAllByFilmId(id);
         if (stringIsEmpty(selectedCity)) return rooms;
         rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
+        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
         return rooms;
     }
 
@@ -114,5 +120,3 @@ public class RoomServiceImpl implements IRoomService {
         roomRepo.deleteById(id);
     }
 }
-
-

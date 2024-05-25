@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,10 +65,12 @@ public class FilmServiceImpl implements IFilmService {
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (invalidPosNumber(id)) return;
-        // desasociar film de rooms
+        // Desasociar film de rooms.
         List<Room> rooms = roomRepo.findAllByFilm_Id(id);
         for (Room room : rooms) {
             room.setFilm(null);
+            room.setPremiere(null); // TODO
+            room.setSchedules(new HashSet<>()); // TODO
             room.setActive(false);
         }
 

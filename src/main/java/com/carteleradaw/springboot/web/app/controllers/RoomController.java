@@ -34,12 +34,9 @@ public class RoomController {
      */
     @GetMapping("")
     public String findAll(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         List<Room> rooms = roomService.findAllByCity(selectedCity);
-        // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas.
-        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
-        model.addAttribute("cities", citiesNames);
+        model.addAttribute("cities", globalStateService.getCitiesNames());
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("rooms", rooms);
         return "room/room-list";
@@ -70,7 +67,6 @@ public class RoomController {
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         List<Room> rooms = roomService.findAllByFilmAndCity(id, selectedCity);
-        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("rooms", rooms);
@@ -86,10 +82,10 @@ public class RoomController {
     @GetMapping("/cinema/{id}")
     public String findByCinemaId(Model model, @PathVariable Long id) {
         Set<String> citiesNames = globalStateService.getCitiesNames();
+        // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
         globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
         String selectedCity = globalStateService.getSelectedCity();
         List<Room> rooms = roomService.findAllByCinemaId(id);
-        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("rooms", rooms);

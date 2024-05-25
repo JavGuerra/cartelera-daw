@@ -50,9 +50,9 @@
                     <a class="btn btn-outline-success" title="Editar cines"
                        th:href="@{/cinemas/{id}/edit(id=${cinema.id})}"
                        sec:authorize="isAuthenticated()" role="button">Editar</a>
-                    <button class="btn btn-outline-danger" title="Borrar cines"
+                    <a class="btn btn-outline-danger" title="Borrar cines"
                             th:href="@{/cinemas/{id}/delete(id=${cinema.id})}"
-                       sec:authorize="isAuthenticated()" role="button">Borrar</button>
+                       sec:authorize="isAuthenticated()" role="button">Borrar</a>
                 </div>
             </div>
         </div>

@@ -20,11 +20,12 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String title;
 
     private Integer duration;
 
+    @Column(nullable = false)
     private Integer year;
 
     private String director;

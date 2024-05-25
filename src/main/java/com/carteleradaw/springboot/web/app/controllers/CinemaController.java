@@ -95,10 +95,11 @@ public class CinemaController {
      * @param cinema Cine.
      * @return Plantilla cinemas.
      */
-    @PostMapping("")
+    @PostMapping("/save")
     public String saveForm(@ModelAttribute Cinema cinema) {
         Address address = cinema.getAddress();
-        addressService.save(address);
+        Address newAddress = addressService.save(address);
+        cinema.setAddress(newAddress);
         cinemaService.save(cinema);
         globalStateService.setSelectedCity(address.getCity());
         globalStateService.updateCitiesNames();

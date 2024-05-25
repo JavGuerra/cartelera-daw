@@ -1,7 +1,6 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
-import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
@@ -59,14 +58,6 @@ public class AddressServiceImpl implements IAddressService {
         for (Address city : addressRepo.findAll()) citiesNames.add(city.getCity());
         return citiesNames;
     }
-
-//    public List<Address> findAllWithCinemaInfo() {
-//        return addressRepo.findAllWithCinemaInfo();
-//    }
-
-//    public Address findByIdWithCinemaInfo(Long id) {
-//        return addressRepo.findByIdWithCinemaInfo(id);
-//    }
 
     @Override
     public Address save(Address address) {

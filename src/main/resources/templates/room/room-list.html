@@ -55,9 +55,9 @@
                     <td th:if="${room.film == null}">---</td>
                     <td th:text="${room.film?.classification?: '---'}"></td>
                     <td th:if="${room.film!= null}">
-                        <div th:if="${room.film.rating >= 0}">
-                            <p><span th:text="${room.film?.rating?: ''}">0</span>/5 <span th:text="${'⭐' * room.film.rating.intValue()}"></span></p>
-                        </div>
+                        <p th:if="${room.film.rating!= null}"><span th:text="${room.film?.rating?: ''}">0</span>/5
+                            <span th:text="${'⭐' * room.film.rating.intValue()}"></span></p>
+                        <p th:if="${room.film.rating == null}">---</p>
                     </td>
                     <td th:if="${room.film == null}">---</td>
                     <td>
@@ -67,7 +67,8 @@
                     <td th:text="${room.roomNumber}"></td>
                     <td sec:authorize="isAuthenticated()" th:if="${room.active == true}">Sí</td>
                     <td sec:authorize="isAuthenticated()" th:if="${room.active != true}">No</td>
-                    <td sec:authorize="isAuthenticated()" th:text="${room.getPremiereFormated}"></td>
+                    <td sec:authorize="isAuthenticated()" th:if="${room.film == null}">---</td>
+                    <td sec:authorize="isAuthenticated()" th:if="${room.film != null}" th:text="${room.getPremiereFormated}"></td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
                            th:href="@{/rooms/{id}(id=${room.id})}" role="button">Ver</a>

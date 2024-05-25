@@ -43,19 +43,6 @@ public interface IAddressService {
     Set<String> citiesNames();
 
     /**
-     * Obtiene una lista de direcciones y la información de sus cines asociados.
-     * @return Lista de direcciones y cines adociados.
-     */
-//    List<Address> findAllWithCinemaInfo();
-
-    /**
-     * Obtiene una dirección y la información de su cine asociado.
-     * @param id
-     * @return
-     */
-//    Address findByIdWithCinemaInfo(Long id);
-
-    /**
      * Guarda una dirección.
      * @param address Dirección.
      * @return La dirección guardada.

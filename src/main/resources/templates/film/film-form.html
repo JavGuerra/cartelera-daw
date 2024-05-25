@@ -28,24 +28,24 @@
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
                 <img class="mb-4" th:src="*{poster}" th:alt="*{title}"/>
                 <div class="mb-4">
-                    <label for="poster" class="form-label">Poster</label>
-                    <input type="text" class="form-control" id="poster" th:field="*{poster}">
+                    <label for="poster" class="form-label">Poster *</label>
+                    <input type="text" class="form-control" id="poster" th:field="*{poster}" required>
                 </div>
                 <div class="mb-4">
                     <label for="title" class="form-label">Título *</label>
                     <input type="text" class="form-control" id="title" th:field="*{title}" required>
                 </div>
                 <div class="mb-4">
-                    <label for="trailer" class="form-label">Tráiler</label>
-                    <input type="text" class="form-control" id="trailer" th:field="*{trailer}">
+                    <label for="year" class="form-label">Año *</label>
+                    <input type="text" class="form-control" id="year" th:field="*{year}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="synopsis" class="form-label">Sinopsis *</label>
+                    <textarea rows = "5" cols = "60" class="form-control" id="synopsis" th:field="*{synopsis}" required></textarea>
                 </div>
                 <div class="mb-4">
                     <label for="duration" class="form-label">Duración</label>
                     <input type="text" class="form-control" id="duration" th:field="*{duration}">
-                </div>
-                <div class="mb-4">
-                    <label for="year" class="form-label">Año</label>
-                    <input type="text" class="form-control" id="year" th:field="*{year}">
                 </div>
                 <div class="mb-4">
                     <label for="country" class="form-label">País</label>
@@ -56,12 +56,39 @@
                     <input type="text" class="form-control" id="company" th:field="*{company}">
                 </div>
                 <div class="mb-4">
+                    <label for="trailer" class="form-label">Tráiler</label>
+                    <input type="text" class="form-control" id="trailer" th:field="*{trailer}">
+                </div>
+
+                <div class="mb-4">
+                    <label for="director" class="form-label">Director</label>
+                    <input type="text" class="form-control" id="director" th:field="*{director}">
+                </div>
+                <div class="mb-4">
+                    <label for="actor" class="form-label">Actor</label>
+                    <input type="text" class="form-control" id="actor" th:field="*{actor}">
+                </div>
+                <div class="mb-4">
+                    <label for="music" class="form-label">Música</label>
+                    <input type="text" class="form-control" id="music" th:field="*{music}">
+                </div>
+                <div class="mb-4">
+                    <label for="photography" class="form-label">Fotografía</label>
+                    <input type="text" class="form-control" id="photography" th:field="*{photography}">
+                </div>
+                <div class="mb-4">
+                    <label for="script" class="form-label">Guión</label>
+                    <input type="text" class="form-control" id="script" th:field="*{script}">
+                </div>
+
+                <div class="mb-4">
                     <label for="genders" class="form-label">Géneros</label>
                     <select name="genders" class="form-control" id="genders" th:field="*{genders}" multiple>
-                        <option th:each="gender : ${T(cartelera.entities.enums.Gender).values()}"
-                                th:value="${gender.name()}" th:text="${gender}"></option>
+                        <option th:each="gender : ${T(com.carteleradaw.springboot.web.app.entities.enums.Gender).values()}"
+                                th:value="${gender.name()}" th:text="${gender.toString()}"></option>
                     </select>
                 </div>
+
                 <label class="form-label">Clasificación</label>
                 <div class="form-inline d-flex justify-content-evenly mb-4">
                     <div class="custom-control custom-radio custom-control-inline">
@@ -107,30 +134,6 @@
                         <input type="radio" id="option5" name="option5" class="custom-control-input" value="5" th:field="*{rating}">
                         <label class="custom-control-label" for="option5">5</label>
                     </div>
-                </div>
-                <div class="mb-4">
-                    <label for="director" class="form-label">Director *</label>
-                    <input type="text" class="form-control" id="director" th:field="*{director}" required>
-                </div>
-                <div class="mb-4">
-                    <label for="actor" class="form-label">Actor</label>
-                    <input type="text" class="form-control" id="actor" th:field="*{actor}">
-                </div>
-                <div class="mb-4">
-                    <label for="music" class="form-label">Música</label>
-                    <input type="text" class="form-control" id="music" th:field="*{music}">
-                </div>
-                <div class="mb-4">
-                    <label for="photography" class="form-label">Fotografía</label>
-                    <input type="text" class="form-control" id="photography" th:field="*{photography}">
-                </div>
-                <div class="mb-4">
-                    <label for="script" class="form-label">Guión</label>
-                    <input type="text" class="form-control" id="script" th:field="*{script}">
-                </div>
-                <div class="mb-4">
-                    <label for="synopsis" class="form-label">Sinopsis</label>
-                    <textarea rows = "5" cols = "60" class="form-control" id="synopsis" th:field="*{synopsis}"></textarea>
                 </div>
 
                 <a class="btn btn-outline-primary" th:href="@{/films}">Cancelar</a>
