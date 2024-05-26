@@ -24,8 +24,10 @@
                 </div>
                 <a type="button" class="btn btn-primary" th:href="@{/cinemas}">Volver</a>
             </div>
-            <form th:if="${error} == null" th:action="@{/cinemas/save}" method="POST" th:object="${cinema}">
+            <form th:if="${error} == null" th:action="@{/cinemas}" method="POST" th:object="${cinema}">
+
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
+
                 <div class="mb-4">
                     <label for="cif" class="form-label">CIF *</label>
                     <input type="text" class="form-control" id="cif" th:field="*{cif}" required>

@@ -30,11 +30,17 @@ public interface IFilmService {
 
     /**
      * Obtiene la lista de películas de una ciudad.
+     * @param city la ciudad.
      * @return Lista de películas.
      */
     List<Film> findAllByCity(String city);
 
-
+    /**
+     * Obtiene la lista de películas con el género dado.
+     * @param gender el género.
+     * @return Lista de películas.
+     */
+//     List<Film> findAllByGender(String gender);
 
     /**
      * Guarda una película.
@@ -48,6 +54,4 @@ public interface IFilmService {
      * @param id Identificador.
      */
     void deleteById(Long id);
-
-    // List<Film> findAllByGenders(String gender);
 }

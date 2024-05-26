@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
@@ -16,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
-import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
+import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 @AllArgsConstructor
 @Scope("session")
@@ -95,14 +93,9 @@ public class CinemaController {
      * @param cinema Cine.
      * @return Plantilla cinemas.
      */
-    @PostMapping("/save")
+    @PostMapping("")
     public String saveForm(@ModelAttribute Cinema cinema) {
-        Address address = cinema.getAddress();
-        Address newAddress = addressService.save(address);
-        cinema.setAddress(newAddress);
         cinemaService.save(cinema);
-        globalStateService.setSelectedCity(address.getCity());
-        globalStateService.updateCitiesNames();
         return "redirect:/cinemas";
     }
 
@@ -113,10 +106,8 @@ public class CinemaController {
      */
     @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
-        if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
+        if (!invalidPosNumber(id) && cinemaService.existsById(id))
             cinemaService.deleteById(id);
-            globalStateService.updateCitiesNames();
-        }
         return "redirect:/cinemas";
     }
 }

@@ -55,6 +55,16 @@ public class FilmServiceImpl implements IFilmService {
         }
     }
 
+//    @Override
+//    public List<Film> findAllByGender(String gender) {
+//        log.info("findAllByGender {}", gender);
+//        if (stringIsEmpty(gender)) {
+//            return this.findAll();
+//        } else {
+//            return filmRepo.findByGenderInFilms(gender);
+//        }
+//    }
+
     @Override
     public Film save(Film film) {
         log.info("save {}", film);
@@ -69,16 +79,11 @@ public class FilmServiceImpl implements IFilmService {
         List<Room> rooms = roomRepo.findAllByFilm_Id(id);
         for (Room room : rooms) {
             room.setFilm(null);
-            room.setPremiere(null); // TODO
-            room.setSchedules(new HashSet<>()); // TODO
+            room.setPremiere(null);
+            room.setSchedules(new HashSet<>());
             room.setActive(false);
         }
 
         filmRepo.deleteById(id);
     }
-
-//    @Override
-//    public List<Film> findAllByGenders(String gender) {
-//        return filmRepo.findAllByGenders(gender);
-//    }
 }

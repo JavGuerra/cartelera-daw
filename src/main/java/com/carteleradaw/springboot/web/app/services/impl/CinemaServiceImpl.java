@@ -2,7 +2,6 @@ package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
-import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
@@ -62,7 +61,13 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public Cinema save(Cinema cinema) {
         log.info("save {}", cinema);
-        return cinemaRepo.save(cinema);
+        Address address = cinema.getAddress();
+        if(!invalidPosNumber(address.getId()) && addressRepo.existsById(address.getId()))
+            addressRepo.save(address);
+        Cinema newCinema = cinemaRepo.save(cinema);
+        globalStateService.setSelectedCity(address.getCity());
+        globalStateService.updateCitiesNames();
+        return newCinema;
     }
 
     @Override
@@ -72,17 +77,6 @@ public class CinemaServiceImpl implements ICinemaService {
 
         Cinema cinema = findById(id).get();
         String city = cinema.getAddress().getCity();
-
-        // borrar todas las rooms asociadas
-        List<Room> rooms = roomRepo.findAllByCinema_Id(id);
-        if (!rooms.isEmpty()) for (Room room : rooms) roomRepo.deleteById(room.getId());
-
-        // borrar address asociada
-        Address address = cinema.getAddress();
-        if (address != null && addressRepo.existsById(address.getId())) {
-            cinema.setAddress(null);
-            addressRepo.deleteById(address.getId());
-        }
 
         cinemaRepo.deleteById(id);
 

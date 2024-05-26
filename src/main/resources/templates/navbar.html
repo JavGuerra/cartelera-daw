@@ -8,20 +8,25 @@
     </a>
 
     <ul class="nav navbar-nav flex-row ms-4">
-        <li class="nav-item me-5" sec:authorize="isAuthenticated()">
-            <a class="nav-link fs-5 text-primary" th:href="@{/films}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
-                    <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
-                </svg>&nbsp;&nbsp;Películas
-            </a>
-        </li>
+
         <li class="nav-item me-5">
-            <a class="nav-link fs-5 text-primary" th:href="@{/rooms}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
-                    <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
-                </svg>&nbsp;&nbsp;Exhibiciones
-            </a>
+    <form id="myForm" class="form-inline mt-1" th:action="@{/setCity}" method="POST">
+        <select class="form-control" id="cities" name="cities" aria-label="Ciudad:">
+            <option value="" th:selected="${selectedCity == ''}">Todas las ciudades</option>
+            <option th:each="city : ${cities}" th:value="${city}" th:text="${city}" th:selected="${city == selectedCity}"></option>
+        </select>
+<!--        <button type="submit" class="btn btn-outline-success" role="button" aria-label="Enviar">🏙️</button>-->
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectElement = document.getElementById('cities');
+            selectElement.addEventListener('change', function() {
+                document.getElementById('myForm').submit();
+            });
+        });
+    </script>
         </li>
+
         <li class="nav-item me-5">
             <a class="nav-link fs-5 text-primary" th:href="@{/cinemas}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels" viewBox="0 0 16 16">
@@ -31,14 +36,23 @@
                 </svg>&nbsp;&nbsp;Cines
             </a>
         </li>
-<!--        <li class="nav-item me-5" sec:authorize="isAuthenticated()">-->
-<!--            <a class="nav-link fs-5 text-primary" th:href="@{/addresses}">-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">-->
-<!--                    <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>-->
-<!--                    <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"/>-->
-<!--                </svg>&nbsp;&nbsp;Direcciones-->
-<!--            </a>-->
-<!--        </li>-->
+
+        <li class="nav-item me-5">
+            <a class="nav-link fs-5 text-primary" th:href="@{/rooms}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                    <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                </svg>&nbsp;&nbsp;Exhibiciones
+            </a>
+        </li>
+
+        <li class="nav-item me-5" sec:authorize="isAuthenticated()">
+            <a class="nav-link fs-5 text-primary" th:href="@{/films}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+                    <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
+                </svg>&nbsp;&nbsp;Películas
+            </a>
+        </li>
+
         <li class="nav-item me-5" sec:authorize="isAuthenticated()">
             <a class="nav-link fs-5 text-primary" th:href="@{/users}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
@@ -57,14 +71,6 @@
                 </svg>&nbsp;&nbsp;Iniciar&nbsp;sesión
             </a>
         </div>
-        <div sec:authorize="isAnonymous()">
-            <a class="btn btn-link text-decoration-none" th:href="@{/users/create}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                </svg>&nbsp;&nbsp;Registrarse
-            </a>
-        </div>
         <div sec:authorize="isAuthenticated()">
             <a class="btn btn-link text-decoration-none" th:href="@{/users/{id}(id=${#authentication.getPrincipal().getId()})}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
@@ -75,6 +81,15 @@
                 <span sec:authentication="principal.surname"></span>
             </a>
         </div>
+
+        <div sec:authorize="isAnonymous()">
+            <a class="btn btn-link text-decoration-none" th:href="@{/users/create}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                </svg>&nbsp;&nbsp;Registrarse
+            </a>
+        </div>
         <div sec:authorize="isAuthenticated()">
             <a class="btn btn-link text-decoration-none" th:href="@{/logout}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
@@ -83,6 +98,6 @@
                 </svg>&nbsp;&nbsp;Cerrar&nbsp;sesión
             </a>
         </div>
-    </div>
 
+    </div>
 </nav>

@@ -33,7 +33,7 @@ public class PremiereController {
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         List<Room> premieres = roomService.findAllByPremiereDescDistinct(selectedCity);
-        if (premieres.size() > 6) premieres.subList(0, 6);
+        if (premieres.size() > 6) premieres = premieres.subList(0, 6);
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("premieres", premieres);
