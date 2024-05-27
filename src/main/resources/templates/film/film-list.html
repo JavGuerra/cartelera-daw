@@ -29,6 +29,7 @@
                     <th scope="col">Duración</th>
                     <th scope="col">Clasific.</th>
                     <th scope="col">Compañía</th>
+                    <th scope="col" th:if="${selectedCity == ''}">En cartel</th>
                     <th scope="col">Opciones</th>
                 </tr>
                 </thead>
@@ -41,6 +42,10 @@
                     <td th:text="${film.duration}"></td>
                     <td th:text="${film.classification}"></td>
                     <td th:text="${film.company}"></td>
+                        <td sec:authorize="isAuthenticated()"
+                            th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}">Sí</td>
+                        <td sec:authorize="isAuthenticated()"
+                            th:if="${#lists.isEmpty(film.rooms) and selectedCity == ''}">No</td>
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver película"
                            th:href="@{/films/{id}(id=${film.id})}" role="button">Ver</a>

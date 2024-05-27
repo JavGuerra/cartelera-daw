@@ -10,13 +10,14 @@
     <ul class="nav navbar-nav flex-row ms-4">
 
         <li class="nav-item me-5">
-    <form id="myForm" class="form-inline mt-1" th:action="@{/setCity}" method="POST">
-        <select class="form-control" id="cities" name="cities" aria-label="Ciudad:">
-            <option value="" th:selected="${selectedCity == ''}">Todas las ciudades</option>
-            <option th:each="city : ${cities}" th:value="${city}" th:text="${city}" th:selected="${city == selectedCity}"></option>
-        </select>
-<!--        <button type="submit" class="btn btn-outline-success" role="button" aria-label="Enviar">🏙️</button>-->
-    </form>
+            <form id="myForm" class="form-inline mt-1" th:action="@{/setCity}" method="POST">
+                <input type="hidden" th:name="returnUrl" th:value="${returnUrl}">
+                <select class="custom-select" id="cities" name="cities" aria-label="Ciudad:">
+                    <option value="" th:selected="${selectedCity == ''}">Todas las ciudades</option>
+                    <option th:each="city : ${cities}" th:value="${city}" th:text="${city}" th:selected="${city == selectedCity}"></option>
+                </select>
+<!--            <button type="submit" class="btn btn-outline-success" role="button" aria-label="Enviar">🏙️</button>-->
+            </form>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var selectElement = document.getElementById('cities');
@@ -41,7 +42,7 @@
             <a class="nav-link fs-5 text-primary" th:href="@{/rooms}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                     <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
-                </svg>&nbsp;&nbsp;Exhibiciones
+                </svg>&nbsp;&nbsp;Cartelera
             </a>
         </li>
 

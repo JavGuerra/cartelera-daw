@@ -3,7 +3,6 @@ package com.carteleradaw.springboot.web.app.controllers;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
-import com.carteleradaw.springboot.web.app.services.IAddressService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,6 @@ public class CinemaController {
     private final GlobalStateService globalStateService;
     private final ICinemaService cinemaService;
     private final IRoomService roomService;
-    private final IAddressService addressService;
 
     /**
      * Lista todos los cines.
@@ -41,6 +39,7 @@ public class CinemaController {
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("cinemas", cinemas);
+        model.addAttribute("returnUrl", "cinemas");
         return "cinema/cinema-list";
     }
 
@@ -53,12 +52,15 @@ public class CinemaController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
+            Set<String> citiesNames = globalStateService.getCitiesNames();
+            String selectedCity = globalStateService.getSelectedCity();
             Cinema cinema = cinemaService.findById(id).get();
             List<Room> rooms = roomService.findAllByCinemaId(id);
-            // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas.
-            if (!isAuth()) rooms.removeIf(room -> !room.getActive());
+            model.addAttribute("cities", citiesNames);
+            model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("cinema", cinema);
             model.addAttribute("rooms", rooms);
+            model.addAttribute("returnUrl", "cinemas");
         } else model.addAttribute("error", "Cine no encontrado.");
         return "cinema/cinema-detail";
     }
@@ -70,7 +72,12 @@ public class CinemaController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        String selectedCity = globalStateService.getSelectedCity();
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("cinema", new Cinema());
+        model.addAttribute("returnUrl", "cinemas");
         return "cinema/cinema-form";
     }
 
@@ -82,9 +89,14 @@ public class CinemaController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
-        if (!invalidPosNumber(id) && cinemaService.existsById(id))
+        if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
+            Set<String> citiesNames = globalStateService.getCitiesNames();
+            String selectedCity = globalStateService.getSelectedCity();
+            model.addAttribute("cities", citiesNames);
+            model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("cinema", cinemaService.findById(id).get());
-        else model.addAttribute("error", "Cine no encontrado.");
+            model.addAttribute("returnUrl", "cinemas");
+        } else model.addAttribute("error", "Cine no encontrado.");
         return "cinema/cinema-form";
     }
 

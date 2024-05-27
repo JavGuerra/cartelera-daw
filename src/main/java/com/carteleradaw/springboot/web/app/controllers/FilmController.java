@@ -1,7 +1,9 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
+import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class FilmController {
     private final GlobalStateService globalStateService;
     private final IFilmService filmService;
     private final IRoomService roomService;
+    private final ICinemaService cinemaService;
 
     /**
      * Lista todas las películas.
@@ -38,6 +41,7 @@ public class FilmController {
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("films", films);
+        model.addAttribute("returnUrl", "films");
         return "film/film-list";
     }
 
@@ -51,8 +55,14 @@ public class FilmController {
     public String findById(Model model, @PathVariable Long id) {
         // List<Film> filmOpt = filmService.findByIdWithGender(id);
         if (!invalidPosNumber(id) && filmService.existsById(id)) {
+            Set<String> citiesNames = globalStateService.getCitiesNames();
+            String selectedCity = globalStateService.getSelectedCity();
+            List<Cinema> cinemas = cinemaService.findAllByCity(selectedCity);
+            model.addAttribute("cities", citiesNames);
+            model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("film", filmService.findById(id).get());
             model.addAttribute("rooms", roomService.findAllByFilmId(id));
+            model.addAttribute("returnUrl", "films");
         } else model.addAttribute("error", "Película no encontrada.");
         return "film/film-detail";
     }
@@ -64,7 +74,12 @@ public class FilmController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("film",new Film());
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        String selectedCity = globalStateService.getSelectedCity();
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
+        model.addAttribute("film", new Film());
+        model.addAttribute("returnUrl", "films");
         return "film/film-form";
     }
 
@@ -76,9 +91,14 @@ public class FilmController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
-        if (!invalidPosNumber(id) && filmService.existsById(id))
+        if (!invalidPosNumber(id) && filmService.existsById(id)){
+            Set<String> citiesNames = globalStateService.getCitiesNames();
+            String selectedCity = globalStateService.getSelectedCity();
+            model.addAttribute("cities", citiesNames);
+            model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("film", filmService.findById(id).get());
-        else model.addAttribute("error", "Película no encontrada.");
+            model.addAttribute("returnUrl", "films");
+        } else model.addAttribute("error", "Película no encontrada.");
         return "film/film-form";
     }
 

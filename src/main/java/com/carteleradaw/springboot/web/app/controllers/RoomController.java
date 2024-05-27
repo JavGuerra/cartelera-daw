@@ -39,6 +39,7 @@ public class RoomController {
         model.addAttribute("cities", globalStateService.getCitiesNames());
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("rooms", rooms);
+        model.addAttribute("returnUrl", "rooms");
         return "room/room-list";
     }
 
@@ -50,9 +51,14 @@ public class RoomController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
-        if (!invalidPosNumber(id) && roomService.existsById(id))
+        if (!invalidPosNumber(id) && roomService.existsById(id)) {
+            Set<String> citiesNames = globalStateService.getCitiesNames();
+            String selectedCity = globalStateService.getSelectedCity();
+            model.addAttribute("cities", citiesNames);
+            model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("room", roomService.findById(id).get());
-        else model.addAttribute("error", "Sala no encontrada.");
+            model.addAttribute("returnUrl", "rooms");
+        } else model.addAttribute("error", "Sala no encontrada.");
         return "room/room-detail";
     }
 
@@ -70,6 +76,7 @@ public class RoomController {
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("rooms", rooms);
+        model.addAttribute("returnUrl", "rooms");
         return "room/room-list";
     }
 
@@ -89,6 +96,7 @@ public class RoomController {
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("rooms", rooms);
+        model.addAttribute("returnUrl", "rooms");
         return "room/room-list";
     }
 
@@ -99,9 +107,16 @@ public class RoomController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
+        Set<String> citiesNames = globalStateService.getCitiesNames();
+        String selectedCity = globalStateService.getSelectedCity();
+        Byte nextRoomNumber = roomService.getNextRoomNumber();
+        model.addAttribute("cities", citiesNames);
+        model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("room", new Room());
+        model.addAttribute("nextRoomNumber", String.valueOf(nextRoomNumber));
         model.addAttribute("cinemas", cinemaService.findAll());
         model.addAttribute("films", filmService.findAll());
+        model.addAttribute("returnUrl", "rooms");
         return "room/room-form";
     }
 
@@ -114,11 +129,16 @@ public class RoomController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && roomService.existsById(id)) {
+            Set<String> citiesNames = globalStateService.getCitiesNames();
+            String selectedCity = globalStateService.getSelectedCity();
             Room room = roomService.findById(id).get();
             model.addAttribute("room", room);
             Long cinemaId = room.getCinema().getId();
+            model.addAttribute("cities", citiesNames);
+            model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("cinemas", cinemaService.findById(cinemaId).get());
             model.addAttribute("films", filmService.findAll());
+            model.addAttribute("returnUrl", "rooms");
         } else model.addAttribute("error", "Sala no encontrada.");
         return "room/room-form";
     }

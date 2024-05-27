@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
@@ -36,6 +37,19 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findById {}", id);
         if (invalidPosNumber(id)) return Optional.empty();
         return roomRepo.findById(id);
+    }
+
+    public Byte getNextRoomNumber() {
+        Set<Byte> existingRoomNumbers = new HashSet<>();
+        for (Room room : roomRepo.findAll()) {
+            Byte roomNumber = room.getRoomNumber();
+            existingRoomNumbers.add(roomNumber);
+        }
+        Byte nextRoomNumber = 1;
+        while (existingRoomNumbers.contains(nextRoomNumber)) {
+            nextRoomNumber++;
+        }
+        return nextRoomNumber;
     }
 
     @Override
@@ -91,7 +105,7 @@ public class RoomServiceImpl implements IRoomService {
         List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados
         Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar filmId ya procesados
 
-        // Elimina repeticiones, quedándose con el extreno más actual.
+        // Elimina repeticiones, quedándose con el estreno más actual.
         for (Room room : rooms) {
             Long filmId = room.getFilmId();
             if (!processedFilmIds.contains(filmId)) {
@@ -106,6 +120,12 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public Room save(Room room) {
         log.info("save {}", room);
+        // Si una sala no tiene película, no puede estar activa ni tener fecha de extreno, ni horarios.
+        if (room.getFilm() == null) {
+            room.setActive(false);
+            room.setPremiere(null);
+            room.setSchedules(new HashSet<>());
+        }
         return roomRepo.save(room);
     }
 

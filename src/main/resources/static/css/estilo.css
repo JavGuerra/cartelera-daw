@@ -8,6 +8,14 @@
     width: 280px;
 }
 
+#myForm .custom-select {
+    width: 280px;
+    height: 37px;
+    background-color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
 .navMenu {
     width: 100%;
 }

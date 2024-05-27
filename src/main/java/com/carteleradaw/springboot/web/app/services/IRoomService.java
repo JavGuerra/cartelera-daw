@@ -31,6 +31,12 @@ public interface IRoomService {
     Optional<Room> findById(Long id);
 
     /**
+     * Obtiene el id no usado más bajo.
+     * @return id.
+     */
+    Byte getNextRoomNumber();
+
+    /**
      * Obtiene la lista de salas de una ciudad.
      * @return Lista de salas de cine.
      */

@@ -33,10 +33,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="user: ${users}">
-                    <td>
-                        <a class="btn btn-sm btn-light cartelera-btn" th:title="|Ver detalle de «${user.username}»|"
-                           th:text="${user.username}" role="button" th:href="@{/user/{id}(id=${user.id})}"></a>
-                    </td>
+                    <td th:text="${user.username}"></td>
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.surname}"></td>
                     <td th:text="${user.email}"></td>
