@@ -22,9 +22,6 @@ Además de los requisitos solicitados para el MVP, la app implementa:
 
 ### Opciones de mejora
 
-- Portada dinámica de la App  
-- Lógica de negocio y estadísticas
-- Gestión de excepciones  
 - Testing  
 - Diseño claro / oscuro
 - Diseño responsive  
