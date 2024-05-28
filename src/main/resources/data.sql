@@ -14,7 +14,7 @@ INSERT INTO `address` (`id`, `map`, `street`, `city`, `country`, `postal_code`) 
 -- --------------------------------------------------------
 
 --
--- Volcado de datos para la tabla `app_users`
+-- Volcado de datos para la tabla `users`
 -- Contraseña: 632541
 --
 

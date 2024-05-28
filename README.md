@@ -10,9 +10,9 @@ Empleando **Java** y el framework **Spring**, se ha llevado a cabo la planificac
 
 En su desarrollo se ha empleado **Spring security**, **Tymeleaft** y **Bootstrap**. Se ha codificado usando **IntelliJ IDEA**.
 
-La planificación y el desarrollo se han llevado a cabo usando **Trello** y **GitHub**.
+La planificación y codificación se han llevado a cabo usando **Trello** y **GitHub**.
 
-Además de los requisitos solicitados para el MVP, la app implementa:
+Además de los requisitos para el MVP, la app implementa:
 
 - Sprint Security para securización de rutas
 - Registro de Usuario
@@ -20,26 +20,21 @@ Además de los requisitos solicitados para el MVP, la app implementa:
 - Documentación JavaDoc
 - Implementación de Logs
 
-### Opciones de mejora
-
-- Testing  
-- Diseño claro / oscuro
-- Diseño responsive  
-- Diseño accesible   
-- Aviso legal y privacidad
-- Despliegue  
-
 ## Indicaciones de instalación
 
 Tras clonar el repositorio, es necesario crear un usuario en la BBDD relacional llamado «**cartelera-daw**» con el password: «**cartelera-daw**» (sin comillas). Estos datos, así como el puerto por defecto de la app (**8082**), pueden ser alterados en el fichero «aplication.propieties», en resources.
+
+Cada vez que se inicia la aplicación, esta recarga los datos en la BBDD.
 
 Una vez iniciada la aplicación en local, se puede acceder a ella con la dirección: http://localhost:8082
 
 Para hacer login, todos los usuarios registrados cuentan con la contraseña: **632541**
 
+Ejemplo de nombres de usuario: dfuertes, mperez, rmartinez.
+
 ## Sobre el autor
 
-* Desarrollado por **Javier Guerra**
+* Desarrollado por [**Javier Guerra**](https://javguerra.github.io/)
 
 ## Licencia
 
