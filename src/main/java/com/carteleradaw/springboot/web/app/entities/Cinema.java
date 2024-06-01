@@ -2,9 +2,7 @@ package com.carteleradaw.springboot.web.app.entities;
 
 import jakarta.persistence.*;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.HashSet;
@@ -60,6 +58,7 @@ public class Cinema {
     @Pattern(regexp = PHONE_PATTERN, message = "Formato de teléfono internacional no válido.")
     private String phone;
 
+    @NotNull(message = "La dirección no puede estar vacía.")
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JoinColumn(unique = true, name = "address_id")
     private Address address;

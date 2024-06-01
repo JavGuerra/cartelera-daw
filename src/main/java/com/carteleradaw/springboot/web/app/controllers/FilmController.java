@@ -6,10 +6,13 @@ import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -109,12 +112,17 @@ public class FilmController {
     /**
      * Guarda la película obtenida desde el formulario.
      * @param film Película.
+     * @param result estado de la validación.
      * @return Plantilla films.
      */
     @PostMapping("")
-    public String saveForm(@ModelAttribute Film film) {
-        filmService.save(film);
-        return "redirect:/films";
+    public String saveForm(@Valid @ModelAttribute Film film, BindingResult result) {
+        if (result.hasErrors()) {
+            return "film/film-form";
+        } else {
+            filmService.save(film);
+            return "redirect:/films";
+        }
     }
 
     /**

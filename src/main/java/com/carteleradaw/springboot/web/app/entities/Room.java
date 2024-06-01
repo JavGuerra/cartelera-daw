@@ -3,6 +3,7 @@ package com.carteleradaw.springboot.web.app.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,14 +43,14 @@ public class Room {
     @ElementCollection
     @ToString.Exclude
     private List<LocalTime> schedules = new ArrayList<>();
-    //private Set<LocalTime> schedules = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "film_id")
     private Film film;
 
+    @NotNull(message = "El cine no puede estar vacío.")
     @ManyToOne
-    @JoinColumn(name = "cinema_id")
+    @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;
 
     public Long getFilmId() {

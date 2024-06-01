@@ -31,32 +31,38 @@
                 <div class="mb-4">
                     <label for="image" class="form-label">Foto</label>
                     <input type="url" class="form-control" id="image" th:field="*{image}" />
+                    <div class="text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="name" class="form-label">Nombre *</label>
                     <input type="text" class="form-control" id="name" th:field="*{name}" required />
+                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="surname" class="form-label">Apellidos *</label>
                     <input type="text" class="form-control" id="surname" th:field="*{surname}" required />
+                    <div class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="username" class="form-label">Usuario *</label>
                     <input type="text" class="form-control" id="username" th:field="*{username}" required />
+                    <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="form-label">Correo *</label>
                     <input type="email" class="form-control" id="email" th:field="*{email}" required />
+                    <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label th:if="${user.id}" for="password" class="form-label">Cambiar contraseña (no obligatorio)</label>
                     <label th:unless="${user.id}" for="password" class="form-label">Contraseña *</label>
                     <input type="password" class="form-control" id="password" th:field="*{password}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
 
                 <div class="mt-5">

@@ -66,6 +66,8 @@ public class Film {
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String poster;
 
+    @NotNull(message = "Debe ingresar una sinopsis.")
+    @Column(nullable = false)
     private String synopsis;
 
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")

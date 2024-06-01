@@ -1,14 +1,17 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
+import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -103,12 +106,17 @@ public class CinemaController {
     /**
      * Guarda el cine obtenido desde el formulario.
      * @param cinema Cine.
+     * @param result estado de la validación.
      * @return Plantilla cinemas.
      */
     @PostMapping("")
-    public String saveForm(@ModelAttribute Cinema cinema) {
-        cinemaService.save(cinema);
-        return "redirect:/cinemas";
+    public String saveForm(@Valid @ModelAttribute Cinema cinema, BindingResult result) {
+        if (result.hasErrors()) {
+            return "cinema/cinema-form";
+        } else {
+            cinemaService.save(cinema);
+            return "redirect:/cinemas";
+        }
     }
 
     /**

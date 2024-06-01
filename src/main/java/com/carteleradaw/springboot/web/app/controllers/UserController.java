@@ -1,12 +1,15 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.IUserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -97,45 +100,50 @@ public class UserController {
     /**
      * Guarda el usuario obtenido desde el formulario.
      * @param user Dirección.
+     * @param result estado de la validación.
      * @return Plantilla users.
      */
+    
     @PostMapping("")
-    public String save(Model model, @ModelAttribute User user) {
-
-        Long id = user.getId();
-        String username = user.getUsername();
-        String email = user.getEmail();
-
-        boolean userExist = userService.existsById(id);
-        boolean existsByUsername = userService.existsByUsername(username);
-        boolean existsByEmail = userService.existsByEmail(email);
-
-        // Si el usuario es nuevo, pero ya existe el nombre de usuario o el correo...
-        if (!userExist && (existsByUsername || existsByEmail)) {
-            model.addAttribute("error", "El usuario ya existe.");
+    public String save(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
             return "user/user-form";
+        } else {
+            Long id = user.getId();
+            String username = user.getUsername();
+            String email = user.getEmail();
+
+            boolean userExist = userService.existsById(id);
+            boolean existsByUsername = userService.existsByUsername(username);
+            boolean existsByEmail = userService.existsByEmail(email);
+
+            // Si el usuario es nuevo, pero ya existe el nombre de usuario o el correo...
+            if (!userExist && (existsByUsername || existsByEmail)) {
+                model.addAttribute("error", "El usuario ya existe.");
+                return "user/user-form";
+            }
+
+            Long idByUsername = (existsByUsername) ? userService.findByUsername(username).get().getId() : id;
+            Long idByEmail = (existsByEmail) ? userService.findByEmail(email).get().getId() : id;
+
+            // Si el usuario ya existe, pero se cambió su nombre de usuario o su correo a otra que ya existía...
+            if (userExist && ((existsByUsername && (idByUsername != id)) || (existsByEmail && (idByEmail != id)))) {
+                model.addAttribute("error", "El nombre de usuario o el correo ya está en uso.");
+                return "user/user-form";
+            }
+
+            String oldPasswd = (userExist) ? userService.findById(id).get().getPassword() : null;
+            String newPasswd = user.getPassword();
+
+            // Permite cambiar contraseña
+            if (!stringIsEmpty(newPasswd)) user.setPassword(passwordEncoder.encode(newPasswd)); // Cambia contraseña
+            else if (!stringIsEmpty(oldPasswd)) user.setPassword(oldPasswd); // Mantiene contraseña actual
+            else user.setPassword("$2a$10$dsQX4tLUoI9qFpRXhdRYcOpM1ORFAU60Jtr/WSn.g0mY6ADvZsa5q"); // por defecto
+
+            userService.save(user);
+
+            return "redirect:/users";
         }
-
-        Long idByUsername = (existsByUsername) ? userService.findByUsername(username).get().getId() : id;
-        Long idByEmail = (existsByEmail) ? userService.findByEmail(email).get().getId() : id;
-
-        // Si el usuario ya existe, pero se cambió su nombre de usuario o su correo a otra que ya existía...
-        if (userExist && ( (existsByUsername && (idByUsername != id)) || (existsByEmail && (idByEmail != id)) )) {
-            model.addAttribute("error", "El nombre de usuario o el correo ya está en uso.");
-            return "user/user-form";
-        }
-
-        String oldPasswd = (userExist) ? userService.findById(id).get().getPassword() : null;
-        String newPasswd = user.getPassword();
-
-        // Permite cambiar contraseña
-        if (!stringIsEmpty(newPasswd)) user.setPassword(passwordEncoder.encode(newPasswd)); // Cambia contraseña
-        else if (!stringIsEmpty(oldPasswd)) user.setPassword(oldPasswd); // Mantiene contraseña actual
-        else user.setPassword("$2a$10$dsQX4tLUoI9qFpRXhdRYcOpM1ORFAU60Jtr/WSn.g0mY6ADvZsa5q"); // por defecto
-
-        userService.save(user);
-
-        return "redirect:/users";
     }
 
     /**

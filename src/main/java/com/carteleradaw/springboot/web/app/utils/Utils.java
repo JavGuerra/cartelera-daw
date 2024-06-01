@@ -53,7 +53,6 @@ public abstract class Utils {
     public static String FormatDate(LocalDate inputDate) {
         DateTimeFormatter outputFormat =
                 DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", Locale.getDefault());
-        // Formatear la fecha de entrada al formato deseado
         return inputDate.format(outputFormat);
     }
 

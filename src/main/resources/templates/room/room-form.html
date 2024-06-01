@@ -41,6 +41,7 @@
 <!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
                         <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
                     </select>
+                    <div class="text-danger" th:if="${#fields.hasErrors('cinema')}" th:errors="*{cinema}"></div>
                 </div>
 
                 <div class="mb-3" th:if="${room.id} == null">
@@ -62,6 +63,7 @@
                 <div class="mb-4">
                     <label for="roomNumber" class="form-label">Número de sala *</label>
                     <input type="number" class="form-control" id="roomNumber" th:field="*{roomNumber}" min="1" pattern="^(\d{1,2})?$" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></div>
                 </div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -123,6 +125,7 @@
                 <div class="mb-4">
                     <label for="capacity" class="form-label">Aforo</label>
                     <input type="number" class="form-control" id="capacity" min="1" pattern="^(\d{1,4})?$" th:field="*{capacity}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
                 </div>
 
                 <div class="mt-5">

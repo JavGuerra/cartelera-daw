@@ -1,14 +1,17 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -156,12 +159,17 @@ public class RoomController {
     /**
      * Guarda la sala obtenida desde el formulario.
      * @param room Dirección.
+     * @param result estado de la validación.
      * @return Plantilla rooms.
      */
     @PostMapping("")
-    public String saveForm(@ModelAttribute Room room) {
-        roomService.save(room);
-        return "redirect:/rooms";
+    public String saveForm(@Valid @ModelAttribute Room room, BindingResult result) {
+        if (result.hasErrors()) {
+            return "room/room-form";
+        } else {
+            roomService.save(room);
+            return "redirect:/rooms";
+        }
     }
 
     /**

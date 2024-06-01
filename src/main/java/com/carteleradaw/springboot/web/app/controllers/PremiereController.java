@@ -46,7 +46,8 @@ public class PremiereController {
      * @return Plantilla index.
      */
     @PostMapping("/setCity")
-    public String setSelectedCity(@RequestParam("cities") String selectedCity, @RequestParam(value = "returnUrl", required = false) String returnUrl) {
+    public String setSelectedCity(@RequestParam("cities") String selectedCity,
+                                  @RequestParam(value = "returnUrl", required = false) String returnUrl) {
         globalStateService.setSelectedCity(selectedCity);
         if (!stringIsEmpty(returnUrl)) {
             return "redirect:" + returnUrl;

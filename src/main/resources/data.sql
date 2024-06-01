@@ -45,6 +45,8 @@ INSERT INTO `cinema` (`id`, `active`, `image`, `cif`, `email`, `facebook`, `inst
 
 -- --------------------------------------------------------
 
+ALTER TABLE `film` MODIFY COLUMN `synopsis` VARCHAR(1000);
+
 --
 -- Volcado de datos para la tabla `film`
 --
