@@ -30,6 +30,7 @@
                         <th scope="col">Ciudad</th>
                         <th scope="col">Web</th>
                         <th scope="col">Teléfono</th>
+                        <th sec:authorize="isAuthenticated()" scope="col">Activo</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -39,13 +40,20 @@
                             <a class="btn btn-sm btn-light cartelera-btn" th:text="${cinema.name}"
                                role="button" th:href="@{/rooms/cinema/{id}(id=${cinema.id})}"></a>
                         </td>
+
                         <td th:text="${#lists.size(cinema.rooms)}"></td>
+
                         <td th:text="${cinema.address.city}"></td>
+
                         <td>
                             <a th:if="${cinema.url} != ''" class="btn btn-sm btn-light cartelera-btn"
                                role="button" th:href="@{${cinema.url}}" target="_blank">Visitar</a>
                         </td>
+
                         <td th:text="${cinema.phone}"></td>
+
+                        <td sec:authorize="isAuthenticated()" th:if="${cinema.active == true}">Sí</td>
+                        <td sec:authorize="isAuthenticated()" th:if="${cinema.active != true}">No</td>
 
                         <td>
                             <a class="btn btn-sm btn-outline-primary" title="Ver cine"

@@ -1,12 +1,16 @@
 package com.carteleradaw.springboot.web.app.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+
+import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,18 +26,24 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String image;
 
+    @NotEmpty(message = "Debe ingresar un nombre.")
     private String name;
 
+    @NotEmpty(message = "Debe ingresar los apellidos.")
     private String surname;
 
+    @NotEmpty(message = "Debe ingresar un nombre de usuario.")
     @Column(unique = true, nullable = false)
     private String username;
 
+    @NotEmpty(message = "Debe ingresar un correo.")
     @Column(unique = true, nullable = false)
     private String email;
 
+    @NotEmpty(message = "Debe ingresar una contraseña.")
     @Column(nullable = false)
     private String password;
 

@@ -12,6 +12,11 @@ import java.util.Optional;
 
 public abstract class Utils {
 
+    public static final String POSTAL_CODE_PATTERN = "^(\\d{5})?$";
+    public static final String CIF_PATTERN = "^[a-zA-Z][0-9]{7}[a-zA-Z]$";
+    public static final String URL_PATTERN = "^((https?|ftp)://(www\\.)?[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+(:[0-9]+)?(/.*)?)?$";
+    public static final String PHONE_PATTERN = "^((\\+[0-9]{1,3}(\\s)?)?[0-9]{1,14})?$";
+
     /**
      * Comprueba si la cadena introducida es válida.
      * @param str cadena.

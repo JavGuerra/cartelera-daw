@@ -27,26 +27,32 @@
             <form th:if="${error} == null" th:action="@{/users}" method="POST" th:object="${user}">
                 <input type="hidden" id="id" name="id" th:field="*{id}" />
                 <img th:if="${error} != null" class="mb-4" th:src="*{image}" th:alt="|*{name} *{surname}|">
+
                 <div class="mb-4">
-                    <label for="image" class="form-label">Imagen</label>
-                    <input type="text" class="form-control" id="image" th:field="*{image}" />
+                    <label for="image" class="form-label">Foto</label>
+                    <input type="url" class="form-control" id="image" th:field="*{image}" />
                 </div>
+
                 <div class="mb-4">
                     <label for="name" class="form-label">Nombre *</label>
                     <input type="text" class="form-control" id="name" th:field="*{name}" required />
                 </div>
+
                 <div class="mb-4">
                     <label for="surname" class="form-label">Apellidos *</label>
                     <input type="text" class="form-control" id="surname" th:field="*{surname}" required />
                 </div>
+
                 <div class="mb-4">
                     <label for="username" class="form-label">Usuario *</label>
                     <input type="text" class="form-control" id="username" th:field="*{username}" required />
                 </div>
+
                 <div class="mb-4">
                     <label for="email" class="form-label">Correo *</label>
                     <input type="email" class="form-control" id="email" th:field="*{email}" required />
                 </div>
+
                 <div class="mb-4">
                     <label th:if="${user.id}" for="password" class="form-label">Cambiar contraseña (no obligatorio)</label>
                     <label th:unless="${user.id}" for="password" class="form-label">Contraseña *</label>

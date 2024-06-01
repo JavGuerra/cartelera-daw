@@ -10,6 +10,10 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.CIF_PATTERN;
+import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
+import static com.carteleradaw.springboot.web.app.utils.Utils.PHONE_PATTERN;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,44 +22,42 @@ import java.util.Set;
 @Entity
 public class Cinema {
 
-    private final String cifRegExp = "^[a-zA-Z][0-9]{7}[a-zA-Z]$";
-    private final String urlRegExp = "^((https?|ftp)://(www\\.)?[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+(:[0-9]+)?(/.*)?)?$";
-    private final String phoneRegExp ="^((\\+[0-9]{1,3}(\\s)?)?[0-9]{1,14})?$";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Pattern(regexp = cifRegExp, message = "Debe ingresar un CIF válido (a1234567Z).")
+    @Pattern(regexp = CIF_PATTERN, message = "Debe ingresar un CIF válido (a1234567Z).")
     @Column(unique = true, nullable = false)
     private String cif;
+
+    private Boolean active;
 
     @NotEmpty(message = "Debe ingresar un nombre.")
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String image;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String url;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String twitter;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String linkedIn;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String facebook;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String instagram;
 
     @Email(message = "Formato de Email no válido.")
     private String email;
 
-    @Pattern(regexp = phoneRegExp, message = "Formato de teléfono internacional no válido.")
+    @Pattern(regexp = PHONE_PATTERN, message = "Formato de teléfono internacional no válido.")
     private String phone;
 
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)

@@ -44,6 +44,13 @@
                     </li>
                 </ul>
 
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" sec:authorize="isAuthenticated()">
+                        <span th:if="${cinema.active}" class="badge text-bg-success">Disponible</span>
+                        <span th:if="${cinema.active} == false" class="badge text-bg-danger">No disponible</span>
+                    </li>
+                </ul>
+
                 <div class="card-footer">
                     <a class="btn btn-outline-primary" title="Ver cines"
                        th:href="@{/cinemas}" role="button">Cines</a>

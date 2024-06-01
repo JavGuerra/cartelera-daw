@@ -9,6 +9,8 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,8 +18,6 @@ import java.util.Set;
 @Builder
 @Entity
 public class Film {
-
-    private final String urlRegExp = "^((https?|ftp)://(www\\.)?[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+(:[0-9]+)?(/.*)?)?$";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,13 +60,16 @@ public class Film {
     @ElementCollection
     private Set<Gender> genders = new HashSet<>();
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String trailer;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String poster;
 
     private String synopsis;
+
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
+    private String review;
 
     @OneToMany(mappedBy = "film", fetch = FetchType.EAGER)
     private Set<Room> rooms = new HashSet<>();

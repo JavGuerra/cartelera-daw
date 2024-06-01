@@ -2,6 +2,7 @@ package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
+import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
@@ -64,9 +65,22 @@ public class CinemaServiceImpl implements ICinemaService {
         Address address = cinema.getAddress();
         if(!invalidPosNumber(address.getId()) && addressRepo.existsById(address.getId()))
             addressRepo.save(address);
+
+        if (cinema.getActive()) {
+            if (existsById(cinema.getId())) {
+                if (roomRepo.findAllByCinema_Id(cinema.getId()).isEmpty()) {
+                    cinema.setActive(false);
+                }
+            } else {
+                cinema.setActive(false);
+            }
+        }
+
         Cinema newCinema = cinemaRepo.save(cinema);
+
         globalStateService.setSelectedCity(address.getCity());
         globalStateService.updateCitiesNames();
+
         return newCinema;
     }
 

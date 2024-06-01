@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.POSTAL_CODE_PATTERN;
+import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -13,16 +16,13 @@ import lombok.*;
 @Entity
 public class Address {
 
-    private final String postalCodeRegExp = "^(\\d{5})?$";
-    private final String urlRegExp = "^((https?|ftp)://(www\\.)?[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+(:[0-9]+)?(/.*)?)?$";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String street; // ( calle, número, escalera, piso )
 
-    @Pattern(regexp = postalCodeRegExp, message = "Debe ingresar exactamente 5 dígitos o dejar el campo vacío.")
+    @Pattern(regexp = POSTAL_CODE_PATTERN, message = "Debe ingresar exactamente 5 dígitos o dejar el campo vacío.")
     @Column(length = 5)
     private String postalCode;
 
@@ -31,7 +31,7 @@ public class Address {
 
     private String country;
 
-    @Pattern(regexp = urlRegExp, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String map;
 
     @Override

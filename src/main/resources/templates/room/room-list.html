@@ -20,6 +20,7 @@
         <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms)}">
             Actualmente no hay ninguna sala para mostrar.
         </div>
+
         <div class="col mt-3" th:if="${#lists.size(rooms) > 0}">
             <table class="table table-hover">
                 <thead>
@@ -40,23 +41,32 @@
                         <a class="btn btn-sm btn-light cartelera-btn" th:text="${room.film}"
                            role="button" th:href="@{/rooms/film/{id}(id=${room.film.id})}"></a>
                     </td>
+
                     <td th:if="${room.film == null}">---</td>
+
                     <td th:text="${room.film?.classification?: '---'}"></td>
+
                     <td th:if="${room.film!= null}">
                         <p th:if="${room.film.rating!= null}"><span th:text="${room.film?.rating?: ''}">0</span>/5
                             <span th:text="${'⭐' * room.film.rating.intValue()}"></span></p>
                         <p th:if="${room.film.rating == null}">---</p>
                     </td>
+
                     <td th:if="${room.film == null}">---</td>
+
                     <td>
                         <a class="btn btn-sm btn-light cartelera-btn" th:text="${room.cinema.name}"
                            role="button" th:href="@{/cinemas/{id}(id=${room.cinema.id})}"></a>
                     </td>
+
                     <td th:text="${room.roomNumber}"></td>
+
                     <td sec:authorize="isAuthenticated()" th:if="${room.active == true}">Sí</td>
                     <td sec:authorize="isAuthenticated()" th:if="${room.active != true}">No</td>
+
                     <td sec:authorize="isAuthenticated()" th:if="${room.film == null}">---</td>
                     <td sec:authorize="isAuthenticated()" th:if="${room.film != null}" th:text="${room.getPremiereFormated}"></td>
+
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver sala"
                            th:href="@{/rooms/{id}(id=${room.id})}" role="button">Ver</a>

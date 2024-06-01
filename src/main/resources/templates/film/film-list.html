@@ -39,13 +39,18 @@
                         <a class="btn btn-sm btn-light cartelera-btn" th:text="${film}"
                            role="button" th:href="@{/rooms/film/{id}(id=${film.id})}"></a>
                     </td>
+
                     <td th:text="${film.duration}"></td>
+
                     <td th:text="${film.classification}"></td>
+
                     <td th:text="${film.company}"></td>
-                        <td sec:authorize="isAuthenticated()"
-                            th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}">Sí</td>
-                        <td sec:authorize="isAuthenticated()"
-                            th:if="${#lists.isEmpty(film.rooms) and selectedCity == ''}">No</td>
+
+                    <td sec:authorize="isAuthenticated()"
+                        th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}">Sí</td>
+                    <td sec:authorize="isAuthenticated()"
+                        th:if="${#lists.isEmpty(film.rooms) and selectedCity == ''}">No</td>
+
                     <td>
                         <a class="btn btn-sm btn-outline-primary" title="Ver película"
                            th:href="@{/films/{id}(id=${film.id})}" role="button">Ver</a>

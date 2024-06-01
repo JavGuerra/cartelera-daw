@@ -49,6 +49,11 @@
                 </div>
 
                 <div class="mb-4">
+                    <label for="review" class="form-label">Reseña</label>
+                    <input type="url" class="form-control" id="review" th:field="*{review}">
+                </div>
+
+                <div class="mb-4">
                     <label for="duration" class="form-label">Duración</label>
                     <input type="number" class="form-control" id="duration" th:field="*{duration}" min="1" pattern="^(\d+)?$">
                 </div>
