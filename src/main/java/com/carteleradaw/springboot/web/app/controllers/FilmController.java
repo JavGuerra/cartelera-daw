@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -79,6 +81,7 @@ public class FilmController {
         model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("film", new Film());
+        model.addAttribute("ratings", Arrays.asList(1, 2, 3, 4, 5));
         model.addAttribute("returnUrl", "films");
         return "film/film-form";
     }
@@ -97,6 +100,7 @@ public class FilmController {
             model.addAttribute("cities", citiesNames);
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("film", filmService.findById(id).get());
+            model.addAttribute("ratings", Arrays.asList(1, 2, 3, 4, 5));
             model.addAttribute("returnUrl", "films");
         } else model.addAttribute("error", "Película no encontrada.");
         return "film/film-form";

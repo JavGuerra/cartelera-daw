@@ -5,6 +5,8 @@ import com.carteleradaw.springboot.web.app.entities.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,4 +85,12 @@ public interface IRoomService {
      * @param id Identificador.
      */
     void deleteById(Long id);
+
+    /**
+     * Genera una lista de horarios con una hora de inicio y un intervalo-
+     * @param startTime La hora de comienzo de emisiones.
+     * @param interval El intervalo entre emisiones.
+     * @return Listado de horas.
+     */
+    List<LocalTime> generateSchedulesList(String startTime, long interval);
 }

@@ -1,15 +1,15 @@
 package com.carteleradaw.springboot.web.app.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.FormatDate;
 
@@ -26,8 +26,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Min(value = 1, message = "El valor debe ser mayor o igual a 1")
+    @Digits(integer = 2, fraction = 0, message = "Solo se permiten números enteros")
     private Byte roomNumber; // Único, pero para cada cine.
 
+    @Min(value = 1, message = "El valor debe ser mayor o igual a 1")
+    @Digits(integer = 4, fraction = 0, message = "Solo se permiten números enteros")
     private Integer capacity;
 
     private Boolean active;
@@ -37,7 +41,8 @@ public class Room {
 
     @ElementCollection
     @ToString.Exclude
-    private Set<LocalTime> schedules = new HashSet<>();
+    private List<LocalTime> schedules = new ArrayList<>();
+    //private Set<LocalTime> schedules = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "film_id")

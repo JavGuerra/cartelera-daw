@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +29,9 @@ public class RoomController {
     private final IRoomService roomService;
     private final ICinemaService cinemaService;
     private final IFilmService filmService;
+
+    private final String startTime = "08:00";
+    private final Long interval = 120L;
 
     /**
      * Lista todas las salas.
@@ -107,6 +113,7 @@ public class RoomController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
+        List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         Byte nextRoomNumber = roomService.getNextRoomNumber();
@@ -116,6 +123,7 @@ public class RoomController {
         model.addAttribute("nextRoomNumber", String.valueOf(nextRoomNumber));
         model.addAttribute("cinemas", cinemaService.findAll());
         model.addAttribute("films", filmService.findAll());
+        model.addAttribute("schedulesList", schedulesList);
         model.addAttribute("returnUrl", "rooms");
         return "room/room-form";
     }
@@ -129,15 +137,17 @@ public class RoomController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && roomService.existsById(id)) {
+            List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
             Set<String> citiesNames = globalStateService.getCitiesNames();
             String selectedCity = globalStateService.getSelectedCity();
             Room room = roomService.findById(id).get();
-            model.addAttribute("room", room);
             Long cinemaId = room.getCinema().getId();
+            model.addAttribute("room", room);
             model.addAttribute("cities", citiesNames);
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("cinemas", cinemaService.findById(cinemaId).get());
             model.addAttribute("films", filmService.findAll());
+            model.addAttribute("schedulesList", schedulesList);
             model.addAttribute("returnUrl", "rooms");
         } else model.addAttribute("error", "Sala no encontrada.");
         return "room/room-form";

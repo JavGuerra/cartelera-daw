@@ -34,6 +34,7 @@
                 <a type="button" class="btn btn-primary" th:href="@{/rooms}">Volver</a>
             </div>
             <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}">
+
                 <div class="mb-3">
                     <label class="form-label"><span th:if="${room.id}">Cine</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
                     <select aria-label="Cinemas" class="form-select"  th:field="*{cinema}" th:required="required" th:readonly="${room.id}">
@@ -54,13 +55,13 @@
 
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    var nextRoomNumber = /*[[${nextRoomNumber}]]*/; // Declara 'nextId' aquí para que esté disponible en el contexto global
+                    var nextRoomNumber = /*[[${nextRoomNumber}]]*/; // Declara 'nextRoomNumber' aquí para que esté disponible en el contexto global
                     /*]]>*/
                 </script>
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
                 <div class="mb-4">
                     <label for="roomNumber" class="form-label">Número de sala *</label>
-                    <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}" required>
+                    <input type="number" class="form-control" id="roomNumber" th:field="*{roomNumber}" min="1" pattern="^(\d{1,2})?$" required>
                 </div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -112,20 +113,16 @@
                 <div class="mb-3">
                     <label class="form-label">Horarios</label>
                     <select class="form-select" th:field="*{schedules}" multiple aria-label="multiple select example">
-                        <option value="" selected>Selecione las horas de pase de la película</option>
-                        <option value="16:00">16:00</option>
-                        <option value="16:30">16:30</option>
-                        <option value="18:00">18:00</option>
-                        <option value="18:30">18:30</option>
-                        <option value="20:00">20:00</option>
-                        <option value="20:30">20:30</option>
-                        <option value="22:00">22:00</option>
-                        <option value="22:30">22:30</option>
+                        <option value="" selected>Selecionar los pases de la película</option>
+                        <th:block th:each="hour : ${schedulesList}">
+                            <option th:value="${hour}" th:text="${hour}"></option>
+                        </th:block>
                     </select>
                 </div>
+
                 <div class="mb-4">
                     <label for="capacity" class="form-label">Aforo</label>
-                    <input type="text" class="form-control" id="capacity" th:field="*{capacity}">
+                    <input type="number" class="form-control" id="capacity" min="1" pattern="^(\d{1,4})?$" th:field="*{capacity}">
                 </div>
 
                 <div class="mt-5">

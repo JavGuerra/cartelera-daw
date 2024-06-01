@@ -7,8 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
@@ -124,7 +125,7 @@ public class RoomServiceImpl implements IRoomService {
         if (room.getFilm() == null) {
             room.setActive(false);
             room.setPremiere(null);
-            room.setSchedules(new HashSet<>());
+            room.setSchedules(new ArrayList<>());
         }
         return roomRepo.save(room);
     }
@@ -138,5 +139,21 @@ public class RoomServiceImpl implements IRoomService {
         room.setCinema(null);
         room.setFilm(null);
         roomRepo.deleteById(id);
+    }
+
+    public List<LocalTime> generateSchedulesList(String startTime, long interval) {
+        List<LocalTime> scheduleList = new ArrayList<>();
+
+        LocalTime schedule = LocalTime.parse(startTime);
+        long timeRemaining = ChronoUnit.MINUTES.between(schedule, LocalTime.MAX);
+        LocalTime lastSchedule = schedule.plusMinutes((timeRemaining / interval) * interval);
+
+        scheduleList.add(schedule);
+        while (schedule.isBefore(lastSchedule)) {
+            schedule = schedule.plusMinutes(interval);
+            scheduleList.add(schedule);
+        }
+
+        return scheduleList;
     }
 }

@@ -27,57 +27,69 @@
             <form th:if="${error} == null" th:action="@{/films}" method="POST" th:object="${film}">
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
                 <img class="mb-4" th:src="*{poster}" th:alt="*{title}"/>
+
                 <div class="mb-4">
                     <label for="poster" class="form-label">Poster *</label>
-                    <input type="text" class="form-control" id="poster" th:field="*{poster}" required>
+                    <input type="url" class="form-control" id="poster" th:field="*{poster}" required>
                 </div>
+
                 <div class="mb-4">
                     <label for="title" class="form-label">Título *</label>
                     <input type="text" class="form-control" id="title" th:field="*{title}" required>
                 </div>
+
                 <div class="mb-4">
                     <label for="year" class="form-label">Año *</label>
-                    <input type="text" class="form-control" id="year" th:field="*{year}" required>
+                    <input type="number" class="form-control" id="year" th:field="*{year}" min="1900" pattern="^\d{4}$" required>
                 </div>
+
                 <div class="mb-4">
                     <label for="synopsis" class="form-label">Sinopsis *</label>
                     <textarea rows = "5" cols = "60" class="form-control" id="synopsis" th:field="*{synopsis}" required></textarea>
                 </div>
+
                 <div class="mb-4">
                     <label for="duration" class="form-label">Duración</label>
-                    <input type="text" class="form-control" id="duration" th:field="*{duration}">
+                    <input type="number" class="form-control" id="duration" th:field="*{duration}" min="1" pattern="^(\d+)?$">
                 </div>
+
                 <div class="mb-4">
                     <label for="country" class="form-label">País</label>
                     <input type="text" class="form-control" id="country" th:field="*{country}">
                 </div>
+
                 <div class="mb-4">
                     <label for="company" class="form-label">Compañía</label>
                     <input type="text" class="form-control" id="company" th:field="*{company}">
                 </div>
+
                 <div class="mb-4">
                     <label for="trailer" class="form-label">Tráiler</label>
-                    <input type="text" class="form-control" id="trailer" th:field="*{trailer}">
+                    <input type="url" class="form-control" id="trailer" th:field="*{trailer}">
                 </div>
 
                 <div class="mb-4">
-                    <label for="director" class="form-label">Director</label>
+                    <label for="director" class="form-label">Director(es)</label>
                     <input type="text" class="form-control" id="director" th:field="*{director}">
                 </div>
+
                 <div class="mb-4">
-                    <label for="actor" class="form-label">Actor</label>
+                    <label for="actor" class="form-label">Actor(es)</label>
                     <input type="text" class="form-control" id="actor" th:field="*{actor}">
                 </div>
+
                 <div class="mb-4">
-                    <label for="music" class="form-label">Música</label>
+                    <label for="music" class="form-label">Compositor(es)</label>
                     <input type="text" class="form-control" id="music" th:field="*{music}">
                 </div>
+
                 <div class="mb-4">
-                    <label for="photography" class="form-label">Fotografía</label>
+                    <label for="photography" class="form-label">Fotografo(s)</label>
                     <input type="text" class="form-control" id="photography" th:field="*{photography}">
                 </div>
+
                 <div class="mb-4">
-                    <label for="script" class="form-label">Guión</label>
+                    <label for="script" class="form-label">Gionista(s)</label>
                     <input type="text" class="form-control" id="script" th:field="*{script}">
                 </div>
 
@@ -89,50 +101,23 @@
                     </select>
                 </div>
 
-                <label class="form-label">Clasificación</label>
-                <div class="form-inline d-flex justify-content-evenly mb-4">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="opt1" name="opt1" class="custom-control-input" value="ALL_AGES" th:field="*{classification}">
-                        <label class="custom-control-label" for="opt1">TP</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="opt2" name="opt2" class="custom-control-input" value="OLDER7" th:field="*{classification}">
-                        <label class="custom-control-label" for="opt2">+7</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="opt3" name="opt3" class="custom-control-input" value="OLDER12" th:field="*{classification}">
-                        <label class="custom-control-label" for="opt3">+12</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="opt4" name="opt4" class="custom-control-input" value="OLDER16" th:field="*{classification}">
-                        <label class="custom-control-label" for="opt4">+16</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="opt5" name="opt5" class="custom-control-input" value="OLDER18" th:field="*{classification}">
-                        <label class="custom-control-label" for="opt5">+18</label>
+                <div class="mb-4">
+                    <label class="form-label">Clasificación</label>
+                    <div class="form-inline d-flex justify-content-evenly">
+                        <div th:each="classification : ${T(com.carteleradaw.springboot.web.app.entities.enums.Classification).values()}"
+                             class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" th:value="${classification.name()}" id="${'opt'+classification.ordinal()}"
+                                   name="classification" class="custom-control-input" th:field="*{classification}">
+                            <label class="custom-control-label" for="${'opt'+classification.ordinal()}" th:text="${classification}"></label>
+                        </div>
                     </div>
                 </div>
+
                 <label class="form-label">Valoración</label>
                 <div class="form-inline d-flex justify-content-evenly mb-4">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="option1" name="option1" class="custom-control-input" value="1" th:field="*{rating}">
-                        <label class="custom-control-label" for="option1">1</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="option2" name="option2" class="custom-control-input" value="2" th:field="*{rating}">
-                        <label class="custom-control-label" for="option2">2</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="option3" name="option3" class="custom-control-input" value="3" th:field="*{rating}">
-                        <label class="custom-control-label" for="option3">3</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="option4" name="option4" class="custom-control-input" value="4" th:field="*{rating}">
-                        <label class="custom-control-label" for="option4">4</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="option5" name="option5" class="custom-control-input" value="5" th:field="*{rating}">
-                        <label class="custom-control-label" for="option5">5</label>
+                    <div th:each="rating, stat : ${ratings}" class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" th:value="${rating}" id="option${stat.index + 1}" name="options" class="custom-control-input" th:field="*{rating}">
+                        <label class="custom-control-label" for="option${stat.index + 1}" th:text="${rating}"></label>
                     </div>
                 </div>
 

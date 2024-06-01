@@ -30,66 +30,87 @@
 
                 <div class="mb-4">
                     <label for="cif" class="form-label">CIF *</label>
-                    <input type="text" class="form-control" id="cif" th:field="*{cif}" required>
+                    <input type="text" class="form-control" id="cif" th:field="*{cif}"
+                           pattern="^[a-zA-Z][0-9]{7}[a-zA-Z]$" required>
                 </div>
+
                 <div class="mb-4">
                     <label for="name" class="form-label">Nombre *</label>
                     <input type="text" class="form-control" id="name" th:field="*{name}" required>
                 </div>
+
                 <div class="mb-4">
                     <label for="image" class="form-label">Imagen</label>
-                    <input type="text" class="form-control" id="image" th:field="*{image}">
+                    <input type="url" class="form-control" id="image" th:field="*{image}">
                 </div>
+
                 <div class="mb-4">
                     <label for="url" class="form-label">Url</label>
-                    <input type="text" class="form-control" id="url" th:field="*{url}">
+                    <input type="url" class="form-control" id="url" th:field="*{url}">
                 </div>
+
                 <div class="mb-4">
                     <label for="twitter" class="form-label">Twitter</label>
-                    <input type="text" class="form-control" id="twitter" th:field="*{twitter}">
+                    <input type="url" class="form-control" id="twitter" th:field="*{twitter}">
                 </div>
+
                 <div class="mb-4">
                     <label for="linkedIn" class="form-label">LinkedIn</label>
-                    <input type="text" class="form-control" id="linkedIn" th:field="*{linkedIn}">
+                    <input type="url" class="form-control" id="linkedIn" th:field="*{linkedIn}">
                 </div>
+
                 <div class="mb-4">
                     <label for="facebook" class="form-label">Facebook</label>
-                    <input type="text" class="form-control" id="facebook" th:field="*{facebook}">
+                    <input type="url" class="form-control" id="facebook" th:field="*{facebook}">
                 </div>
+
                 <div class="mb-4">
                     <label for="instagram" class="form-label">Instagram</label>
-                    <input type="text" class="form-control" id="instagram" th:field="*{instagram}">
+                    <input type="url" class="form-control" id="instagram" th:field="*{instagram}">
                 </div>
+
                 <div class="mb-4">
                     <label for="email" class="form-label">Correo</label>
-                    <input type="text" class="form-control" id="email" th:field="*{email}">
+                    <input type="email" class="form-control" id="email" th:field="*{email}">
                 </div>
+
                 <div class="mb-4">
                     <label for="phone" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="phone" th:field="*{phone}">
+                    <input type="tel" class="form-control" id="phone" th:field="*{phone}"
+                           pattern="^((\+[0-9]{1,3}(\s)?)?[0-9]{1,14})?$">
                 </div>
+
+                <h2>Ubicación:</h2>
 
                 <input type="hidden" id="address.id" name="address.id" th:field="*{address.id}"/>
 
                 <div class="mb-4">
-                    <label for="street" class="form-label">Dirección *</label>
-                    <input type="text" class="form-control" id="street" th:field="*{address.street}" required>
+                    <label for="street" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="street" th:field="*{address.street}">
                 </div>
+
                 <div class="mb-4">
-                    <label for="postalCode" class="form-label">Código Postal *</label>
-                    <input type="text" class="form-control" id="postalCode" th:field="*{address.postalCode}" maxlength="6" required>
+                    <label for="postalCode" class="form-label">Código Postal</label>
+                    <input type="text" class="form-control" id="postalCode" th:field="*{address.postalCode}"
+                           pattern="^(\d{5})?$">
                 </div>
-                <div class="mb-4">
+
+                <div class="form-group mb-4">
                     <label for="city" class="form-label">Ciudad *</label>
-                    <input type="text" class="form-control" id="city" th:field="*{address.city}" required>
+                    <input type="text" list="addressCities" class="form-control" id="city" th:field="*{address.city}" required>
+                    <datalist id="addressCities">
+                        <option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>
+                    </datalist>
                 </div>
+
                 <div class="mb-4">
-                    <label for="country" class="form-label">País *</label>
-                    <input type="text" class="form-control" id="country" th:field="*{address.country}" required>
+                    <label for="country" class="form-label">País</label>
+                    <input type="text" class="form-control" id="country" th:field="*{address.country}">
                 </div>
+
                 <div class="mb-4">
                     <label for="map" class="form-label">Mapa</label>
-                    <input type="text" class="form-control" id="map" th:field="*{address.map}">
+                    <input type="url" class="form-control" id="map" th:field="*{address.map}">
                 </div>
 
                 <a class="btn btn-outline-primary" th:href="@{/cinemas}">Cancelar</a>

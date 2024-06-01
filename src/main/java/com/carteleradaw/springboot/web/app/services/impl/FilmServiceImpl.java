@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.FilmRepository;
@@ -10,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,7 +79,7 @@ public class FilmServiceImpl implements IFilmService {
         for (Room room : rooms) {
             room.setFilm(null);
             room.setPremiere(null);
-            room.setSchedules(new HashSet<>());
+            room.setSchedules(new ArrayList<>());
             room.setActive(false);
         }
 
