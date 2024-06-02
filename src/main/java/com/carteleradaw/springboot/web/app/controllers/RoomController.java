@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
@@ -14,9 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

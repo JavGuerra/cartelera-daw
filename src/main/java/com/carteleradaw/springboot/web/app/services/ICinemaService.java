@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.services;
 
-import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 
 import java.util.List;

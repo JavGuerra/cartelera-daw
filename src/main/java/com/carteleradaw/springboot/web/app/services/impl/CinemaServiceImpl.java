@@ -2,7 +2,6 @@ package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
-import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;

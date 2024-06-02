@@ -1,7 +1,6 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
-import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;

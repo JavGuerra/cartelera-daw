@@ -1,7 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap');
 
+body {
+    min-height: 100vh;
+    background: url("/img/fondo.jpg") center/cover no-repeat fixed;
+}
+
 #navbarTop {
-    background-color: #FFFFE0;
+    background: linear-gradient(to bottom, moccasin, rgba(255, 255, 255, 0.8));
+}
+
+footer {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 10%, moccasin 90%);
+}
+
+#copyright {
+    background: linear-gradient(to bottom, Tan 10%, moccasin 90%);
+}
+
+.myContainer {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 0.5em 3em 3em;
+    border-radius: 20px;
 }
 
 #myForm {

@@ -1,11 +1,7 @@
 package com.carteleradaw.springboot.web.app.services;
 
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;

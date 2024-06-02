@@ -1,10 +1,8 @@
 package com.carteleradaw.springboot.web.app.repositories;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
