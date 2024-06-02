@@ -12,7 +12,7 @@
 <body>
 <div th:replace="~{navbar :: navbar}"></div>
 
-<div class="container myContainer mt-5 text-left">
+<div class="container myContainer mt-5 shadow text-left">
 
     <div class="row mt-5">
         <h1 class="cartelera-h1">Listado de películas</h1>
@@ -74,7 +74,7 @@
     <div class="text-center mt-4">
         <a class="btn btn-outline-primary" th:href="@{/films/create}"
            sec:authorize="isAuthenticated()" role="button">Crear nueva película</a>
-        <a class="btn btn-outline-success" th:href="@{/}" role="button">Portada</a>
+        <a class="btn btn-outline-success" th:href="@{/}" role="button">Estrenos</a>
     </div>
 </div>
 

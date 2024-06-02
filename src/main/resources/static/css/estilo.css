@@ -9,6 +9,10 @@ body {
     background: linear-gradient(to bottom, moccasin, rgba(255, 255, 255, 0.8));
 }
 
+.title-size {
+    font-size: 1.2em;
+}
+
 footer {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 10%, moccasin 90%);
 }

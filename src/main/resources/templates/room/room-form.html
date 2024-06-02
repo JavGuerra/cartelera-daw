@@ -12,7 +12,7 @@
 <body>
 <div th:replace="~{navbar :: navbar}"></div>
 
-<div class="container myContainer mt-5 text-center">
+<div class="container myContainer mt-5 shadow text-center">
 
     <div class="row mt-5">
         <h1 class="cartelera-h1" th:if="${room.id}">Modificar sala <span th:text="${room.roomNumber}"></span></h1>
@@ -36,7 +36,7 @@
             <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}">
 
                 <div class="mb-3">
-                    <label class="form-label"><span th:if="${room.id}">Cine</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
+                    <label class="form-label"><span th:if="${room.id}">Cine *</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
                     <select aria-label="Cinemas" class="form-select"  th:field="*{cinema}" th:required="required" th:readonly="${room.id}">
 <!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
                         <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
@@ -113,7 +113,7 @@
                 </script>
 
                 <div class="mb-3">
-                    <label class="form-label">Horarios</label>
+                    <label class="form-label">Horarios <small class="text-muted">(multiselección)</small></label>
                     <select class="form-select" th:field="*{schedules}" multiple aria-label="multiple select example">
                         <option value="" selected>Selecionar los pases de la película</option>
                         <th:block th:each="hour : ${schedulesList}">

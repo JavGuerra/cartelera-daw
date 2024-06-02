@@ -22,7 +22,7 @@ public class  SecurityConfig {
         return http
             .authorizeHttpRequests()
             .requestMatchers("/", "/favicon.ico", "/css/**", "/js/**", "/img/**", "/webjars/**",
-                    "/avisoLegal", "/politicaPrivacidad").permitAll()
+                    "/legal", "/privacity").permitAll()
 
             .requestMatchers(HttpMethod.GET,"/cinemas/create").authenticated()
             .requestMatchers(HttpMethod.GET,"/cinemas/{id}/edit").authenticated()
