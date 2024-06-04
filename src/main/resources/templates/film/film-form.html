@@ -106,10 +106,10 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="genders" class="form-label">Géneros <small class="text-muted">(multiselección)</small></label>
-                    <select name="genders" class="form-control" id="genders" th:field="*{genders}" multiple>
-                        <option th:each="gender : ${T(com.carteleradaw.springboot.web.app.entities.enums.Gender).values()}"
-                                th:value="${gender.name()}" th:text="${gender.toString()}"></option>
+                    <label for="genres" class="form-label">Géneros <small class="text-muted">(multiselección)</small></label>
+                    <select name="genres" class="form-control" id="genres" th:field="*{genres}" multiple>
+                        <option th:each="genre : ${T(com.carteleradaw.springboot.web.app.entities.enums.Genre).values()}"
+                                th:value="${genre.name()}" th:text="${genre.toString()}"></option>
                     </select>
                 </div>
 

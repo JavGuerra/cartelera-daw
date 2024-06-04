@@ -1,7 +1,7 @@
 package com.carteleradaw.springboot.web.app.entities;
 
 import com.carteleradaw.springboot.web.app.entities.enums.Classification;
-import com.carteleradaw.springboot.web.app.entities.enums.Gender;
+import com.carteleradaw.springboot.web.app.entities.enums.Genre;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -58,7 +58,7 @@ public class Film {
     private String actor;
 
     @ElementCollection
-    private Set<Gender> genders = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
 
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String trailer;

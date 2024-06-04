@@ -16,7 +16,8 @@ Además de los requisitos para el MVP, la app implementa:
 
 - Sprint Security para securización de rutas
 - Registro de Usuario
-- Refactorización de métodos
+- Validaciones de formularios
+- Automatizaciones
 - Documentación JavaDoc
 - Implementación de Logs
 
@@ -26,11 +27,11 @@ Tras clonar el repositorio, es necesario crear un usuario en la BBDD relacional 
 
 Cada vez que se inicia la aplicación, esta recarga los datos en la BBDD.
 
-Una vez iniciada la aplicación en local, se puede acceder a ella con la dirección: http://localhost:8082
+Una vez iniciada la aplicación en local, se puede acceder a ella con en dirección: http://localhost:8082
 
-Para hacer login, todos los usuarios registrados cuentan con la contraseña: **632541**
+El acceso al panel de administración requiere de un usuario y contraseña. Por defecto, la aplicación tiene un usuario «admin» y su contraseña es «admin».
 
-Ejemplo de nombres de usuario: dfuertes, mperez, rmartinez.
+ADVERTENCIA: Se recomienda encarecidamente que, tras el primer acceso, la contraseña de admin sea cambiada o se cree una nueva cuenta de usuario desde la que eliminar la cuenta «admin».
 
 ## Sobre el autor
 

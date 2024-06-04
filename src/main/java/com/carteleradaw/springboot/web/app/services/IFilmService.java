@@ -36,10 +36,10 @@ public interface IFilmService {
 
     /**
      * Obtiene la lista de películas con el género dado.
-     * @param gender el género.
+     * @param genre el género.
      * @return Lista de películas.
      */
-//     List<Film> findAllByGender(String gender);
+//     List<Film> findAllByGenre(String genre);
 
     /**
      * Guarda una película.

@@ -55,12 +55,12 @@ public class FilmServiceImpl implements IFilmService {
     }
 
 //    @Override
-//    public List<Film> findAllByGender(String gender) {
-//        log.info("findAllByGender {}", gender);
-//        if (stringIsEmpty(gender)) {
+//    public List<Film> findAllByGenre(String genre) {
+//        log.info("findAllByGenre {}", genre);
+//        if (stringIsEmpty(genre)) {
 //            return this.findAll();
 //        } else {
-//            return filmRepo.findByGenderInFilms(gender);
+//            return filmRepo.findByGenreInFilms(genre);
 //        }
 //    }
 

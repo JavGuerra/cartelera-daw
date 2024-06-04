@@ -29,7 +29,7 @@
                 <img th:if="${error} != null" class="mb-4" th:src="*{image}" th:alt="|*{name} *{surname}|">
 
                 <div class="mb-4">
-                    <label for="image" class="form-label">Foto</label>
+                    <label for="image" class="form-label">Enlace a foto</label>
                     <input type="url" class="form-control" id="image" th:field="*{image}" />
                     <div class="text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
                 </div>

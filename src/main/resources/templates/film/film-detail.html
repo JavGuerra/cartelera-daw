@@ -43,10 +43,10 @@
                     <li th:if="${film.actor!= ''}" class="list-group-item" th:text="|Actores: ${film.actor}|"></li>
                     <li class="list-group-item" th:text="|Sinopsis: ${film.synopsis}|"></li>
                     <li th:if="${film.classification!= null}" class="list-group-item" th:text="|Clasificación: ${film.classification}|"></li>
-                    <li th:if="${#lists.size(film.genders)}" class="list-group-item">
+                    <li th:if="${#lists.size(film.genres)}" class="list-group-item">
                         <p class="card-text">Género:</p>
-                        <ul th:each="gender: ${film.genders}">
-                            <li th:text="${gender}"></li>
+                        <ul th:each="genre: ${film.genres}">
+                            <li th:text="${genre}"></li>
                         </ul>
                     </li>
                     <li th:if="${film.duration!= null}" class="list-group-item" th:text="|Duración: ${film.duration}|"></li>

@@ -12,6 +12,6 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
     @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE a.city = :city")
     List<Film> findByCityInFilms(@Param("city") String city);
 
-//    @Query("SELECT f FROM Film f JOIN f.genders g WHERE g.name = :gender")
-//    List<Film> findByGenderInFilms(@Param("gender") String gender);
+//    @Query("SELECT f FROM Film f JOIN f.genres g WHERE g.name = :genre")
+//    List<Film> findByGenreInFilms(@Param("genre") String genre);
 }

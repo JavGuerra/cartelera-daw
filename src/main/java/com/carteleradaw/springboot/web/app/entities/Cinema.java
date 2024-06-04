@@ -25,13 +25,13 @@ public class Cinema {
     private Long id;
 
     @Pattern(regexp = CIF_PATTERN, message = "Debe ingresar un CIF válido (a1234567Z).")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 9)
     private String cif;
 
     private Boolean active;
 
     @NotEmpty(message = "Debe ingresar un nombre.")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")

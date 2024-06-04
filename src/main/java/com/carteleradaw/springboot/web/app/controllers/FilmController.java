@@ -57,7 +57,7 @@ public class FilmController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
-        // List<Film> filmOpt = filmService.findByIdWithGender(id);
+        // List<Film> filmOpt = filmService.findByIdWithGenre(id);
         if (!invalidPosNumber(id) && filmService.existsById(id)) {
             Set<String> citiesNames = globalStateService.getCitiesNames();
             String selectedCity = globalStateService.getSelectedCity();
