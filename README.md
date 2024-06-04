@@ -23,11 +23,11 @@ Además de los requisitos para el MVP, la app implementa:
 
 ## Indicaciones de instalación
 
-Tras clonar el repositorio, es necesario crear un usuario en la BBDD relacional llamado «**cartelera-daw**» con el password: «**cartelera-daw**» (sin comillas). Estos datos, así como el puerto por defecto de la app (**8082**), pueden ser alterados en el fichero «aplication.propieties», en resources.
+Tras clonar el repositorio, es necesario crear un usuario en la BBDD relacional llamado «**cartelera-daw**» con el password que deseemos. Estos datos, así como el puerto por defecto de la app (**8082**), pueden ser introducidos en el fichero «aplication.propieties», en la carpeta resources.
 
 Cada vez que se inicia la aplicación, esta recarga los datos en la BBDD.
 
-Una vez iniciada la aplicación en local, se puede acceder a ella con en dirección: http://localhost:8082
+Una vez iniciada la aplicación en local, se puede acceder a ella en la dirección: http://localhost:8082
 
 El acceso al panel de administración requiere de un usuario y contraseña. Por defecto, la aplicación tiene un usuario «admin» y su contraseña es «admin».
 
