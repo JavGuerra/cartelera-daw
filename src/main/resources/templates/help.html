@@ -12,10 +12,175 @@
 <body>
 <div th:replace="~{navbar :: navbar}"></div>
 
-<div class="container myContainer mt-5 shadow text-left">
+<div id="top" class="container myContainer mt-5 shadow text-left">
     <h1 class="cartelera-h1 mt-5">Ayuda</h1>
 
-<!--Poner texto aquí-->
+    <section>
+        <p>La aplicación web Cartelera está diseñada para facilitar la experiencia online de los usuarios, permitiendo navegar con facilidad, y encontrar rápidamente lo que se busca ofreciendo información útil y relevante.
+        <p>Con una interfaz intuitiva aseguramos que el tiempo en línea sea productivo y gratificante, y para contribuir a ello, es necesario realizar adecuadamente el mantenimiento de la información de los datos que se muestran en la aplicación.
+    </section>
+
+    <section>
+        <h2>Índice</h2>
+
+        <p>En este manual veremos:
+
+        <ol>
+            <li><a href="#conceptos">Conceptos generales de la aplicación</a></li>
+            <ol>
+                <li><a href="#ccce">Ciudades, cines, cartelera y estrenos</a></li>
+                <li><a href="#estructura">Estructura organizativa</a></li>
+            </ol>
+            <li><a href="#lyf">Listados y formularios</a></li>
+            <ol>
+                <li><a href="#ciudad">El selector de ciudad</a></li>
+                <li><a href="#cine">Cines</a></li>
+                <li><a href="#sala">Salas</a></li>
+                <li><a href="#pelicula">Películas</a></li>
+            </ol>
+            <li><a href="#usuario">Gestión de usuarios</a></li>
+            <ol>
+                <li><a href="#alg">Altas, login y gestión</a></li>
+            </ol>
+        </ol>
+    </section>
+
+    <hr/><p>
+
+    <section>
+        <h2 id="conceptos">1. Conceptos generales</h2>
+
+        <p>La principal funcionalidad de la aplicación es la de mostrar, de manera ordenada y selectiva, las películas en cartel.
+
+        <article>
+            <h3 id="ccce">1.1. Ciudades, cines, cartelera y estrenos</h3>
+
+        <p>Mediante el selector de ciudades podemos filtrar el resultado de los cines y la cartelera asociada de tal forma que en las selecciones sólo se muetren aquellos cines y aquellas películas que corresponden a la ciudad elegida.
+        <p>Con la opción Cines podemos elegir el cine que deseemos de la ciudad elegida, y conocer así su cartelera e información relacionada.
+        <p>Con la opción Cartelera podemos mostrar las películas en cartel en una ciudad, independientemente del cine en el que se proyecten. Realmente lo que se muestra son las salas y la película que en ella se proyecta.
+        <p>Cuando hacemos login en la aplicación, la opción Cartelera pasa a mostrarse como Salas.
+        <p>En la portada de la aplicación se muestran los estrenos de cine de esa ciudad. Estas son las últimas películas programadas en cartel.
+        <p>Cuando hacemos login, el menú incluirá la opción Películas, que mostrará información específica sobre ellas.
+        </article>
+
+        <article>
+            <h3 id="estructura">1.2. Estructura organizativa</h3>
+
+            <p>Ciudades, cines, salas y películas están estrechamente relacionados.
+
+            <ul>
+                <li>Cada cine está ubicado en una ciudad determinada.</li>
+                <li>Cada cine puede contener ninguna, una o varias salas asociadas.</li>
+                <li>Cada sala puede contener ninguna o una película asociada.</li>
+                <li>Las películas pueden estar relacionadas con ninguna, una o varias salas.</li>
+            </ul>
+
+            <p>El proceso de gestión de información comprende dos partes:
+
+            <ul>
+                <li>Gestión de cines y salas de cine.
+                <li>Gestión de películas.
+            </ul>
+
+            <h4>Gestión de cines y salas de cine</h4>
+
+            <p>Debemos crear cines para luego crear las salas relacionadas. Si no hay cines creados aún, no será posible crear salas asociadas. Si existen cines, podemos crear nuevas salas asociadas a estos.
+            <p>Si un cine no tiene salas, aparecerá como desactivado, y no se mostrará en el listado de cines que los usuarios puedan ver. Igualmente, si una sala no cuenta con una película asociada, esta no será visible para los usuarios.
+
+            <h4>Gestión de películas</h4>
+
+            <p>Podemos crear películas de forma independiente a las salas y podemos asociarlas a las salas desde la configuración de las salas de cine.
+        </article>
+    </section>
+
+    <a href="#top">🔺 Subir</a>
+    <hr/><p>
+
+    <section>
+        <h2 id="lyf">2. Listados y formularios</h2>
+
+        <p>Mediante estas opciones seleccionamos los cines y películas en cartel que buscamos.
+
+        <article>
+            <h3 id="ciudad">2.1. El selector de ciudad</h3>
+
+            <p>A la hora de listar cines y salas, el selector de ciudad filtrará los resultados, por lo que sólo se mostrarán aquellos cines y aquellas salas que se correspondan con la ciudad elegida. Selecciona otra ciudad o la opción «Todas las ciudades» si no encuentras el cine o la sala que buscas.
+        </article>
+
+        <article>
+            <h3 id="cine">2.2. Cines</h3>
+
+            <p>Cuando accedemos a la opción de cines podemos ver una listado de cines de la ciudad elegida.
+            <p>Haciendo clic en ellos accedemos a la ficha del cine donde podemos ver las películas en emisión en cada sala. Igualmente, si hacemos clic en el nombre del cine, obtendremos una lista de Salas a las que acceder directamente.
+            <p>Desde el listado de cines podemos acceder también a su página web.
+            <p>Cuando editamos o creamos un cine, hay una serie de campos del formulario que son obligatorios: El CIF, que tiene un formato de 9 caracteres, y que empieza por una letra, seguida de siete dígitos y finaliza con otra letra, el nombre del cine y la ciudad.
+            <p>Si bien es recomendable incluir la mayor información posible, con estos datos podemos dar de alta un nuevo Cine y hacerlo visible para los listados marcando la casilla «Cine operativo».
+            <p>Aunque activemos un cine, si este no tiene asociada ninguna sala, no se marcará como operativo.
+            <p>Si nos equivocamos al introducir los datos, por ejemplo metiendo mal el formato de correo electrónico o una dirección web… la aplicación nos avisará con un error para que podamos corregirlo.
+            <p>Podemos borrar un Cine, y este dejará de estar disponible definitivamente, así como todas las salas que dependan de él.
+        </article>
+
+        <article>
+            <h3 id="sala">2.3. Salas</h3>
+
+            <p>Al acceder a la opción de Cartelera o Salas, podemos ver un listado de salas de cine de la ciudad elegida, independientemente del cine al que pertenezca la sala.
+            <p>Al hacer clic en alguna de ellas obtendremos información detallada de horarios de emisión de la película, y podremos acceder a información detalla de la película desde ahí.
+            <p>Cada sala tiene un enlace a la información del cine a la que pertenece.
+            <p>Si hacemos clic en el nombre de la película, podemos filtrar las emisiones de esa película para esa ciudad, conociendo así en que cines se está emitiendo. Igualmente, desde la ficha de la sala podemos acceder al mismo listado.
+            <p>Cuando editamos o creamos una sala, hay dos campos que son obligatorios: el cine al que pertenece y el número de sala.
+            <p>Si intentamos crear una sala y no existe ningún cine, esta no podrá crearse, debiendo añadirse primero un cine.
+            <p>Si al añadir una nueva sala ya existiera el número de sala anteriormente, la sala anterior se desactivará si hemos activado la nueva sala. Esto permite tener configuraciones de salas listas para intercambiarse cuando se desee, simplemente activando la sala en cuestión.
+            <p>Por defecto, al crear una sala, esta asume la fecha actual como fecha de estreno. Y nos sugerirá un número de sala que corresponde al mayor valor de sala disponible de entre todas las salas.
+            <p>Podemos hacer selecciones múltiples de los horarios de emisión haciendo clic mientras mantenemos la tecla <CTRL> pulsada.
+            <p>Desde el formulario de edición o de creación tenemos la posibilidad de crear una nueva película si la que queremos añadir a la sala no se encuentra aún en la lista de películas.
+            <p>Aunque activemos una sala, si este no tiene asociada ninguna película, no se marcará como operativa.
+            <p>Si nos equivocamos al introducir los datos, la aplicación nos avisará con un error para que podamos corregirlo.
+            <p>Cuando borremos una sala, esta dejará de estar disponible en el cine al que está asociada.
+        </article>
+
+        <article>
+            <h3 id="pelicula">2.4. Películas</h3>
+
+            <p>Al acceder a la opción de Películas, podemos ver un listado de películas en emisión en la ciudad elegida.
+            <p>Al hacer clic en alguna de ellas obtendremos información detallada de la película, ver un trailer o una reseña.
+            <p>Si hacemos clic en el nombre de la película, podemos filtrar las emisiones de esa película para esa ciudad, conociendo así en que cines se está emitiendo. Igualmente, desde la ficha de la sala podemos acceder al mismo listado.
+            <p>Cuando editamos o creamos una sala, hay una serie de campos obligatorios: el enlace al poster, el título, el año de producción y la sinopsis o resumen de la película.
+            <p>Podemos hacer selecciones múltiples de géneros haciendo clic mientras mantenemos la tecla <CTRL> pulsada.
+            <p>Si nos equivocamos al introducir los datos, la aplicación nos avisará con un error para que podamos corregirlo.
+            <p>Cuando borremos una película, esta dejará de estar disponible para las salas en las que estaba en emisión, y dichas salas se desactivarán.
+        </article>
+    </section>
+
+    <a href="#top">🔺 Subir</a>
+    <hr/><p>
+
+    <section>
+        <h2 id="usuario">3. Gestión de usuarios</h2>
+
+        <p>Los usuarios de la plataforma tienen el rol único de administradores, La plataforma debe contar con al menos un usuario administrador.
+        <p>La aplicación cuenta con un usuario por defecto:
+        <p>
+            usuario: admin
+            contraseña: admin
+        </p>
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <span class="align-middle title-size">ADVERTENCIA: Se recomienda encarecidamente que, tras el primer acceso, la contraseña de admin sea cambiada o se cree una nueva cuenta desde la que eliminar la cuenta admin.</span>
+        </div>
+
+        <article>
+            <h3 id="alg">3.1. Altas, login y gestión</h3>
+
+            <p>Al acceder al listado de usuarios obtendremos la lista de usuarios administradores.
+            <p>Podemos ver información sobre los usuarios haciendo clic en ver.
+            <p>Es posible editar los datos del usuario, incluida su contraseña, desde el formulario de edición.
+            <p>Cuando editamos o creamos un usuario, hay una serie de campos obligatorios: nombre, apellidos, usuario, correo y contraseña.
+            <p>Si nos equivocamos al introducir los datos, la aplicación nos avisará con un error para que podamos corregirlo.
+            <p>Cuando borremos un usuario, este ya no podrá acceder a la aplicación.
+            <p>El usuario actualmente logueado no puede eliminar su cuenta.
+        </article>
+    </section>
+
+    <a href="#top">🔺 Subir</a>
 
 </div>
 
