@@ -21,6 +21,13 @@ public interface ICinemaService {
     boolean existsById(Long id);
 
     /**
+     * Comprueba si existe un cine por su CIF.
+     * @param cif Identificador.
+     * @return Verdadero si existe, falso en caso contrario.
+     */
+    boolean existsByCif(String cif);
+
+    /**
      * Obtiene una dirección por su ID.
      * @param id Identificador.
      * @return Opcionalmente, el cine solicitado.

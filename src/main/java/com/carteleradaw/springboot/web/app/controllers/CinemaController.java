@@ -113,6 +113,10 @@ public class CinemaController {
         if (result.hasErrors()) {
             return "cinema/cinema-form";
         } else {
+            if (cinemaService.existsByCif(cinema.getCif())) {
+                result.rejectValue("cif", "error.cif", "El CIF indicado ya existe.");
+                return "cinema/cinema-form";
+            }
             cinemaService.save(cinema);
             return "redirect:/cinemas";
         }

@@ -41,6 +41,12 @@ public class CinemaServiceImpl implements ICinemaService {
         return cinemaRepo.existsById(id);
     }
 
+    public boolean existsByCif(String cif) {
+        log.info("existsByCif {}", cif);
+        if (stringIsEmpty(cif)) return false;
+        else return cinemaRepo.findByCif(cif).isPresent();
+    }
+
     @Override
     public Optional<Cinema> findById(Long id) {
         log.info("findById {}", id);

@@ -24,7 +24,7 @@
                 </div>
                 <a type="button" class="btn btn-primary" th:href="@{/users}">Volver</a>
             </div>
-            <form th:if="${error} == null" th:action="@{/users}" method="POST" th:object="${user}">
+            <form th:action="@{/users}" method="POST" th:object="${user}">
                 <input type="hidden" id="id" name="id" th:field="*{id}" />
                 <img th:if="${error} != null" class="mb-4" th:src="*{image}" th:alt="|*{name} *{surname}|">
 

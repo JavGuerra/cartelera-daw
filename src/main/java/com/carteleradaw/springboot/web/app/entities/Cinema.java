@@ -25,7 +25,8 @@ public class Cinema {
     private Long id;
 
     @Pattern(regexp = CIF_PATTERN, message = "Debe ingresar un CIF válido (a1234567Z).")
-    @Column(unique = true, nullable = false, length = 9)
+    @Size(max = 9, message = "El CIF debe tener máximo {max} caracteres.")
+    @Column(nullable = false, length = 9)
     private String cif;
 
     private Boolean active;
@@ -60,7 +61,7 @@ public class Cinema {
 
     @NotNull(message = "La dirección no puede estar vacía.")
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
-    @JoinColumn(unique = true, name = "address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)

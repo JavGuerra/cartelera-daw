@@ -26,6 +26,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Título</th>
+                    <th scope="col">Cartelera</th>
                     <th scope="col">Duración</th>
                     <th scope="col">Clasific.</th>
                     <th scope="col">Compañía</th>
@@ -35,9 +36,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="film: ${films}">
+                    <td th:text="${film}"></td>
+
                     <td>
-                        <a class="btn btn-sm btn-light cartelera-btn" th:text="${film}"
-                           role="button" th:href="@{/rooms/film/{id}(id=${film.id})}"></a>
+                        <a class="btn btn-sm btn-light cartelera-btn" role="button"
+                           th:href="@{/rooms/film/{id}(id=${film.id})}">Ver</a>
                     </td>
 
                     <td th:text="${film.duration}"></td>

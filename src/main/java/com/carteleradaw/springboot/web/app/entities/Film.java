@@ -24,7 +24,7 @@ public class Film {
     private Long id;
 
     @NotEmpty(message = "Debe ingresar un título.")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String title;
 
     @Min(value = 1, message = "El valor debe ser mayor o igual a 1")

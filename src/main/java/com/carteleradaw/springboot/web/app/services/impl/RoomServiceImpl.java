@@ -121,12 +121,26 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public Room save(Room room) {
         log.info("save {}", room);
+
         // Si una sala no tiene película, no puede estar activa ni tener fecha de extreno, ni horarios.
         if (room.getFilm() == null) {
             room.setActive(false);
             room.setPremiere(null);
             room.setSchedules(new ArrayList<>());
         }
+
+        // Si esta sala está activada y el número de sala ya existe en ese cine,
+        // entonces desactivar la otra sala activa.
+        if (room.getActive()) {
+            Optional<Room> optRoom = roomRepo.findRoomByCinemaIdAndRoomNumberAndActive(
+                    room.getCinema().getId(), room.getRoomNumber());
+            if (optRoom.isPresent()) {
+                Room oldRoom = optRoom.get();
+                oldRoom.setActive(false);
+                roomRepo.save(oldRoom);
+            }
+        }
+
         return roomRepo.save(room);
     }
 
