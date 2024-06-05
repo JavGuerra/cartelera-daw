@@ -62,7 +62,7 @@
                     </a>
                     <br />
                     <a class="btn btn-outline-primary" title="Ver salas"
-                       th:href="@{/rooms}" role="button">Salas</a>
+                       th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">Cartelera</a>
                     <a class="btn btn-outline-success" title="Editar sala"
                        th:href="@{/rooms/{id}/edit(id=${room.id})}"
                        sec:authorize="isAuthenticated()" role="button">Editar</a>
