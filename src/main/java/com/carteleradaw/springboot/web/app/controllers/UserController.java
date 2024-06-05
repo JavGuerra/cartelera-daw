@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -118,7 +119,11 @@ public class UserController {
 
             // Si el usuario es nuevo, pero ya existe el nombre de usuario o el correo...
             if (!userExist && (existsByUsername || existsByEmail)) {
-                model.addAttribute("error", "El usuario ya existe.");
+                model.addAttribute("error", "Ya está en uso.");
+                if (existsByUsername)
+                    result.rejectValue("username", "error.username", "El usuario ya existe.");
+                if (existsByEmail)
+                    result.rejectValue("email", "error.email", "El correo ya existe.");
                 return "user/user-form";
             }
 
@@ -126,8 +131,13 @@ public class UserController {
             Long idByEmail = (existsByEmail) ? userService.findByEmail(email).get().getId() : id;
 
             // Si el usuario ya existe, pero se cambió su nombre de usuario o su correo a otra que ya existía...
-            if (userExist && ((existsByUsername && (idByUsername != id)) || (existsByEmail && (idByEmail != id)))) {
-                model.addAttribute("error", "El nombre de usuario o el correo ya está en uso.");
+            if (userExist && ((existsByUsername && (!Objects.equals(idByUsername, id))) ||
+                    (existsByEmail && (!Objects.equals(idByEmail, id))))) {
+                model.addAttribute("error", "Ya está en uso.");
+                if (existsByUsername && !Objects.equals(idByUsername, id))
+                    result.rejectValue("username", "error.username", "El usuario ya existe.");
+                if (existsByEmail && !Objects.equals(idByEmail, id))
+                    result.rejectValue("email", "error.email", "El correo ya existe.");
                 return "user/user-form";
             }
 
@@ -137,7 +147,7 @@ public class UserController {
             // Permite cambiar contraseña
             if (!stringIsEmpty(newPasswd)) user.setPassword(passwordEncoder.encode(newPasswd)); // Cambia contraseña
             else if (!stringIsEmpty(oldPasswd)) user.setPassword(oldPasswd); // Mantiene contraseña actual
-            else user.setPassword("$2a$10$dsQX4tLUoI9qFpRXhdRYcOpM1ORFAU60Jtr/WSn.g0mY6ADvZsa5q"); // por defecto
+            else user.setPassword("$2a$10$uuAkGrH14kAnfPe2d7ApcOrDM2tTjz7JhPxa5yGeuE34j65cT6xFq"); // por defecto
 
             userService.save(user);
 
