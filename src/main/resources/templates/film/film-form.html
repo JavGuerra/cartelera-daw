@@ -9,8 +9,9 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
+<div class="flex-grow-1">
 
 <div class="container myContainer mt-5 shadow text-center">
     <div class="row mt-5">
@@ -142,6 +143,7 @@
     </div>
 </div>
 
+</div>
 <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>

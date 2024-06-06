@@ -1,16 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap');
 
 body {
-    min-height: 100vh;
     background: url("/img/fondo.jpg") center/cover no-repeat fixed;
 }
 
 #navbarTop {
     background: linear-gradient(to bottom, moccasin, rgba(255, 255, 255, 0.8));
-}
-
-.title-size {
-    font-size: 1.2em;
 }
 
 footer {
@@ -27,20 +22,10 @@ footer {
     border-radius: 20px;
 }
 
-#myForm {
-    width: 280px;
-}
-
-#myForm .custom-select {
-    width: 280px;
-    height: 37px;
-    background-color: white;
-    border: none;
-    padding: 5px 10px;
-}
-
-.navMenu {
-    width: 100%;
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5); /* Cambia el último valor para ajustar la opacidad */
+    padding: 10px; /* Ajusta el padding según sea necesario */
+    color: #fff; /* Cambia el color del texto si es necesario */
 }
 
 .register {
