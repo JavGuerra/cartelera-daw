@@ -2,6 +2,7 @@ package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
+import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -27,6 +30,7 @@ public class CinemaController {
     private final GlobalStateService globalStateService;
     private final ICinemaService cinemaService;
     private final IRoomService roomService;
+    private final CinemaRepository cinemaRepository;
 
     /**
      * Lista todos los cines.
@@ -114,8 +118,11 @@ public class CinemaController {
             return "cinema/cinema-form";
         } else {
             if (cinemaService.existsByCif(cinema.getCif())) {
-                result.rejectValue("cif", "error.cif", "El CIF indicado ya existe.");
-                return "cinema/cinema-form";
+                Long existingId = cinemaRepository.findByCif(cinema.getCif()).get().getId();
+                if (!Objects.equals(existingId, cinema.getId())) {
+                    result.rejectValue("cif", "error.cif", "El CIF indicado ya existe.");
+                    return "cinema/cinema-form";
+                }
             }
             cinemaService.save(cinema);
             return "redirect:/cinemas";

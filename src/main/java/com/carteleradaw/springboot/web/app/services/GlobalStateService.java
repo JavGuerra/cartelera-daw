@@ -32,7 +32,7 @@ public class GlobalStateService {
         }
 
         // Obtiene los nombres de las ciudades del servicio IAddressService
-        Set<String> citiesNames = addressService.citiesNames();
+        Set<String> citiesNames = addressService.getCitiesNames();
 
         // Inicializa el conjunto de nombres de ciudades como un Set vacío si no existe
         if (session.getAttribute("citiesNames") == null) {
@@ -56,7 +56,7 @@ public class GlobalStateService {
     }
 
     public void updateCitiesNames() {
-        Set<String> newCitiesNames = addressService.citiesNames();
+        Set<String> newCitiesNames = addressService.getCitiesNames();
         session.setAttribute("citiesNames", newCitiesNames);
     }
 

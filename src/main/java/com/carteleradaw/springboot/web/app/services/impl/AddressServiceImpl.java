@@ -1,6 +1,7 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
@@ -10,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
-import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
+import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 import java.util.*;
 
@@ -52,10 +52,11 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
-    public Set<String> citiesNames() {
+    public Set<String> getCitiesNames() {
         log.info("citiesNames");
         Set<String> citiesNames = new HashSet<>();
-        for (Address city : addressRepo.findAll()) citiesNames.add(city.getCity());
+        List<Cinema> cinemas = isAuth() ? cinemaRepo.findAll() : cinemaRepo.findAllByActive();
+        for (Cinema cinema : cinemas) citiesNames.add(cinema.getAddress().getCity());
         return citiesNames;
     }
 

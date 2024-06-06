@@ -131,8 +131,8 @@ public class UserController {
             Long idByEmail = (existsByEmail) ? userService.findByEmail(email).get().getId() : id;
 
             // Si el usuario ya existe, pero se cambió su nombre de usuario o su correo a otra que ya existía...
-            if (userExist && ((existsByUsername && (!Objects.equals(idByUsername, id))) ||
-                    (existsByEmail && (!Objects.equals(idByEmail, id))))) {
+            if (userExist && ( (existsByUsername && !Objects.equals(idByUsername, id)) ||
+                    (existsByEmail && !Objects.equals(idByEmail, id)) ) ) {
                 model.addAttribute("error", "Ya está en uso.");
                 if (existsByUsername && !Objects.equals(idByUsername, id))
                     result.rejectValue("username", "error.username", "El usuario ya existe.");
