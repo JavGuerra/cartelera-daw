@@ -9,8 +9,9 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="css/estilo.css">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
+<div class="flex-grow-1">
 
 <div class="container myContainer mt-5 shadow">
     <h1 class="text-danger" th:text="|Error ${status}|"></h1>
@@ -43,6 +44,7 @@
     </div>
 </div>
 
+</div>
 <div th:replace="~{footer :: footer}"></div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>

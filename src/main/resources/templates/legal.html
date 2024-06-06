@@ -9,8 +9,9 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="css/estilo.css">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
+<div class="flex-grow-1">
 
 <div class="container myContainer mt-5 shadow text-left">
     <h1 class="cartelera-h1 mt-5">Aviso legal y términos del servicio</h1>
@@ -102,6 +103,7 @@
     <p>De parte del equipo que formamos CARTELERA te agradecemos el tiempo dedicado en leer este Aviso Legal.
 </div>
 
+</div>
 <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>

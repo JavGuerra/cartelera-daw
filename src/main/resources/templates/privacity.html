@@ -9,8 +9,9 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="css/estilo.css">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
+<div class="flex-grow-1">
 
 <div class="container myContainer mt-5 shadow text-left">
     <h1 class="cartelera-h1 mt-5">Privacidad y política de cookies</h1>
@@ -254,6 +255,7 @@
     <p>Cuando se produzcan cambios significativos en esta Política de Cookies, estos se comunicarán a los usuarios bien mediante la web o a través de correo electrónico a los usuarios registrados.
 </div>
 
+</div>
 <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>

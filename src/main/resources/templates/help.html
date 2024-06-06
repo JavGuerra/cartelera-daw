@@ -9,8 +9,9 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="css/estilo.css">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
+<div class="flex-grow-1">
 
 <div id="top" class="container myContainer mt-5 shadow text-left">
     <h1 class="cartelera-h1 mt-5">Ayuda</h1>
@@ -167,7 +168,8 @@
             contraseña: admin
         </p>
         <div class="alert alert-warning d-flex align-items-center" role="alert">
-            <span class="align-middle title-size">ADVERTENCIA: Se recomienda encarecidamente que, tras el primer acceso, la contraseña de admin sea cambiada o se cree una nueva cuenta desde la que eliminar la cuenta admin.</span>
+            <p><strong>ADVERTENCIA:</strong><br/>
+            Se recomienda encarecidamente que, tras el primer acceso, la contraseña de admin sea cambiada o se cree una nueva cuenta desde la que eliminar la cuenta admin.</p>
         </div>
 
         <article>
@@ -187,6 +189,7 @@
 
 </div>
 
+</div>
 <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>
