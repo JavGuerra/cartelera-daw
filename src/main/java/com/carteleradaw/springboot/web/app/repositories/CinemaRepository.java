@@ -10,11 +10,14 @@ import java.util.Optional;
 
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
-    @Query("SELECT c from Cinema c WHERE c.address.id = ?1")
-    Cinema findByAddress_Id(Long id);
+    @Query("SELECT c from Cinema c WHERE c.address.id = :id")
+    Cinema findByAddress_Id(@Param("id") Long id);
 
-    @Query("SELECT c from Cinema c WHERE upper(c.cif) = upper(?1)")
-    Optional<Cinema> findByCif(String cif);
+    @Query("SELECT c from Cinema c WHERE c.active = true")
+    List<Cinema> findAllByActive();
+
+    @Query("SELECT c from Cinema c WHERE upper(c.cif) = upper(:cif)")
+    Optional<Cinema> findByCif(@Param("cif") String cif);
 
     @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
     List<Cinema> findByCity(@Param("city") String city);

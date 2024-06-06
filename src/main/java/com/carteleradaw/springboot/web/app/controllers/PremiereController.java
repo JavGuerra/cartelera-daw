@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
 import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 
 @AllArgsConstructor
@@ -29,6 +30,7 @@ public class PremiereController {
      */
     @GetMapping("/")
     public String findAll(Model model) {
+        if (isAuth()) globalStateService.updateCitiesNames();
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         List<Room> premieres = roomService.findAllByPremiereDescDistinct(selectedCity);

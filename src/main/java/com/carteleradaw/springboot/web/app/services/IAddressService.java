@@ -39,7 +39,7 @@ public interface IAddressService {
      * Obtiene una lista de nombres de ciudades disponibles.
      * @return Lista de nombres de ciudades.
      */
-    Set<String> citiesNames();
+    Set<String> getCitiesNames();
 
     /**
      * Guarda una dirección.

@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    @Query("SELECT r FROM Room r WHERE r.cinema.id = ?1")
-    List<Room> findAllByCinema_Id(Long id);
+    @Query("SELECT r FROM Room r WHERE r.cinema.id = :id")
+    List<Room> findAllByCinema_Id(@Param("id") Long id);
 
-    @Query("SELECT r FROM Room r WHERE r.film.id = ?1")
-    List<Room> findAllByFilm_Id(Long id);
+    @Query("SELECT r FROM Room r WHERE r.film.id = :id")
+    List<Room> findAllByFilm_Id(@Param("id") Long id);
 
     @Query("SELECT r FROM Room r WHERE r.active = true ORDER BY r.premiere DESC")
     List<Room> findAllActiveByPremiereDesc();
