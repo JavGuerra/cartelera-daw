@@ -15,52 +15,63 @@
 
     <div class="container myContainer mt-5 shadow text-left">
 
-        <h1 class="cartelera-h1 mt-5">Todos los estrenos</h1>
+        <h1 class="cartelera-h1 mt-5">Todos los estrenos<span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
 
         <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(premieres)}">
             Actualmente no hay ninguna sala para mostrar.
         </div>
 
-        <div class="row">
-            <div class="col mb-3 mr-3" th:each="premiere, stat : ${premieres}">
-                <div class="d-flex flex-column align-items-center">
-                    <a th:href="@{/rooms/{id}(id=${premiere.id})}">
-                        <img th:src="${premiere.film.poster}" class="d-block" width="300px" height="450" th:alt="${premiere.film.title}">
-                    </a>
-                    <a th:href="@{/rooms/{id}(id=${premiere.id})}" class="text-decoration-none mt-2">
-                        <span th:text="${premiere.film}"></span>
-                    </a>
-                    <a th:href="@{/cinemas/{id}(id=${premiere.cinema.id})}" class="text-decoration-none mb-3">
-                        <small th:text="${premiere.cinema.name}"></small>
-                    </a>
-                </div>
+        <div class="row d-flex justify-content-center" th:if="${#lists.size(premieres) > 0}">
+
+            <div class="col-sm-12 col-md-6">
+
+                        <div id="premiereCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div th:each="premiere, stat : ${premieres}">
+                            <div th:classappend="'carousel-item' + (${stat.index == 0}? ' active' : '')" th:id="'diapositiva-' + ${premiere.id}">
+                                <a th:href="@{/rooms/{id}(id=${premiere.id})}">
+                                    <img th:src="${premiere.film.poster}" class="d-block w-100" th:alt="${premiere.film.title}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h4 th:text="${premiere.film}"></h4>
+                                        <p th:text="${premiere.cinema.name}"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#premiereCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#premiereCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+
             </div>
+
+            <div class="col-sm-12 col-md-6">
+
+                <div class="row">
+                    <div class="col mb-3 mr-3" th:each="premiere, stat : ${premieres}">
+                        <div class="d-flex flex-column align-items-center">
+                            <a th:href="@{/rooms/{id}(id=${premiere.id})}">
+                                <img th:src="${premiere.film.poster}" class="d-block" width="200px" height="300" th:alt="${premiere.film.title}">
+                            </a>
+                            <a th:href="@{/rooms/{id}(id=${premiere.id})}" class="text-decoration-none align-text-center mt-2">
+                                <span th:text="${premiere.film}"></span>
+                            </a>
+                            <a th:href="@{/cinemas/{id}(id=${premiere.cinema.id})}" class="text-decoration-none mb-3">
+                                <small th:text="${premiere.cinema.name}"></small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-
-
-<!--        <div th:if="${#lists.size(premieres) > 0}">-->
-<!--                <div id="premiereCarousel" class="carousel slide" data-bs-ride="carousel">-->
-<!--                <div class="carousel-inner" th:each="premiere, stat : ${premieres}">-->
-<!--                    <div th:classappend="'carousel-item' + (${stat.index == 0}? ' active' : '')" th:id="'diapositiva-' + ${premiere.id}">-->
-<!--                        <a th:href="@{/rooms/{id}(id=${premiere.id})}">-->
-<!--                            <img th:src="${premiere.film.poster}" class="d-block w-100" th:alt="${premiere.film.title}">-->
-<!--                            <div class="carousel-caption d-none d-md-block">-->
-<!--                                <h4 th:text="${premiere.film}"></h4>-->
-<!--                                <p th:text="${premiere.cinema.name}"></p>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <button class="carousel-control-prev" type="button" data-bs-target="#premiereCarousel" data-bs-slide="prev">-->
-<!--                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                    <span class="visually-hidden">Anterior</span>-->
-<!--                </button>-->
-<!--                <button class="carousel-control-next" type="button" data-bs-target="#premiereCarousel" data-bs-slide="next">-->
-<!--                    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                    <span class="visually-hidden">Siguiente</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
 
     </div>
 </div>

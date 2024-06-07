@@ -16,7 +16,7 @@
 <div class="container myContainer mt-5 shadow text-left">
 
     <div class="row mt-5">
-        <h1 class="cartelera-h1">Listado de cines</h1>
+        <h1 class="cartelera-h1">Cines <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
 
         <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(cinemas)}">
             Actualmente no hay ningún cine para mostrar.
