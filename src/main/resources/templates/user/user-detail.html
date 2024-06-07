@@ -29,10 +29,8 @@
 
             <div class="card">
 
-<!--                // TODO la imagen no se carga-->
-
-
                 <img th:src="${user.image!= ''? user.image : '../img/noUser.png'}" class="card-img-top" th:alt="|${user.name} ${user.surname}|">
+
                 <div th:if="${user.image!= ''}" class="card-body">
                     <h5 class="card-title" th:text="${user.username}"></h5>
                 </div>

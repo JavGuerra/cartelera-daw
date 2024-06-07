@@ -29,7 +29,8 @@
 
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
 
-                <img th:src="${cinema.image!= null? cinema.image : '../../img/noCinema.png'}" class="card-img-top" th:alt="${cinema.image!= null? cinema.name : 'Sin imagen'}">
+                <img th:src="${(cinema.image!= null and cinema.image!= '')? cinema.image : '../../img/noCinema.png'}" class="card-img-top"
+                     th:alt="${(cinema.image!= null and cinema.image!= '')? cinema.name : 'Sin imagen'}">
 
                 <div class="mb-4">
                     <label for="cif" class="form-label">CIF *</label>

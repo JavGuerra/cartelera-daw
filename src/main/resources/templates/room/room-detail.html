@@ -28,7 +28,7 @@
             </div>
             <div class="card">
 
-                <img th:src="${room.film} != null? room.film.poster : '../img/noFilm.png'}" class="card-img-top" th:alt="${room.film.title}">
+                <img th:src="${room.film!= null? room.film.poster : '../img/noFilm.png'}" class="card-img-top" th:alt="${room.film!= null? room.film.title : 'Sin imagen'}">
 
                 <div class="card-body" th:if="${room.film} == null">
                     <p class="col mt-3 alert alert-info" role="alert">Este cine no tiene una película asociada.</p>

@@ -26,7 +26,7 @@
 
     <div class="row mt-4" th:if="${#lists.size(rooms) > 0}">
 
-        <div class="col mb-4 me-3 d-flex flex-column align-items-center" th:each="room: ${rooms}">
+        <div th:each="room: ${rooms}" class="col mb-4 me-3 d-flex flex-column align-items-center">
 
             <div class="row">
 
@@ -34,7 +34,7 @@
 
                     <img th:if="${room.film == null}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded">
                     <a th:if="${room.film != null}" th:href="@{/rooms/{id}(id=${room.id})}">
-                        <img th:src="@{${room.film.poster?: 'img/noFilm.png'}}" th:alt="${room.film?.title?: ''}" class="d-block poster rounded">
+                        <img th:src="${room.film.poster}" th:alt="${room.film.title}" class="d-block poster rounded">
                     </a>
                     <a th:href="@{/rooms/{id}(id=${room.id})}" class="text-decoration-none mt-2">
                         <h6 th:text="${room.film}" class="mb-0"></h6>
@@ -45,10 +45,9 @@
                     <div class="mb-3">
                         <small th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light"></small>
                         <small sec:authorize="isAnonymous()" th:text="|Sala ${room.roomNumber}|" class="text-decoration-none badge text-secondary text-bg-light"></small>
-                        <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="|Sala ${room.roomNumber} activa|" class="badge text-bg-success"></span>
-                        <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="|Sala ${room.roomNumber} inactiva|" class="badge text-bg-danger"></span>
+                        <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="|Sala ${room.roomNumber}, activa|" class="badge text-bg-success"></span>
+                        <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="|Sala ${room.roomNumber}, inactiva|" class="badge text-bg-danger"></span>
                     </div>
-
 
                 </div>
 

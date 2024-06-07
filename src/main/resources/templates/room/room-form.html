@@ -37,8 +37,7 @@
             <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}">
 
                 <img th:src="${(room?.film!= null && room.film.poster!= '')? room.film.poster : '../../img/noFilm.png'}" class="card-img-top"
-                     th:alt="${(room?.film!= null && room.film.poster!= '')? room.film.title : 'Sin imagen'}"
-                >
+                     th:alt="${(room?.film!= null && room.film.poster!= '')? room.film.title : 'Sin imagen'}">
 
                 <div class="mt-3 mb-3">
 

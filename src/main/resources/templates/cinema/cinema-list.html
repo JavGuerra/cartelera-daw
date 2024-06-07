@@ -23,7 +23,7 @@
 
     <div class="row mt-4" th:if="${#lists.size(cinemas) > 0}">
 
-        <div class="col mb-4 me-3 d-flex flex-column align-items-center" th:each="cinema : ${cinemas}">
+        <div th:each="cinema : ${cinemas}" class="col mb-4 me-3 d-flex flex-column align-items-center">
 
             <div class="row">
 
