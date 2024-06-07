@@ -27,7 +27,8 @@
             </div>
             <form th:action="@{/users}" method="POST" th:object="${user}">
                 <input type="hidden" id="id" name="id" th:field="*{id}" />
-                <img th:if="${error} != null" class="mb-4" th:src="*{image}" th:alt="|*{name} *{surname}|">
+
+                <img th:src="${user.image!= null? user.image : '../../img/noUser.png'}" class="card-img-top" th:alt="${user.image!= null? user.name + ' ' + user.surname : 'Sin imagen'}">
 
                 <div class="mb-4">
                     <label for="image" class="form-label">Enlace a foto</label>

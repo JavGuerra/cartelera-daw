@@ -26,7 +26,9 @@
                 <a class="btn btn-primary" th:href="@{/films}" role="button">Listado de películas</a>
             </div>
             <div class="card">
-                <img th:if="${film.poster!= ''}" th:src="@{${film.poster}}" class="card-img-top" th:alt="${film.title}"/>
+
+                <img th:src="${film.poster!= ''? film.poster : '../img/noFilm.png'}" class="card-img-top" th:alt="${film.title}">
+
                 <div class="card-body">
                     <h5 th:if="${film.director!= ''}" class="card-title" th:text="|De: ${film.director}"></h5>
                     <p th:if="${film.company!= ''}" class="card-text" th:text="${film.company}"></p>
@@ -38,7 +40,9 @@
                         <a class="btn btn-outline-primary" role="button"
                            th:href="@{${film.review}}" target="_blank">Ver reseña</a>
                     </p>
-                    <p th:if="${film.rating!= null}" class="card-text" th:text="|Valoración: ${film.rating} de 5|"></p>
+
+                    <p th:if="${film.rating!= null}"><span th:text="${film?.rating?: ''}">0</span>/5
+                        <span th:text="${'⭐' * film.rating.intValue()}"></span></p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li th:if="${film.actor!= ''}" class="list-group-item" th:text="|Actores: ${film.actor}|"></li>

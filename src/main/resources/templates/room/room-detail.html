@@ -27,7 +27,9 @@
                 <a class="btn btn-primary" th:href="@{/films}" role="button">Volver</a>
             </div>
             <div class="card">
-                <img th:if="${room.film} != null" th:src="@{${room.film.poster}}" class="card-img-top" th:alt="${room.film.title}"/>
+
+                <img th:src="${room.film} != null? room.film.poster : '../img/noFilm.png'}" class="card-img-top" th:alt="${room.film.title}">
+
                 <div class="card-body" th:if="${room.film} == null">
                     <p class="col mt-3 alert alert-info" role="alert">Este cine no tiene una película asociada.</p>
                 </div>

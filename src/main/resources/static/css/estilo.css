@@ -8,6 +8,10 @@ body {
     background: linear-gradient(to bottom, moccasin, rgba(255, 255, 255, 0.8));
 }
 
+.navLinkColor {
+    color: Olive;
+}
+
 footer {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 10%, moccasin 90%);
 }
@@ -28,12 +32,8 @@ footer {
     color: #fff; /* Cambia el color del texto si es necesario */
 }
 
-.register {
-    width: 150px;
-}
-
 .cartelera-h1, th {
-    color: #808000ff;
+    color: Olive;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
@@ -56,6 +56,15 @@ td, .card-title, .card-text, .list-group-item, .form-label {
 }
 
 .poster {
-    width: 200px;
-    height: auto;
+    width: 215px;
+    height: 300px;
+}
+
+.cinema {
+    width: 300px;
+    height: 200px;
+}
+
+.poster:hover, .cinema:hover {
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }

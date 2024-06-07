@@ -15,7 +15,7 @@
 
     <div class="container myContainer mt-5 shadow text-left">
 
-        <h1 class="cartelera-h1 mt-5">Todos los estrenos<span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
+        <h1 class="cartelera-h1 mt-5 mb-3">Todos los estrenos<span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
 
         <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(premieres)}">
             Actualmente no hay ninguna sala para mostrar.
@@ -54,18 +54,16 @@
             <div class="col-sm-12 col-md-6">
 
                 <div class="row">
-                    <div class="col mb-3 mr-3" th:each="premiere, stat : ${premieres}">
-                        <div class="d-flex flex-column align-items-center">
-                            <a th:href="@{/rooms/{id}(id=${premiere.id})}">
-                                <img th:src="${premiere.film.poster}" class="d-block" width="200px" height="300" th:alt="${premiere.film.title}">
-                            </a>
-                            <a th:href="@{/rooms/{id}(id=${premiere.id})}" class="text-decoration-none align-text-center mt-2">
-                                <span th:text="${premiere.film}"></span>
-                            </a>
-                            <a th:href="@{/cinemas/{id}(id=${premiere.cinema.id})}" class="text-decoration-none mb-3">
-                                <small th:text="${premiere.cinema.name}"></small>
-                            </a>
-                        </div>
+                    <div class="col mb-3 mr-3 d-flex flex-column align-items-center" th:each="premiere, stat : ${premieres}">
+                        <a th:href="@{/rooms/{id}(id=${premiere.id})}">
+                            <img th:src="${premiere.film.poster}" class="d-block poster rounded" th:alt="${premiere.film.title}">
+                        </a>
+                        <a th:href="@{/rooms/{id}(id=${premiere.id})}" class="text-decoration-none mt-2">
+                            <h6 th:text="${premiere.film}" class="mb-0"></h6>
+                        </a>
+                        <a th:href="@{/cinemas/{id}(id=${premiere.cinema.id})}" class="text-decoration-none mb-3">
+                            <small th:text="${premiere.cinema.name}"></small>
+                        </a>
                     </div>
                 </div>
 
