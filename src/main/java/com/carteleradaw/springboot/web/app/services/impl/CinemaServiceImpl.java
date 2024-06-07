@@ -31,7 +31,8 @@ public class CinemaServiceImpl implements ICinemaService {
 
     @Override
     public List<Cinema> findAll() {
-        return cinemaRepo.findAll();
+        if (isAuth()) return cinemaRepo.findAll();
+        else return cinemaRepo.findAllActiveCinemas();
     }
 
     @Override
@@ -60,7 +61,8 @@ public class CinemaServiceImpl implements ICinemaService {
         if (stringIsEmpty(city)) {
             return this.findAll();
         } else {
-            return cinemaRepo.findByCity(city);
+            if (isAuth()) return cinemaRepo.findByCity(city);
+            else return cinemaRepo.findByCityAndActiveTrue(city);
         }
     }
 
