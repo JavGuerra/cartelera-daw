@@ -17,8 +17,8 @@
 
     <div class="row mt-5">
         <h1 class="cartelera-h1">
-            <span sec:authorize="isAnonymous()">Cartelera</span>
-            <span sec:authorize="isAuthenticated()">Salas</span>
+            <span sec:authorize="isAnonymous()">Cartelera <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></span>
+            <span sec:authorize="isAuthenticated()">Salas <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></span>
         </h1>
 
         <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms)}">
