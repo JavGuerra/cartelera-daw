@@ -25,29 +25,29 @@
 
             <div class="col-sm-12 col-md-6">
 
-                        <div id="premiereCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div th:each="premiere, stat : ${premieres}">
-                            <div th:classappend="'carousel-item' + (${stat.index == 0}? ' active' : '')" th:id="'diapositiva-' + ${premiere.id}">
-                                <a th:href="@{/rooms/{id}(id=${premiere.id})}">
-                                    <img th:src="${premiere.film.poster}" class="d-block w-100" th:alt="${premiere.film.title}">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h4 th:text="${premiere.film}"></h4>
-                                        <p th:text="${premiere.cinema.name}"></p>
-                                    </div>
-                                </a>
+                <div id="premiereCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div th:each="premiere, stat : ${premieres}">
+                    <div th:classappend="'carousel-item' + (${stat.index == 0}? ' active' : '')" th:id="'diapositiva-' + ${premiere.id}">
+                        <a th:href="@{/rooms/{id}(id=${premiere.id})}">
+                            <img th:src="${premiere.film.poster}" class="d-block w-100" th:alt="${premiere.film.title}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h4 th:text="${premiere.film}"></h4>
+                                <p th:text="${premiere.cinema.name}"></p>
                             </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#premiereCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Anterior</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#premiereCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Siguiente</span>
-                        </button>
+                        </a>
                     </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#premiereCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#premiereCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
 
             </div>
 

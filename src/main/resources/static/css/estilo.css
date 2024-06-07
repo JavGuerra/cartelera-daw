@@ -60,7 +60,12 @@ td, .card-title, .card-text, .list-group-item, .form-label {
     height: 300px;
 }
 
-.cinema {
+.poster-info {
+        width: 300px;
+        height: 420px;
+}
+
+.cinema, .cinema-info {
     width: 300px;
     height: 200px;
 }
