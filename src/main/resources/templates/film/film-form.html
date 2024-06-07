@@ -27,7 +27,9 @@
             </div>
             <form th:if="${error} == null" th:action="@{/films}" method="POST" th:object="${film}">
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
-                <img class="mb-4" th:src="*{poster}" th:alt="*{title}"/>
+
+                <img th:src="${(film.poster!= null && film.poster!= '')? film.poster : '../../img/noFilm.png'}" class="card-img-top"
+                     th:alt="${(film.poster!= null && film.poster!= '')? film.title : 'Sin imagen'}">
 
                 <div class="mb-4">
                     <label for="poster" class="form-label">Enlace al poster *</label>
