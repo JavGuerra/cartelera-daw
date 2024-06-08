@@ -15,7 +15,7 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 mt-5">Cines <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
+    <h1 class="cartelera-h1 mt-4">Cines <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
 
     <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(cinemas)}">
         Actualmente no hay ningún cine para mostrar.
@@ -82,8 +82,16 @@
 
     <div class="text-center mt-4">
         <a class="btn btn-outline-primary" th:href="@{/cinemas/create}"
-           sec:authorize="isAuthenticated()" role="button">Crear nuevo cine</a>
-        <a class="btn btn-outline-success" th:href="@{/}" role="button">Estrenos</a>
+           sec:authorize="isAuthenticated()" role="button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+            </svg><span class="align-middle">&nbsp;&nbsp;Crear&nbsp;nuevo&nbsp;cine</span></a>
+        <a class="btn btn-outline-success" th:href="@{/}" role="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-camera-reels" viewBox="0 0 16 16">
+            <path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM1 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/>
+            <path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7zm6 8.73V7.27l-3.5 1.555v4.35l3.5 1.556zM1 8v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z"/>
+            <path d="M9 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM7 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+        </svg><span class="align-middle">&nbsp;&nbsp;Estrenos</span></a>
     </div>
 
 </div>
