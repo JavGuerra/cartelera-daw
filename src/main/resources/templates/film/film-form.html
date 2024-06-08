@@ -14,22 +14,30 @@
 <div class="flex-grow-1">
 
 <div class="container myContainer mt-5 shadow text-center">
-    <div class="row mt-5">
-        <h1 class="cartelera-h1" th:if="${film.id}">Modificar «<span th:text="${film.title}"></span>»</h1>
-        <h1 class="cartelera-h1" th:if="${film.id} == null">Crear nueva película</h1>
-        <div class="col"></div>
-        <div class="col">
-            <div th:if="${error}">
-                <div class="alert alert-danger" role="alert">
-                    <p th:text="${error}"></p>
-                </div>
-                <a type="button" class="btn btn-primary" th:href="@{/films}">Volver</a>
-            </div>
-            <form th:if="${error} == null" th:action="@{/films}" method="POST" th:object="${film}">
-                <input type="hidden" id="id" name="id" th:field="*{id}"/>
 
-                <img th:src="${(film.poster!= null && film.poster!= '')? film.poster : '../../img/noFilm.png'}" class="card-img-top"
-                     th:alt="${(film.poster!= null && film.poster!= '')? film.title : 'Sin imagen'}">
+    <h1 class="cartelera-h1 my-4" th:if="${film.id}">Modificar «<span th:text="${film.title}"></span>»</h1>
+    <h1 class="cartelera-h1 my-4" th:if="${film.id} == null">Crear nueva película</h1>
+
+    <div th:if="${error}">
+        <div class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
+        <a type="button" class="btn btn-primary" th:href="@{/films}">Volver</a>
+    </div>
+
+    <div class="row d-flex justify-content-center" th:if="${error == null}">
+
+        <div class="col-sm-12 col-md-6 w-auto">
+
+            <img th:src="${(film.poster!= null and film.poster!= '')? film.poster : '../../img/noFilm.png'}" class="d-block poster-info rounded shadow mb-4"
+                 th:alt="${(film.poster!= null and film.poster!= '')? film.title : 'Sin imagen'}">
+
+        </div>
+
+        <div class="col-sm-12 col-md-6 w-sm-100 w-md-50">
+
+            <form th:if="${error} == null" th:action="@{/films}" method="POST" th:object="${film}" class="bg-white p-sm-3 p-md-5">
+                <input type="hidden" id="id" name="id" th:field="*{id}"/>
 
                 <div class="mb-4">
                     <label for="poster" class="form-label">Enlace al poster *</label>
@@ -137,12 +145,16 @@
                     <div class="text-danger" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
                 </div>
 
-                <a class="btn btn-outline-primary" th:href="@{/films}">Cancelar</a>
-                <button type="submit" class="btn btn-outline-success">Guardar</button>
+                <div class="mt-5">
+                    <a class="btn btn-outline-primary" th:href="@{/films}">Cancelar</a>
+                    <button type="submit" class="btn btn-outline-success">Guardar</button>
+                </div>
             </form>
+
         </div>
-        <div class="col"></div>
+
     </div>
+
 </div>
 
 </div>
