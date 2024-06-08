@@ -29,7 +29,7 @@
 
         <div class="col-sm-12 col-md-6 w-auto">
 
-            <img th:src="${(user.image!= null and user.image!= '')? user.image : '../../img/noUser.png'}" class="d-block rounded shadow mb-4"
+            <img th:src="${(user.image!= null and user.image!= '')? user.image : '../../img/noUser.png'}" class="d-block user rounded shadow mb-4"
                  th:alt="${(user.image!= null and user.image!= '')? user.name + ' ' + user.surname : 'Sin imagen'}">
 
         </div>

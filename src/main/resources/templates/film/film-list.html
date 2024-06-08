@@ -29,7 +29,7 @@
 
                 <div class="col d-flex flex-column align-items-center w-100 me-0 pt-3 bg-light">
 
-                    <a th:href="@{/films/{id}(id=${film.id})}">
+                    <a th:href="@{/films/{id}(id=${film.id})}" class="text-decoration-none">
                         <img th:if="${film == null or film.poster ==null or film.poster == ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded">
                         <img th:if="${film.poster != null and film.poster != ''}" th:src="${film.poster}" th:alt="${film.title}" class="d-block poster rounded">
                     </a>

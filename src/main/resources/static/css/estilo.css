@@ -32,22 +32,22 @@ footer {
     color: #fff; /* Cambia el color del texto si es necesario */
 }
 
+.cartelera-h1 {
+    font-size: 3em;
+}
+
 .cartelera-h1, th {
     color: Olive;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
-.cartelera-h1 {
-    font-size: 3em;
+.cartelera-h2, th {
+    font-size: x-large;
+    text-align: center;
 }
 
 .cartelera-btn {
     font-size: 15px;
-}
-
-.cartelera-h2, th {
-    font-size: x-large;
-    text-align: center;
 }
 
 td, .card-title, .card-text, .list-group-item, .form-label {
@@ -64,12 +64,27 @@ td, .card-title, .card-text, .list-group-item, .form-label {
         width: 300px;
         height: 420px;
 }
+.poster, .poster-info {
+    background-image: url('../img/noFilm.png');
+}
+
+a .poster:hover, a .cinema:hover {
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
 
 .cinema, .cinema-info {
     width: 300px;
     height: 200px;
+    background-image: url('../img/noCinema.png');
 }
 
-.poster:hover, .cinema:hover {
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+.user {
+    width: 256px;
+    height: 256px;
+    background-image: url('../img/noUser.png');
+}
+
+.poster, .poster-info, .cinema, .cinema-info, .user {
+    background-size: cover;
+    background-position: center;
 }
