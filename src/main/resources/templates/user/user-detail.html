@@ -28,7 +28,7 @@
 
         <div class="col-sm-12 col-md-6 w-auto">
 
-            <img th:src="${user.image!= ''? user.image : '../img/noUser.png'}" class="card-img-top" th:alt="|${user.name} ${user.surname}|">
+            <img th:src="${user.image!= ''? user.image : '../img/noUser.png'}" class="d-block rounded shadow" th:alt="|${user.name} ${user.surname}|">
 
             <div class="my-3">
                 <a class="btn btn-outline-primary btn-sm" title="Ver usuarios"

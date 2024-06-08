@@ -29,10 +29,11 @@
 
                 <div class="col d-flex flex-column align-items-center w-100 me-0 pt-3 bg-light">
 
-                    <img th:if="${film == null}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded">
-                    <a th:if="${film != null}" th:href="@{/films/{id}(id=${film.id})}">
-                        <img th:src="${film.poster}" th:alt="${film.title}" class="d-block poster rounded">
+                    <a th:href="@{/films/{id}(id=${film.id})}">
+                        <img th:if="${film == null or film.poster ==null or film.poster == ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded">
+                        <img th:if="${film.poster != null and film.poster != ''}" th:src="${film.poster}" th:alt="${film.title}" class="d-block poster rounded">
                     </a>
+
                     <a th:href="@{/films/{id}(id=${film.id})}" class="text-decoration-none mt-2">
                         <h6 th:text="${film}" class="mb-0"></h6>
                     </a>

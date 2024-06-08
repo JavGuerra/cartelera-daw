@@ -28,10 +28,13 @@
 
         <div class="col-sm-12 col-md-6 w-auto">
 
-            <img th:src="${room.film!= null? room.film.poster : '../img/noFilm.png'}" class="d-block poster-info rounded shadow" th:alt="${room.film!= null? room.film.title : 'Sin imagen'}">
+<!--            <img th:src="${room.film!= null? room.film.poster : '../img/noFilm.png'}" class="d-block poster-info rounded shadow" th:alt="${room.film!= null? room.film.title : 'Sin imagen'}">-->
+
+                <img th:if="${room.film == null or room.film?.poster== null or room.film?.poster== ''}" src="../img/noFilm.png" alt="Sin película" class="d-block poster-info rounded shadow">
+                <img th:if="${room.film?.poster != null and room.film?.poster != ''}" th:src="${room.film.poster}" th:alt="${room.film.title}" class="d-block poster-info rounded shadow">
 
             <div class="my-3">
-                <a class="btn btn-outline-primary btn-sm" title="Ver salas"
+                <a th:if="${room.film != null}" class="btn btn-outline-primary btn-sm" title="Ver salas"
                    th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                         <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
@@ -62,8 +65,9 @@
             <div class="card">
 
                 <div class="card-body" th:if="${room.film} == null">
-                    <p class="col mt-3 alert alert-info" role="alert">Este cine no tiene una película asociada.</p>
+                    <p class="col mt-3 alert alert-info" role="alert">Esta sala no tiene una película asociada.</p>
                 </div>
+
                 <div class="card-body" th:if="${room.film} != null">
                     <p class="card-text" th:text="|Resumen: ${room.film.synopsis}"></p>
 

@@ -15,133 +15,143 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <div class="row mt-5">
-        <h1 class="cartelera-h1" th:if="${room.id}">Modificar sala <span th:text="${room.roomNumber}"></span></h1>
-        <h1 class="cartelera-h1" th:if="${room.id} == null">Crear nueva sala</h1>
+    <h1 class="cartelera-h1 my-4" th:if="${room.id}">Modificar sala <span th:text="${room.roomNumber}"></span></h1>
+    <h1 class="cartelera-h1 my-4" th:if="${room.id} == null">Crear nueva sala</h1>
 
-        <div class="col mt-3 alert alert-info" role="alert" th:if="${room.id == null && #lists.isEmpty(cinemas)}">
-            Actualmente no hay ningún cine al que añadir esta sala.
-            <a th:href="@{/cinemas/create}">Crear un nuevo cine</a>
-        </div>
+    <div class="mt-3 alert alert-info" role="alert" th:if="${room.id == null && #lists.isEmpty(cinemas)}">
+        Actualmente no hay ningún cine al que añadir esta sala.
+        <a th:href="@{/cinemas/create}">Crear un nuevo cine</a>
     </div>
 
-    <div class="row mt-3" th:if="${!#lists.isEmpty(cinemas)}">
-        <div class="col"></div>
-        <div class="col">
-            <div th:if="${error}">
-                <div class="alert alert-danger" role="alert">
-                    <p th:text="${error}"></p>
-                </div>
-                <a type="button" class="btn btn-primary" th:href="@{/rooms}">Volver</a>
-            </div>
-            <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}">
+    <div th:if="${error}">
+        <div class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
+        <a type="button" class="btn btn-primary" th:href="@{/rooms}">Volver</a>
+    </div>
 
-                <img th:src="${(room?.film!= null && room.film.poster!= '')? room.film.poster : '../../img/noFilm.png'}" class="card-img-top"
+    <div th:if="${!#lists.isEmpty(cinemas)}">
+
+        <div class="row d-flex justify-content-center" th:if="${error == null}">
+
+            <div class="col-sm-12 col-md-6 w-auto">
+
+                <img th:src="${(room?.film!= null && room.film.poster!= '')? room.film.poster : '../../img/noFilm.png'}" class="d-block poster-info rounded shadow mb-4"
                      th:alt="${(room?.film!= null && room.film.poster!= '')? room.film.title : 'Sin imagen'}">
 
-                <div class="mt-3 mb-3">
+            </div>
 
-                    <label class="form-label"><span th:if="${room.id}">Cine *</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
+            <div class="col-sm-12 col-md-6 w-sm-100 w-md-50">
 
-                    <select aria-label="Cinemas" class="form-select"  th:field="*{cinema}" th:required="required" th:readonly="${room.id}">
-<!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
-                        <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
-                    </select>
-                    <div class="text-danger" th:if="${#fields.hasErrors('cinema')}" th:errors="*{cinema}"></div>
-                </div>
+                <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}" class="bg-white p-sm-3 p-md-5">
 
-                <div class="mb-3" th:if="${room.id} == null">
-                    <a class="btn btn-outline-primary" th:href="@{/cinemas/create}" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels" viewBox="0 0 16 16">
-                            <path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM1 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/>
-                            <path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7zm6 8.73V7.27l-3.5 1.555v4.35l3.5 1.556zM1 8v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z"/>
-                            <path d="M9 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM7 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
-                        </svg>&nbsp;&nbsp;Crear cine
-                    </a>
-                </div>
+                    <div class="mt-3 mb-3">
 
-                <script th:inline="javascript">
-                    /*<![CDATA[*/
-                    var nextRoomNumber = /*[[${nextRoomNumber}]]*/; // Declara 'nextRoomNumber' aquí para que esté disponible en el contexto global
-                    /*]]>*/
-                </script>
-                <input type="hidden" id="id" name="id" th:field="*{id}"/>
-                <div class="mb-4">
-                    <label for="roomNumber" class="form-label">Número de sala *</label>
-                    <input type="number" class="form-control" id="roomNumber" th:field="*{roomNumber}" min="1" pattern="^(\d{1,2})?$" required>
-                    <div class="text-danger" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></div>
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Verificar si el campo 'roomNumber' está vacío
-                        if (document.getElementById('roomNumber').value === '' && typeof nextRoomNumber!== 'undefined') {
-                            // Solo proceder a establecer el valor si 'nextRoomNumber' existe
-                            document.getElementById('roomNumber').value = nextRoomNumber.toString();
-                        }
-                    });
-                </script>
+                        <label class="form-label"><span th:if="${room.id}">Cine *</span><span th:if="${room.id} == null">Seleccionar cine *</span></label>
 
-                <div class="form-check mb-4 text-start">
-                    <input class="form-check-input" type="checkbox" id="active" th:field="*{active}">
-                    <label class="form-check-label" for="active">Sala operativa</label>
-                </div>
+                        <select aria-label="Cinemas" class="form-select"  th:field="*{cinema}" th:required="required" th:readonly="${room.id}">
+                            <!--                        <option th:if="${room.id} == null" selected value="0">Seleccionar cine</option>-->
+                            <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('cinema')}" th:errors="*{cinema}"></div>
+                    </div>
 
-                <div class="mb-4">
-                    <label class="form-label" for="filmSelect">Seleccionar película <span th:if="${room.id} == null">*</span></label>
-                    <select aria-label="Films" class="form-select" id="filmSelect" th:field="*{film}">
-                        <option selected value="0">Sin película</option>
-                        <option th:each="film : ${films}" th:value="${film.id}" th:text="${film.title}"></option>
-                    </select>
-                </div>
+                    <div class="mb-3" th:if="${room.id} == null">
+                        <a class="btn btn-outline-primary" th:href="@{/cinemas/create}" role="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels" viewBox="0 0 16 16">
+                                <path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM1 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/>
+                                <path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7zm6 8.73V7.27l-3.5 1.555v4.35l3.5 1.556zM1 8v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z"/>
+                                <path d="M9 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM7 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                            </svg>&nbsp;&nbsp;Crear cine
+                        </a>
+                    </div>
 
-                <div class="mb-3">
-                    <a class="btn btn-outline-primary" th:href="@{/films/create}" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
-                            <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
-                        </svg>&nbsp;&nbsp;Crear película
-                    </a>
-                </div>
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        var nextRoomNumber = /*[[${nextRoomNumber}]]*/; // Declara 'nextRoomNumber' aquí para que esté disponible en el contexto global
+                        /*]]>*/
+                    </script>
+                    <input type="hidden" id="id" name="id" th:field="*{id}"/>
+                    <div class="mb-4">
+                        <label for="roomNumber" class="form-label">Número de sala *</label>
+                        <input type="number" class="form-control" id="roomNumber" th:field="*{roomNumber}" min="1" pattern="^(\d{1,2})?$" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Verificar si el campo 'roomNumber' está vacío
+                            if (document.getElementById('roomNumber').value === '' && typeof nextRoomNumber!== 'undefined') {
+                                // Solo proceder a establecer el valor si 'nextRoomNumber' existe
+                                document.getElementById('roomNumber').value = nextRoomNumber.toString();
+                            }
+                        });
+                    </script>
 
-                <div class="mb-4">
-                    <label for="premiere" class="form-label">Día de estreno <span th:if="${!#lists.isEmpty(films)}">*</span></label>
-                    <input type="date" class="form-control" id="premiere" th:field="*{premiere}" th:required="${!#lists.isEmpty(films)}">
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var premiereInput = document.getElementById('premiere');
+                    <div class="form-check mb-4 text-start">
+                        <input class="form-check-input" type="checkbox" id="active" th:field="*{active}">
+                        <label class="form-check-label" for="active">Sala operativa</label>
+                    </div>
 
-                        // Verificar si el campo 'premiere' está vacío
-                        if (premiereInput.value === '') {
-                            // Establecer el valor del campo de fecha a la fecha actual
-                            premiereInput.value = new Date().toISOString().split('T')[0]; // Formato yyyy-MM-dd
-                        }
-                    });
-                </script>
+                    <div class="mb-4">
+                        <label class="form-label" for="filmSelect">Seleccionar película <span th:if="${room.id} == null">*</span></label>
+                        <select aria-label="Films" class="form-select" id="filmSelect" th:field="*{film}">
+                            <option selected value="0">Sin película</option>
+                            <option th:each="film : ${films}" th:value="${film.id}" th:text="${film.title}"></option>
+                        </select>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Horarios <small class="text-muted">(multiselección)</small></label>
-                    <select class="form-select" th:field="*{schedules}" multiple aria-label="multiple select example">
-                        <option value="" selected>Selecionar los pases de la película</option>
-                        <th:block th:each="hour : ${schedulesList}">
-                            <option th:value="${hour}" th:text="${hour}"></option>
-                        </th:block>
-                    </select>
-                </div>
+                    <div class="mb-3">
+                        <a class="btn btn-outline-primary" th:href="@{/films/create}" role="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+                                <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
+                            </svg>&nbsp;&nbsp;Crear película
+                        </a>
+                    </div>
 
-                <div class="mb-4">
-                    <label for="capacity" class="form-label">Aforo</label>
-                    <input type="number" class="form-control" id="capacity" min="1" pattern="^(\d{1,4})?$" th:field="*{capacity}">
-                    <div class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
-                </div>
+                    <div class="mb-4">
+                        <label for="premiere" class="form-label">Día de estreno <span th:if="${!#lists.isEmpty(films)}">*</span></label>
+                        <input type="date" class="form-control" id="premiere" th:field="*{premiere}" th:required="${!#lists.isEmpty(films)}">
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var premiereInput = document.getElementById('premiere');
 
-                <div class="mt-5">
-                    <a class="btn btn-outline-primary" th:href="@{/rooms}" role="button">Cancelar</a>
-                    <button type="submit" class="btn btn-outline-success" role="button">Guardar</button>
-                </div>
-            </form>
+                            // Verificar si el campo 'premiere' está vacío
+                            if (premiereInput.value === '') {
+                                // Establecer el valor del campo de fecha a la fecha actual
+                                premiereInput.value = new Date().toISOString().split('T')[0]; // Formato yyyy-MM-dd
+                            }
+                        });
+                    </script>
+
+                    <div class="mb-3">
+                        <label class="form-label">Horarios <small class="text-muted">(multiselección)</small></label>
+                        <select class="form-select" th:field="*{schedules}" multiple aria-label="multiple select example">
+                            <option value="" selected>Selecionar los pases de la película</option>
+                            <th:block th:each="hour : ${schedulesList}">
+                                <option th:value="${hour}" th:text="${hour}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="capacity" class="form-label">Aforo</label>
+                        <input type="number" class="form-control" id="capacity" min="1" pattern="^(\d{1,4})?$" th:field="*{capacity}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+                    </div>
+
+                    <div class="mt-5">
+                        <a class="btn btn-outline-primary" th:href="@{/rooms}" role="button">Cancelar</a>
+                        <button type="submit" class="btn btn-outline-success" role="button">Guardar</button>
+                    </div>
+                </form>
+
+            </div>
+
         </div>
-        <div class="col"></div>
+
     </div>
+
 </div>
 
 </div>
