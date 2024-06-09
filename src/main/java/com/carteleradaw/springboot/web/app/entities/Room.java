@@ -48,7 +48,7 @@ public class Room {
     @JoinColumn(name = "film_id")
     private Film film;
 
-    @NotNull(message = "El cine no puede estar vacío.")
+    @NotNull(message = "El campo cine no puede estar vacío.")
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;

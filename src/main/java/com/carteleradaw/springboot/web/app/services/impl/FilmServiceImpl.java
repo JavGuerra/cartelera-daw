@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
-import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
+import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -28,6 +27,23 @@ public class FilmServiceImpl implements IFilmService {
     public List<Film> findAll() {
         log.info("findAll");
         return filmRepo.findAll();
+    }
+
+    public List<Film> findAllActive() {
+        log.info("findAllActive");
+        return filmRepo.findAllByActiveTrue();
+    }
+
+
+    @Override
+    public boolean isVisible(Long id) {
+        log.info("isActive {}", id);
+        if (invalidPosNumber(id)) return false;
+        if (isAuth()) return true;
+        else if (filmRepo.existsById(id)) {
+                return filmRepo.findById(id).get().getActive();
+            } else return false;
+
     }
 
     @Override
@@ -48,9 +64,11 @@ public class FilmServiceImpl implements IFilmService {
     public List<Film> findAllByCity(String city) {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) {
-            return this.findAll();
+            if (isAuth()) return this.findAll();
+            else return filmRepo.findAllByActiveTrue();
         } else {
-            return filmRepo.findByCityInFilms(city);
+            if (isAuth()) return filmRepo.findByCityInFilms(city);
+            else return filmRepo.findByCityInFilmsAndActiveTrue(city);
         }
     }
 
@@ -70,6 +88,20 @@ public class FilmServiceImpl implements IFilmService {
         return filmRepo.save(film);
     }
 
+    @Override
+    public void deactiveById(Long id) {
+        log.info("deactiveById {}", id);
+        if (invalidPosNumber(id)) return;
+        // Desasociar film de rooms.
+        List<Room> rooms = roomRepo.findAllByFilm_Id(id);
+        for (Room room : rooms) {
+            room.setFilm(null);
+            room.setPremiere(null);
+            room.setSchedules(new ArrayList<>());
+            room.setActive(false);
+        }
+
+    }
     @Override
     public void deleteById(Long id) {
         log.info("deleteById {}", id);

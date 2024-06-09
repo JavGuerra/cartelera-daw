@@ -14,6 +14,19 @@ public interface IFilmService {
     List<Film> findAll();
 
     /**
+     * Obtiene una lista completa de películas activas.
+     * @return Lista de películas activas.
+     */
+    List<Film> findAllActive();
+
+    /**
+     * Informa de si una película está visible o no.
+     * @param id Identificador.
+     * @return Verdadero si está visible, falso en caso contrario.
+     */
+    boolean isVisible(Long id);
+
+    /**
      * Comprueba si existe una película por su ID.
      * @param id Identificador.
      * @return Verdadero si existe, falso en caso contrario.
@@ -49,7 +62,13 @@ public interface IFilmService {
     Film save(Film film);
 
     /**
-     *  borra una dirección por el ID.
+     *  Desactiva una película por el ID.
+     * @param id Identificador.
+     */
+    void deactiveById(Long id);
+
+    /**
+     *  Borra una película por el ID.
      * @param id Identificador.
      */
     void deleteById(Long id);

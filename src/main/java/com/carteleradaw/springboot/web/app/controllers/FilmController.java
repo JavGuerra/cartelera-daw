@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -58,10 +57,9 @@ public class FilmController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         // List<Film> filmOpt = filmService.findByIdWithGenre(id);
-        if (!invalidPosNumber(id) && filmService.existsById(id)) {
+        if (!invalidPosNumber(id) && filmService.existsById(id) && filmService.isVisible(id)) {
             Set<String> citiesNames = globalStateService.getCitiesNames();
             String selectedCity = globalStateService.getSelectedCity();
-            List<Cinema> cinemas = cinemaService.findAllByCity(selectedCity);
             model.addAttribute("cities", citiesNames);
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("film", filmService.findById(id).get());
@@ -119,6 +117,7 @@ public class FilmController {
         if (result.hasErrors()) {
             return "film/film-form";
         } else {
+            if (!film.getActive()) filmService.deactiveById(film.getId());
             filmService.save(film);
             return "redirect:/films";
         }
