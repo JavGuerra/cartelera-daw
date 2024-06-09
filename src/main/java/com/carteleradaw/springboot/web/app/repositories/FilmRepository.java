@@ -9,8 +9,14 @@ import java.util.List;
 
 public interface FilmRepository extends JpaRepository<Film, Long> {
 
+    @Query("SELECT f FROM Film f WHERE f.active = true")
+    List<Film> findAllByActiveTrue();
+
     @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
     List<Film> findByCityInFilms(@Param("city") String city);
+
+    @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND f.active = true")
+    List<Film> findByCityInFilmsAndActiveTrue(@Param("city") String city);
 
 //    @Query("SELECT f FROM Film f JOIN f.genres g WHERE g.name = :genre")
 //    List<Film> findByGenreInFilms(@Param("genre") String genre);

@@ -122,7 +122,7 @@ public class RoomController {
         model.addAttribute("room", new Room());
         model.addAttribute("nextRoomNumber", String.valueOf(nextRoomNumber));
         model.addAttribute("cinemas", cinemaService.findAll());
-        model.addAttribute("films", filmService.findAll());
+        model.addAttribute("films", filmService.findAllActive());
         model.addAttribute("schedulesList", schedulesList);
         model.addAttribute("returnUrl", "rooms");
         return "room/room-form";
@@ -146,7 +146,7 @@ public class RoomController {
             model.addAttribute("cities", citiesNames);
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("cinemas", cinemaService.findById(cinemaId).get());
-            model.addAttribute("films", filmService.findAll());
+            model.addAttribute("films", filmService.findAllActive());
             model.addAttribute("schedulesList", schedulesList);
             model.addAttribute("returnUrl", "rooms");
         } else model.addAttribute("error", "Sala no encontrada.");

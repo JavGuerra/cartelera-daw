@@ -27,6 +27,8 @@ public class Film {
     @Column(nullable = false)
     private String title;
 
+    private Boolean active;
+
     @Min(value = 1, message = "El valor debe ser mayor o igual a 1")
     @Digits(integer = 5, fraction = 0, message = "Solo se permiten números enteros")
     private Integer duration;
