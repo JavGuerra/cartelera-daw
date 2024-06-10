@@ -57,12 +57,12 @@ td, .card-title, .card-text, .list-group-item, .form-label {
 
 .poster {
     width: 215px;
-    height: 300px;
+    height: 320px;
 }
 
 .poster-info {
         width: 300px;
-        height: 420px;
+        height: 444px;
 }
 .poster, .poster-info {
     background-image: url('../img/noFilm.png');
