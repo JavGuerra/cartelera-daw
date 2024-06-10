@@ -35,6 +35,7 @@ public class Room {
     @Digits(integer = 4, fraction = 0, message = "Solo se permiten números enteros")
     private Integer capacity;
 
+    @Column(nullable = false)
     private Boolean active;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

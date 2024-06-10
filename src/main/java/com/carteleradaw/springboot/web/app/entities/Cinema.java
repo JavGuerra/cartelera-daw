@@ -29,6 +29,7 @@ public class Cinema {
     @Column(nullable = false, length = 9)
     private String cif;
 
+    @Column(nullable = false)
     private Boolean active;
 
     @NotEmpty(message = "Debe ingresar un nombre.")
