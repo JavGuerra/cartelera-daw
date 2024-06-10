@@ -27,7 +27,7 @@
 
             <div class="row">
 
-                <div class="col d-flex flex-column align-items-center w-100 me-0 pt-3 bg-light">
+                <div class="col d-flex flex-column gap-0 align-items-center w-100 me-0 pt-3 bg-light">
 
                     <a th:href="@{/films/{id}(id=${film.id})}" class="text-decoration-none">
                         <img th:if="${film == null or film.poster ==null or film.poster == ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded">
@@ -51,7 +51,7 @@
 
                 </div>
 
-                <div class="col d-flex flex-column align-items-center w-auto ms-0">
+                <div class="col d-flex flex-column align-items-center w-auto ps-1">
 
                     <a title="Cartelera"  th:if="${film != null}" th:href="@{/rooms/film/{id}(id=${film.id})}" role="button" class="mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
