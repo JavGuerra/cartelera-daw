@@ -57,7 +57,7 @@ public class RoomController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
-        if (!invalidPosNumber(id) && roomService.existsById(id)) {
+        if (!invalidPosNumber(id) && roomService.existsById(id) && roomService.isVisible(id)) {
             Set<String> citiesNames = globalStateService.getCitiesNames();
             String selectedCity = globalStateService.getSelectedCity();
             model.addAttribute("cities", citiesNames);

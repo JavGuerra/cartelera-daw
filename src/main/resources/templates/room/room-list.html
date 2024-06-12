@@ -43,8 +43,13 @@
                     <a th:href="@{/cinemas/{id}(id=${room.cinema.id})}" class="text-decoration-none">
                         <small th:text="|${room.cinema.name}"></small>
                     </a>
+                    <div class="mb-1">
+                        <small th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
+                        <small th:text="${room.film?.duration?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
+<!--                        <small th:text="${room.film?.rating? ? '⭐' * room.film.rating.intValue() : ''}"></small>-->
+                        <small th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}"></small>
+                    </div>
                     <div class="mb-3">
-                        <small th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light"></small>
                         <small sec:authorize="isAnonymous()" th:text="|Sala ${room.roomNumber}|" class="text-decoration-none badge text-secondary text-bg-light"></small>
                         <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="|Sala ${room.roomNumber}, activa|" class="badge text-bg-success"></span>
                         <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="|Sala ${room.roomNumber}, inactiva|" class="badge text-bg-danger"></span>

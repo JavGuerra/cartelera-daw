@@ -15,9 +15,9 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:text="${film}"></h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4" th:text="${film}"></h1>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert" >
             <p th:text="${error}"></p>
         </div>
@@ -52,7 +52,6 @@
             </div>
 
             <div class="my-3">
-                <small th:text="${'⭐' * film.rating.intValue()}"></small>
                 <span sec:authorize="isAuthenticated()" th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}" class="badge text-bg-primary ms-1">En salas</span>
                 <span sec:authorize="isAuthenticated()" th:if="${#lists.isEmpty(film.rooms) and selectedCity == ''}" class="badge text-bg-warning ms-1">Sin salas</span>
                 <span sec:authorize="isAuthenticated()" th:if="${film.active}" class="badge text-bg-success ms-1">En exhibición</span>
@@ -100,6 +99,11 @@
                                 </div>
                             </div>
                         </li>
+                        <li th:if="${film.rating!= null}" class="list-group-item">
+                            <strong>Valoración:</strong>&nbsp;<span th:text="|${film.rating.intValue()} de 5 |"></span>
+                            <span th:text="${'⭐' * film.rating.intValue()}"></span>
+                        </li>
+
                         <li th:if="${film.classification!= null}" class="list-group-item">
                             <strong>Clasificación:</strong>&nbsp;<span th:text="${film.classification}"></span>
                         </li>

@@ -29,11 +29,11 @@ public class FilmServiceImpl implements IFilmService {
         return filmRepo.findAll();
     }
 
+    @Override
     public List<Film> findAllActive() {
         log.info("findAllActive");
         return filmRepo.findAllByActiveTrue();
     }
-
 
     @Override
     public boolean isVisible(Long id) {
@@ -43,7 +43,6 @@ public class FilmServiceImpl implements IFilmService {
         else if (filmRepo.existsById(id)) {
                 return filmRepo.findById(id).get().getActive();
             } else return false;
-
     }
 
     @Override
@@ -102,6 +101,7 @@ public class FilmServiceImpl implements IFilmService {
         }
 
     }
+
     @Override
     public void deleteById(Long id) {
         log.info("deleteById {}", id);

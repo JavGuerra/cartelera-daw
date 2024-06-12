@@ -1,6 +1,8 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
+import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
@@ -18,12 +20,23 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @Service
 public class RoomServiceImpl implements IRoomService {
 
+    private final CinemaServiceImpl cinemaService;
     private final RoomRepository roomRepo;
 
     @Override
     public List<Room> findAll() {
         log.info("findAll");
         return roomRepo.findAll();
+    }
+
+    @Override
+    public boolean isVisible(Long id) {
+        log.info("isActive {}", id);
+        if (invalidPosNumber(id)) return false;
+        if (isAuth()) return true;
+        else if (this.existsById(id)) {
+            return this.findById(id).get().getActive();
+        } else return false;
     }
 
     @Override
@@ -40,6 +53,7 @@ public class RoomServiceImpl implements IRoomService {
         return roomRepo.findById(id);
     }
 
+    @Override
     public Byte getNextRoomNumber() {
         Set<Byte> existingRoomNumbers = new HashSet<>();
         for (Room room : roomRepo.findAll()) {
@@ -58,13 +72,12 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findAllByCity {}", city);
         List<Room> rooms;
         if (stringIsEmpty(city)) {
-            rooms = this.findAll();
+            if (isAuth()) rooms = this.findAll();
+            else rooms = roomRepo.findByActiveTrue();
         } else {
-            rooms = roomRepo.findByCityInRooms(city);
+            if (isAuth()) rooms = roomRepo.findByCityInRooms(city);
+            else rooms = roomRepo.findByCityAndActiveRoom(city);
         }
-        // Determina si el usuario está autenticado y en caso contrario, elimina las salas no activas.
-        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
-
          return rooms;
     }
 
@@ -84,6 +97,7 @@ public class RoomServiceImpl implements IRoomService {
         return roomRepo.findAllByFilm_Id(id);
     }
 
+    @Override
     public List<Room> findAllByFilmAndCity(Long id, String selectedCity) {
         log.info("findAllByFilmAndCity {}", id);
         if (invalidPosNumber(id)) return new ArrayList<>();
@@ -122,12 +136,15 @@ public class RoomServiceImpl implements IRoomService {
     public Room save(Room room) {
         log.info("save {}", room);
 
-        // Si una sala no tiene película, no puede estar activa ni tener fecha de extreno, ni horarios.
+        // Si una sala no tiene película, no puede estar activa ni tener fecha de estreno, ni horarios.
         if (room.getFilm() == null) {
             room.setActive(false);
             room.setPremiere(null);
             room.setSchedules(new ArrayList<>());
         }
+
+        // Si una sala pertenece a un cine que está desactivado, no puede activarse.
+        if (room.getActive() && !room.getCinema().getActive()) room.setActive(false);
 
         // Si esta sala está activada y el número de sala ya existe en ese cine,
         // entonces desactivar la otra sala activa.
@@ -141,7 +158,19 @@ public class RoomServiceImpl implements IRoomService {
             }
         }
 
+        // Si la sala se ha desactivado, y es la última sala activa del cine, desactivar el cine.
+        if (!room.getActive() && roomRepo.findAllByCinema_IdAndActiveTrue(room.getCinema().getId()).size() <= 1)
+            room.getCinema().setActive(false);
+
         return roomRepo.save(room);
+    }
+
+    @Override
+    public void deactiveAllByCinemaId(Long id) {
+        log.info("deactiveAllByCinemaId {}", id);
+        if (invalidPosNumber(id)) return;
+        List<Room> rooms = this.findAllByCinemaId(id);
+        for (Room room : rooms) room.setActive(false);
     }
 
     @Override
@@ -155,6 +184,7 @@ public class RoomServiceImpl implements IRoomService {
         roomRepo.deleteById(id);
     }
 
+    @Override
     public List<LocalTime> generateSchedulesList(String startTime, long interval) {
         List<LocalTime> scheduleList = new ArrayList<>();
 
