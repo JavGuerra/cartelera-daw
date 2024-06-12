@@ -14,6 +14,13 @@ public interface ICinemaService {
     List<Cinema> findAll();
 
     /**
+     * Informa de si un Cine está visible o no.
+     * @param id Identificador.
+     * @return Verdadero si está visible, falso en caso contrario.
+     */
+    boolean isVisible(Long id);
+
+    /**
      * Comprueba si existe un cine por su ID.
      * @param id Identificador.
      * @return Verdadero si existe, falso en caso contrario.

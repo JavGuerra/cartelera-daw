@@ -67,11 +67,13 @@ public class UserServiceImpl implements IUserService {
         return userRepo.findByEmail(email);
     }
 
+    @Override
     public User save(User user) {
         log.info("save {}", user);
         return userRepo.save(user);
     }
 
+    @Override
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (!invalidPosNumber(id) && userRepo.existsById(id)) userRepo.deleteById(id);

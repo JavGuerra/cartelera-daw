@@ -15,14 +15,16 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:if="${user.id}">Modificar usuario «<span th:text="${user.username}"></span>»</h1>
-    <h1 class="cartelera-h1 my-4" th:unless="${user.id}">Crear nuevo usuario</h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4">
+        <span th:if="${user.id}">Modificar usuario «<span th:text="${user.username}"></span>»</span>
+        <span th:if="${user.id == null}">Crear nuevo usuario</span>
+    </h1>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert" >
             <p th:text="${error}"></p>
         </div>
-        <a type="button" class="btn btn-primary" th:href="@{/users}">Volver</a>
+        <a type="button" class="btn btn-primary" th:href="@{/users}">Listado de usuarios</a>
     </div>
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
@@ -42,7 +44,7 @@
 
                 <div class="mb-4">
                     <label for="image" class="form-label">Enlace a foto</label>
-                    <input type="url" class="form-control" id="image" th:field="*{image}" />
+                    <input type="text" class="form-control" id="image" th:field="*{image}" />
                     <div class="text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
                 </div>
 

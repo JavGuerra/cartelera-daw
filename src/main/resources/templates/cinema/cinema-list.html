@@ -36,11 +36,11 @@
                     <a th:href="@{/cinemas/{id}(id=${cinema.id})}" class="text-decoration-none mt-2">
                         <h6 th:text="${cinema.name}"></h6>
                     </a>
-                    <div class="mb-3">
+                    <div>
                         <small th:if="${selectedCity == ''}" th:text="${cinema.address.city}"
-                               class="text-decoration-none badge text-bg-secondary"></small>
-                        <span sec:authorize="isAuthenticated()" th:if="${cinema.active}" class="badge text-bg-success">Activo</span>
-                        <span sec:authorize="isAuthenticated()" th:if="${cinema.active} == false" class="badge text-bg-danger">Inactivo</span>
+                               class="text-decoration-none badge text-bg-secondary mb-3"></small>
+                        <span sec:authorize="isAuthenticated()" th:if="${cinema.active}" class="badge text-bg-success mb-3">Activo</span>
+                        <span sec:authorize="isAuthenticated()" th:if="${cinema.active} == false" class="badge text-bg-danger mb-3">Inactivo</span>
                     </div>
 
                 </div>

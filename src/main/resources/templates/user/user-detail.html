@@ -15,13 +15,13 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:text="|${user.name} ${user.surname}|"></h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4" th:text="|${user.name} ${user.surname}|"></h1>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert" >
             <p th:text="${error}"></p>
         </div>
-        <a class="btn btn-primary" th:href="@{/users}" role="button">Lista de usuarios</a>
+        <a class="btn btn-primary" th:href="@{/users}" role="button">Listado de usuarios</a>
     </div>
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">

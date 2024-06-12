@@ -15,14 +15,16 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:if="${cinema.id}">Modificar datos de <span th:text="${cinema.name}"></span></h1>
-    <h1 class="cartelera-h1 my-4" th:if="${cinema.id} == null">Crear nuevo cine</h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4">
+        <span th:if="${cinema.id}">Modificar datos de <span th:text="${cinema.name}"></span></span>
+        <span th:if="${cinema.id == null}">Crear nuevo cine</span>
+    </h1>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
-        <a type="button" class="btn btn-primary" th:href="@{/cinemas}">Volver</a>
+        <a type="button" class="btn btn-primary" th:href="@{/cinemas}">Listado de cines</a>
     </div>
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
@@ -60,37 +62,37 @@
 
                 <div class="mb-4">
                     <label for="image" class="form-label">Enlace a la imagen</label>
-                    <input type="url" class="form-control" id="image" th:field="*{image}">
+                    <input type="text" class="form-control" id="image" th:field="*{image}">
                     <div class="text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="url" class="form-label">Página Web</label>
-                    <input type="url" class="form-control" id="url" th:field="*{url}">
+                    <input type="text" class="form-control" id="url" th:field="*{url}">
                     <div class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="twitter" class="form-label">Twitter</label>
-                    <input type="url" class="form-control" id="twitter" th:field="*{twitter}">
+                    <input type="text" class="form-control" id="twitter" th:field="*{twitter}">
                     <div class="text-danger" th:if="${#fields.hasErrors('twitter')}" th:errors="*{twitter}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="linkedIn" class="form-label">LinkedIn</label>
-                    <input type="url" class="form-control" id="linkedIn" th:field="*{linkedIn}">
+                    <input type="text" class="form-control" id="linkedIn" th:field="*{linkedIn}">
                     <div class="text-danger" th:if="${#fields.hasErrors('linkedIn')}" th:errors="*{linkedIn}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="facebook" class="form-label">Facebook</label>
-                    <input type="url" class="form-control" id="facebook" th:field="*{facebook}">
+                    <input type="text" class="form-control" id="facebook" th:field="*{facebook}">
                     <div class="text-danger" th:if="${#fields.hasErrors('facebook')}" th:errors="*{facebook}"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="instagram" class="form-label">Instagram</label>
-                    <input type="url" class="form-control" id="instagram" th:field="*{instagram}">
+                    <input type="text" class="form-control" id="instagram" th:field="*{instagram}">
                     <div class="text-danger" th:if="${#fields.hasErrors('instagram')}" th:errors="*{instagram}"></div>
                 </div>
 
@@ -139,7 +141,7 @@
 
                 <div class="mb-4">
                     <label for="map" class="form-label">Enlace al mapa</label>
-                    <input type="url" class="form-control" id="map" th:field="*{address.map}">
+                    <input type="text" class="form-control" id="map" th:field="*{address.map}">
                     <div class="text-danger" th:if="${#fields.hasErrors('address.map')}" th:errors="*{address.map}"></div>
                 </div>
 

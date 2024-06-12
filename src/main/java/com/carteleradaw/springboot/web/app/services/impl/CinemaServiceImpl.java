@@ -17,11 +17,10 @@ import java.util.Optional;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
-@Scope("session")
+
 @Slf4j
 @AllArgsConstructor
 @Service
-
 public class CinemaServiceImpl implements ICinemaService {
 
     private final GlobalStateService globalStateService;
@@ -36,12 +35,23 @@ public class CinemaServiceImpl implements ICinemaService {
     }
 
     @Override
+    public boolean isVisible(Long id) {
+        log.info("isActive {}", id);
+        if (invalidPosNumber(id)) return false;
+        if (isAuth()) return true;
+        else if (this.existsById(id)) {
+            return this.findById(id).get().getActive();
+        } else return false;
+    }
+
+    @Override
     public boolean existsById(Long id) {
         log.info("existsById {}", id);
         if (invalidPosNumber(id)) return false;
         return cinemaRepo.existsById(id);
     }
 
+    @Override
     public boolean existsByCif(String cif) {
         log.info("existsByCif {}", cif);
         if (stringIsEmpty(cif)) return false;

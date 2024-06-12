@@ -15,14 +15,16 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:if="${film.id}">Modificar «<span th:text="${film.title}"></span>»</h1>
-    <h1 class="cartelera-h1 my-4" th:if="${film.id} == null">Crear nueva película</h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4">
+        <span th:if="${film.id}">Modificar «<span th:text="${film.title}"></span>»</span>
+        <span th:if="${film.id == null}">Crear nueva película</span>
+    </h1>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
-        <a type="button" class="btn btn-primary" th:href="@{/films}">Volver</a>
+        <a type="button" class="btn btn-primary" th:href="@{/films}">Listado de películas</a>
     </div>
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
@@ -41,7 +43,7 @@
 
                 <div class="mb-4">
                     <label for="poster" class="form-label">Enlace al poster *</label>
-                    <input type="url" class="form-control" id="poster" th:field="*{poster}" required>
+                    <input type="text" class="form-control" id="poster" th:field="*{poster}" required>
                     <div class="text-danger" th:if="${#fields.hasErrors('poster')}" th:errors="*{poster}"></div>
                 </div>
 
@@ -70,7 +72,7 @@
 
                 <div class="mb-4">
                     <label for="review" class="form-label">Enlace a la reseña</label>
-                    <input type="url" class="form-control" id="review" th:field="*{review}">
+                    <input type="text" class="form-control" id="review" th:field="*{review}">
                     <div class="text-danger" th:if="${#fields.hasErrors('review')}" th:errors="*{review}"></div>
                 </div>
 
@@ -92,7 +94,7 @@
 
                 <div class="mb-4">
                     <label for="trailer" class="form-label">Enlace al tráiler</label>
-                    <input type="url" class="form-control" id="trailer" th:field="*{trailer}">
+                    <input type="text" class="form-control" id="trailer" th:field="*{trailer}">
                     <div class="text-danger" th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}"></div>
                 </div>
 

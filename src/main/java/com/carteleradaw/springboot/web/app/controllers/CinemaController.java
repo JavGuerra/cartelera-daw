@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -57,7 +56,7 @@ public class CinemaController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
-        if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
+        if (!invalidPosNumber(id) && cinemaService.existsById(id) && cinemaService.isVisible(id)) {
             Set<String> citiesNames = globalStateService.getCitiesNames();
             String selectedCity = globalStateService.getSelectedCity();
             Cinema cinema = cinemaService.findById(id).get();
@@ -124,6 +123,13 @@ public class CinemaController {
                     return "cinema/cinema-form";
                 }
             }
+
+            if (cinemaService.existsById(cinema.getId())) {
+                if (cinemaService.findById(cinema.getId()).get().getActive() != cinema.getActive()) {
+                    if (!cinema.getActive()) roomService.deactiveAllByCinemaId(cinema.getId());
+                }
+            }
+
             cinemaService.save(cinema);
             return "redirect:/cinemas";
         }

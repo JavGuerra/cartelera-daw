@@ -15,13 +15,13 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:text="${cinema.name}"></h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4" th:text="${cinema.name}"></h1>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
-        <a type="button" class="btn btn-primary" th:href="@{/cinemas}" role="button">Lista de cines</a>
+        <a type="button" class="btn btn-primary" th:href="@{/cinemas}" role="button">Listado de cines</a>
     </div>
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
@@ -80,16 +80,16 @@
                                 </svg><span class="align-middle">&nbsp;&nbsp;Sitio web</span></a>
                         </li>
 
-                        <li class="list-group-item mt-3"><strong>Salas:</strong></li>
+                        <li th:if="!${#lists.isEmpty(rooms)}" class="list-group-item mt-3"><strong>Salas:</strong></li>
 
                         <li class="list-group-item" th:each="room: ${rooms}">
-                            <a th:if="${room.film != null}" class="btn btn-sm btn-light cartelera-btn"
-                               th:href="@{/rooms/{id}(id=${room.id})}" th:text="|Sala ${room.roomNumber} - ${room.film.title}|">
+                            <a class="btn btn-sm btn-light cartelera-btn"
+                               th:href="@{/rooms/{id}(id=${room.id})}">
+                                <span th:text="|Sala ${room.roomNumber} - |"></span>
+                                <span th:if="${room.film != null}" th:text="${room.film.title}"></span>
                             </a>
-                            <span th:if="${room.film != null and not room.active}" th:text="Inactiva" class="badge text-bg-danger"></span>
-                            <div th:if="${room.film == null}">
-                                <span th:text="|Sala ${room.roomNumber} - |"></span><span class="badge text-bg-danger">Sin película</span>
-                            </div>
+                            <span th:if="${room.film != null and not room.active}" class="badge text-bg-danger">Inactiva</span>
+                            <span th:if="${room.film == null}" class="badge text-bg-danger">Sin película</span>
                         </li>
                     </ul>
                 </div>

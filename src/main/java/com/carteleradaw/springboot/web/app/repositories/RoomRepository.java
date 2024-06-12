@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
+    @Query("SELECT r FROM Room r WHERE r.active = true")
+    List<Room> findByActiveTrue();
+
     @Query("SELECT r FROM Room r WHERE r.cinema.id = :id")
     List<Room> findAllByCinema_Id(@Param("id") Long id);
 
@@ -21,6 +24,12 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query("SELECT r FROM Room r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
     List<Room> findByCityInRooms(@Param("city") String city);
+
+    @Query("SELECT r FROM Room r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND r.active = true")
+    List<Room> findByCityAndActiveRoom(@Param("city") String city);
+
+    @Query("SELECT r FROM Room r WHERE r.cinema.id = :id AND r.active = true")
+    List<Room> findAllByCinema_IdAndActiveTrue(@Param("id") Long id);
 
     @Query("SELECT r FROM Room r WHERE r.cinema.id = :cinemaId AND r.roomNumber = :roomNumber AND r.active = true")
     Optional<Room> findRoomByCinemaIdAndRoomNumberAndActive(@Param("cinemaId") Long cinemaId, @Param("roomNumber") Byte roomNumber);

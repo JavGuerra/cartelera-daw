@@ -15,6 +15,13 @@ public interface IRoomService {
     List<Room> findAll();
 
     /**
+     * Informa de si una sala está visible o no.
+     * @param id Identificador.
+     * @return Verdadero si está visible, falso en caso contrario.
+     */
+    boolean isVisible(Long id);
+
+    /**
      * Cumprueba si existe una sala por su ID.
      * @param id Identificador.
      * @return Verdadero si existe, falso en caso contrario.
@@ -75,6 +82,12 @@ public interface IRoomService {
      * @return La sala guardada.
      */
     Room save(Room room);
+
+    /**
+     * Desactiva las salas por el Id del Cine.
+     * @param id identificador.
+     */
+    void deactiveAllByCinemaId(Long id);
 
     /**
      * Borra una sala por el ID.

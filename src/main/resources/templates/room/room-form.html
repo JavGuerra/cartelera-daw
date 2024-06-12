@@ -15,19 +15,23 @@
 
 <div class="container myContainer mt-5 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4" th:if="${room.id}">Modificar sala <span th:text="${room.roomNumber}"></span></h1>
-    <h1 class="cartelera-h1 my-4" th:if="${room.id} == null">Crear nueva sala</h1>
+    <h1 th:if="${error == null}" class="cartelera-h1 my-4">
+        <span th:if="${room.id}">Modificar sala <span th:text="${room.roomNumber}"></span></span>
+        <span th:if="${room.id == null}">Crear nueva sala</span>
+    </h1>
 
-    <div class="mt-3 alert alert-info" role="alert" th:if="${room.id == null && #lists.isEmpty(cinemas)}">
-        Actualmente no hay ningún cine al que añadir esta sala.
-        <a th:href="@{/cinemas/create}">Crear un nuevo cine</a>
+    <div th:if="${error == null}">
+        <div class="mt-3 alert alert-info" role="alert" th:if="${(room.id == null) and (#lists.isEmpty(cinemas))}">
+            Actualmente no hay ningún cine al que añadir esta sala.
+            <a th:href="@{/cinemas/create}">Crear un nuevo cine</a>
+        </div>
     </div>
 
-    <div th:if="${error}">
+    <div th:if="${error}" class="mt-5">
         <div class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
-        <a type="button" class="btn btn-primary" th:href="@{/rooms}">Volver</a>
+        <a type="button" class="btn btn-primary" th:href="@{/rooms}">Listado de salas</a>
     </div>
 
     <div th:if="${!#lists.isEmpty(cinemas)}">

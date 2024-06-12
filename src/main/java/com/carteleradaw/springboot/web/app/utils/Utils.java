@@ -12,9 +12,18 @@ import java.util.Optional;
 
 public abstract class Utils {
 
+    // Cinco dígitos o vacío
     public static final String POSTAL_CODE_PATTERN = "^(\\d{5})?$";
+    // Una letra, 7 dígitos y una letra
     public static final String CIF_PATTERN = "^[a-zA-Z][0-9]{7}[a-zA-Z]$";
-    public static final String URL_PATTERN = "^((https?|ftp)://(www\\.)?[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+(:[0-9]+)?(/.*)?)?$";
+    // Línea 1 - http, https, con www y puerto y / final o no
+    // Línea 2 - Nombre fichero y ext. o ruta, con sub ruta o no, con nombre de fichero y ext., permitiendo rutas relativas
+    // Línea 3 - Parámetros de URL opcionales y / final o no
+    public static final String URL_PATTERN =
+            "^((http(s)?://)?(www\\.)?[\\w.-]+(:[0-9]+)?)?/?" +
+            "(([\\w-\\s]+\\.)?[\\w-\\s]+(/?[\\w-\\s]+)*(/?[\\w-\\s]+\\.[\\w-\\s]+)?)?" +
+            "(\\?[\\w-]+=[\\w-]+(&[\\w-]+=[\\w-]+)*)?/?$";
+    // Prefijo con signo + opcional, un espacio opcional y 14 dígitos
     public static final String PHONE_PATTERN = "^((\\+[0-9]{1,3}(\\s)?)?[0-9]{1,14})?$";
 
     /**

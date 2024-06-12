@@ -40,7 +40,7 @@
                     <div class="mb-1">
                         <small th:text="${film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
                         <small th:text="${film?.duration?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
-                        <small th:text="${'⭐' * film.rating.intValue()}"></small>
+                        <small th:if="${film.rating!= null}" th:text="${'⭐' * film.rating.intValue()}"></small>
                     </div>
                     <div class="mb-3">
                         <span sec:authorize="isAuthenticated()" th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}" class="badge text-bg-primary mx-1">En salas</span>
