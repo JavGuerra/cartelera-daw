@@ -46,7 +46,6 @@
                     <div class="mb-1">
                         <small th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
                         <small th:text="${room.film?.duration?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
-<!--                        <small th:text="${room.film?.rating? ? '⭐' * room.film.rating.intValue() : ''}"></small>-->
                         <small th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}"></small>
                     </div>
                     <div class="mb-3">
