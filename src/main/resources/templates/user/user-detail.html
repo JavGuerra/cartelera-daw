@@ -13,7 +13,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container myContainer mt-5 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
     <h1 th:if="${error == null}" class="cartelera-h1 my-4" th:text="|${user.name} ${user.surname}|"></h1>
 
@@ -26,11 +26,11 @@
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
 
-        <div class="col-sm-12 col-md-6 w-auto">
+        <div class="col-12 col-md-6 w-auto">
 
             <img th:src="${user.image!= ''? user.image : '../img/noUser.png'}" class="d-block user rounded shadow" th:alt="|${user.name} ${user.surname}|">
 
-            <div class="my-3">
+            <div class="my-3 btn-group">
                 <a class="btn btn-outline-primary btn-sm" title="Ver usuarios"
                    th:href="@{/users}" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
@@ -60,7 +60,7 @@
 
         </div>
 
-        <div class="col-sm-12 col-md-6 w-sm-100 w-md-50">
+        <div class="col-12 col-md-6 w-md-50">
 
             <div class="card">
                 <div th:if="${user.image!= ''}" class="card-body">

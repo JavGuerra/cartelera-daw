@@ -20,12 +20,6 @@ footer {
     background: linear-gradient(to bottom, Tan 10%, moccasin 90%);
 }
 
-.myContainer {
-    background: rgba(255, 255, 255, 0.75);
-    padding: 0.5em 3em 3em;
-    border-radius: 20px;
-}
-
 .carousel-caption {
     background: rgba(0, 0, 0, 0.5); /* Cambia el último valor para ajustar la opacidad */
     padding: 10px; /* Ajusta el padding según sea necesario */
@@ -61,9 +55,10 @@ td, .card-title, .card-text, .list-group-item, .form-label {
 }
 
 .poster-info {
-        width: 300px;
-        height: 444px;
+    width: 300px;
+    height: 444px;
 }
+
 .poster, .poster-info {
     background-image: url('../img/noFilm.png');
 }

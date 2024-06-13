@@ -13,7 +13,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container myContainer mt-5 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
     <h1 th:if="${error == null}" class="cartelera-h1 my-4">
         <span th:text="${room.cinema.name}"></span><small th:text="| — Sala ${room.roomNumber}|"></small>
@@ -28,12 +28,12 @@
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
 
-        <div class="col-sm-12 col-md-6 w-auto">
+        <div class="col-12 col-md-6 w-auto">
 
-                <img th:if="${room.film == null or room.film?.poster== null or room.film?.poster== ''}" src="../img/noFilm.png" alt="Sin película" class="d-block poster-info rounded shadow">
-                <img th:if="${room.film?.poster != null and room.film?.poster != ''}" th:src="${room.film.poster}" th:alt="${room.film.title}" class="d-block poster-info rounded shadow">
+            <img th:if="${room.film == null or room.film?.poster== null or room.film?.poster== ''}" src="../img/noFilm.png" alt="Sin película" class="d-block poster-info rounded shadow">
+            <img th:if="${room.film?.poster != null and room.film?.poster != ''}" th:src="${room.film.poster}" th:alt="${room.film.title}" class="d-block poster-info rounded shadow">
 
-            <div class="my-3">
+            <div class="btn-group my-3">
                 <a th:if="${room.film != null}" class="btn btn-outline-primary btn-sm" title="Ver salas"
                    th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
@@ -53,14 +53,14 @@
                     </svg><span class="align-middle">&nbsp;&nbsp;Borrar</span></a>
             </div>
 
-            <div class="mb-3">
-                <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="|Sala ${room.roomNumber}, activa|" class="badge text-bg-success"></span>
-                <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="|Sala ${room.roomNumber}, inactiva|" class="badge text-bg-danger"></span>
+            <div class="mb-4">
+                <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="Activa" class="badge text-bg-success"></span>
+                <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="Inactiva" class="badge text-bg-danger"></span>
             </div>
 
         </div>
 
-        <div class="col-sm-12 col-md-6 w-sm-100 w-md-50">
+        <div class="col-12 col-md-6 w-md-50">
 
             <div class="card">
 
@@ -109,7 +109,7 @@
                     </p>
 
                     <p th:if="${room.film?.duration!= null}" class="card-text">
-                        <strong>Duración:</strong>&nbsp;<span th:text="${room.film.duration}"></span><small>&nbsp;min.</small>
+                        <strong>Duración:</strong>&nbsp;<span th:text="${room.film.duration}"></span><small>&nbsp;min</small>
                     </p>
 
                     <p th:if="${room.film?.year!= null}" class="card-text">
