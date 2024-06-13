@@ -13,7 +13,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container myContainer mt-5 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
     <h1 th:if="${error == null}" class="cartelera-h1 my-4" th:text="${cinema.name}"></h1>
 
@@ -26,11 +26,11 @@
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
 
-        <div class="col-sm-12 col-md-6 w-auto">
+        <div class="col-12 col-md-6 w-auto">
 
             <img th:src="${cinema.image!= ''? cinema.image : '../img/noCinema.png'}" class="d-block cinema-info rounded shadow" th:alt="${cinema.name}">
 
-            <div class="my-3">
+            <div class="btn-group my-3">
                 <a class="btn btn-outline-primary btn-sm" title="Ver cines"
                    th:href="@{/rooms/cinema/{id}(id=${cinema.id})}" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
@@ -50,15 +50,15 @@
                     </svg><span class="align-middle">&nbsp;&nbsp;Borrar</span></a>
             </div>
 
-            <div class="my-3">
-                <small th:text="${cinema.address.city}" class="text-decoration-none badge text-bg-secondary"></small>
-                <span sec:authorize="isAuthenticated()" th:if="${cinema.active}" class="badge text-bg-success">Activo</span>
-                <span sec:authorize="isAuthenticated()" th:if="${cinema.active} == false" class="badge text-bg-danger">Inactivo</span>
+            <div class="mb-4">
+                <span th:text="${cinema.address.city}" class="badge text-bg-secondary mx-1"></span>
+                <span sec:authorize="isAuthenticated()" th:if="${cinema.active}" class="badge text-bg-success mx-1">Activo</span>
+                <span sec:authorize="isAuthenticated()" th:if="${cinema.active} == false" class="badge text-bg-danger mx-1">Inactivo</span>
             </div>
 
         </div>
 
-        <div class="col-sm-12 col-md-6 w-sm-100 w-md-50">
+        <div class="col-12 col-md-6 w-md-50">
 
             <div class="card">
                 <div class="card-body">
@@ -88,8 +88,8 @@
                                 <span th:text="|Sala ${room.roomNumber} - |"></span>
                                 <span th:if="${room.film != null}" th:text="${room.film.title}"></span>
                             </a>
-                            <span th:if="${room.film != null and not room.active}" class="badge text-bg-danger">Inactiva</span>
-                            <span th:if="${room.film == null}" class="badge text-bg-danger">Sin película</span>
+                            <small th:if="${room.film != null and not room.active}" class="badge text-bg-danger">Inactiva</small>
+                            <small th:if="${room.film == null}" class="badge text-bg-danger">Sin película</small>
                         </li>
                     </ul>
                 </div>

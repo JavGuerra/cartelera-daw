@@ -13,7 +13,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container myContainer mt-5 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
     <h1 th:if="${error == null}" class="cartelera-h1 my-4">
         <span th:if="${cinema.id}">Modificar datos de <span th:text="${cinema.name}"></span></span>
@@ -29,14 +29,14 @@
 
     <div class="row d-flex justify-content-center" th:if="${error == null}">
 
-        <div class="col-sm-12 col-md-6 w-auto">
+        <div class="col-12 col-md-6 w-auto">
 
             <img th:src="${(cinema.image!= null and cinema.image!= '')? cinema.image : '../../img/noCinema.png'}" class="d-block cinema-info rounded shadow mb-4"
                  th:alt="${(cinema.image!= null and cinema.image!= '')? cinema.name : 'Sin imagen'}">
 
         </div>
 
-        <div class="col-sm-12 col-md-6 w-sm-100 w-md-50">
+        <div class="col-12 col-md-6 w-md-50">
 
             <form th:if="${error} == null" th:action="@{/cinemas}" method="POST" th:object="${cinema}" class="bg-white p-sm-3 p-md-5">
 
@@ -145,7 +145,7 @@
                     <div class="text-danger" th:if="${#fields.hasErrors('address.map')}" th:errors="*{address.map}"></div>
                 </div>
 
-                <div class="mt-5">
+                <div class="my-5 mb-md-0">
                     <a class="btn btn-outline-primary" th:href="@{/cinemas}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />

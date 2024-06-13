@@ -13,7 +13,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container myContainer mt-5 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
     <h1 class="cartelera-h1 mt-4">
         <span sec:authorize="isAnonymous()">Cartelera <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></span>
@@ -26,56 +26,42 @@
 
     <div class="row mt-4" th:if="${#lists.size(rooms) > 0}">
 
-        <div th:each="room: ${rooms}" class="col mb-4 me-3 d-flex flex-column align-items-center">
+        <div th:each="room: ${rooms}" class="col d-flex flex-column align-items-center">
 
-            <div class="row">
+            <div class="mb-2">
+                <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="Activa" class="badge text-bg-success align-middle mx-1"></span>
+                <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="Inactiva" class="badge text-bg-danger align-middle mx-1"></span>
+                <a title="Editar" sec:authorize="isAuthenticated()" th:href="@{/rooms/{id}/edit(id=${room.id})}" role="button" class="mx-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                    </svg></a>
+                <a title="Borrar" sec:authorize="isAuthenticated()" th:href="@{/rooms/{id}/delete(id=${room.id})}" role="button" class="mx-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg></a>
+            </div>
 
-                <div class="col d-flex flex-column align-items-center w-100 me-0 pt-3 bg-light">
+            <a th:href="@{/rooms/{id}(id=${room.id})}" class="text-decoration-none">
+                <img th:if="${room.film == null or room.film?.poster== null or room.film?.poster== ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded border border-4 border-white">
+                <img th:if="${room.film?.poster != null and room.film?.poster != ''}" th:src="${room.film.poster}" th:alt="${room.film.title}" class="d-block poster rounded border border-4 border-white">
+            </a>
 
-                    <a th:href="@{/rooms/{id}(id=${room.id})}" class="text-decoration-none">
-                        <img th:if="${room.film == null or room.film?.poster== null or room.film?.poster== ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded">
-                        <img th:if="${room.film?.poster != null and room.film?.poster != ''}" th:src="${room.film.poster}" th:alt="${room.film.title}" class="d-block poster rounded">
-                    </a>
-
-                    <a th:href="@{/rooms/{id}(id=${room.id})}" class="text-decoration-none mt-2">
-                        <h6 th:text="${room.film}" class="mb-0"></h6>
-                    </a>
-                    <a th:href="@{/cinemas/{id}(id=${room.cinema.id})}" class="text-decoration-none">
-                        <small th:text="|${room.cinema.name}"></small>
-                    </a>
-                    <div class="mb-1">
-                        <small th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
-                        <small th:text="${room.film?.duration?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-2"></small>
-                        <small th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}"></small>
-                    </div>
-                    <div class="mb-3">
-                        <small sec:authorize="isAnonymous()" th:text="|Sala ${room.roomNumber}|" class="text-decoration-none badge text-secondary text-bg-light"></small>
-                        <span sec:authorize="isAuthenticated()" th:if="${room.active == true}" th:text="|Sala ${room.roomNumber}, activa|" class="badge text-bg-success"></span>
-                        <span sec:authorize="isAuthenticated()" th:if="${room.active == false}" th:text="|Sala ${room.roomNumber}, inactiva|" class="badge text-bg-danger"></span>
-                    </div>
-
-                </div>
-
-                <div class="col d-flex flex-column align-items-center w-auto ps-2">
-
-                    <a title="Cartelera"  th:if="${room.film != null}" th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button" class="mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+            <div class="mb-5">
+                <div class="my-1">
+                    <small th:text="|Sala ${room.roomNumber}|" class="badge text-secondary text-bg-light mx-1"></small>
+                    <small th:if="${room.film != null}" th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light mx-1"></small>
+                    <small th:if="${room.film != null}" th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}" class="ms-1 me-3"></small>
+                    <a title="Cartelera" th:if="${room.film != null}" th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                             <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
-                        </svg>
-                    </a>
-                    <a title="Editar" sec:authorize="isAuthenticated()" th:href="@{/rooms/{id}/edit(id=${room.id})}" role="button" class="mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                        </svg>
-                    </a>
-                    <a title="Borrar" sec:authorize="isAuthenticated()" th:href="@{/rooms/{id}/delete(id=${room.id})}" role="button" class="mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                        </svg>
-                    </a>
-
+                        </svg></a>
                 </div>
-
+                <a th:if="${room.film != null}" th:href="@{/rooms/{id}(id=${room.id})}" class="text-decoration-none">
+                    <h6 th:text="${room.film}" class="mb-0"></h6>
+                </a>
+                <a th:href="@{/cinemas/{id}(id=${room.cinema.id})}" class="text-decoration-none">
+                    <small th:text="|${room.cinema.name}"></small>
+                </a>
             </div>
 
         </div>
@@ -86,7 +72,7 @@
         Actualmente hay <span th:text="${#lists.size(rooms)}"></span> salas.
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center my-4">
         <a class="btn btn-outline-primary" th:href="@{/rooms/create}"
            sec:authorize="isAuthenticated()" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
