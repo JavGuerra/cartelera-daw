@@ -2,7 +2,6 @@ package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
-import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import jakarta.validation.Valid;
