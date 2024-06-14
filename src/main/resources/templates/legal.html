@@ -1,13 +1,8 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Aviso legal</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="css/estilo.css">
+    <th:replace th:replace="~{meta :: meta}" />
 </head>
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
@@ -102,6 +97,14 @@
     <p>En caso de que cualquier Usuario tuviese alguna duda acerca de estas Condiciones legales o cualquier comentario sobre el portal https://lidao.herokuapp.com/, por favor diríjase a lidao@correo.es
 
     <p>De parte del equipo que formamos CARTELERA te agradecemos el tiempo dedicado en leer este Aviso Legal.
+
+    <h2>Contenidos de prueba</h2>
+
+<p>La información de las películas y posters proceden de la página <a href="https://www.filmaffinity.com">Filmaffinity</a>.
+
+    <p>La información sobre los cines procede de la web de los propios cines.
+
+    <p>En ambos casos, la información es usada exclusivamente para probar la operativa de la aplicación, y para evitar el hotlinking, las imágenes son accedidas desde el propio espacio de la aplicación.
 </div>
 
 </div>

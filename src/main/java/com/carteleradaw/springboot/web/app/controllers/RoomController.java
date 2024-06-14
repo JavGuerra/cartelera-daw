@@ -64,7 +64,7 @@ public class RoomController {
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("room", roomService.findById(id).get());
             model.addAttribute("returnUrl", "rooms");
-        } else model.addAttribute("error", "Sala no encontrada.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Sala no encontrada");
         return "room/room-detail";
     }
 
@@ -149,7 +149,7 @@ public class RoomController {
             model.addAttribute("films", filmService.findAllActive());
             model.addAttribute("schedulesList", schedulesList);
             model.addAttribute("returnUrl", "rooms");
-        } else model.addAttribute("error", "Sala no encontrada.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Sala no encontrada");
         return "room/room-form";
     }
 

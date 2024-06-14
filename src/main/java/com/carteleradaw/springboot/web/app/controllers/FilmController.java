@@ -65,7 +65,7 @@ public class FilmController {
             model.addAttribute("film", filmService.findById(id).get());
             model.addAttribute("rooms", roomService.findAllByFilmId(id));
             model.addAttribute("returnUrl", "films");
-        } else model.addAttribute("error", "Película no encontrada.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
         return "film/film-detail";
     }
 
@@ -102,7 +102,7 @@ public class FilmController {
             model.addAttribute("film", filmService.findById(id).get());
             model.addAttribute("ratings", Arrays.asList(1, 2, 3, 4, 5));
             model.addAttribute("returnUrl", "films");
-        } else model.addAttribute("error", "Película no encontrada.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
         return "film/film-form";
     }
 

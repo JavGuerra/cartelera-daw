@@ -1,13 +1,8 @@
 <!Doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Formulario Sala</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+    <title>Formulario de sala</title>
+    <th:replace th:replace="~{meta :: meta}" />
 </head>
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
@@ -27,11 +22,13 @@
         </div>
     </div>
 
-    <div th:if="${error}" class="mt-5">
-        <div class="alert alert-danger" role="alert">
-            <p th:text="${error}"></p>
-        </div>
-        <a type="button" class="btn btn-primary" th:href="@{/rooms}">Listado de salas</a>
+    <div th:if="${error}" class="my-4">
+        <h1 class="cartelera-h1">Salas</h1>
+        <h2 th:text="${error}" role="alert" class="alert alert-danger"></h2>
+        <a th:href="@{/rooms}" role="button" class="btn btn-outline-primary mt-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+            </svg><span class="align-middle">&nbsp;&nbsp;Listado&nbsp;de&nbsp;salas</span></a>
     </div>
 
     <div th:if="${!#lists.isEmpty(cinemas)}">

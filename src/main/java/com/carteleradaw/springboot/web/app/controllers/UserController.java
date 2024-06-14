@@ -58,7 +58,7 @@ public class UserController {
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("user", userService.findById(id).get());
             model.addAttribute("returnUrl", "users");
-        } else model.addAttribute("error", "Usuario no encontrado.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Usuario no encontrado");
         return "user/user-detail";
     }
 
@@ -93,7 +93,7 @@ public class UserController {
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("user", userService.findById(id).get());
             model.addAttribute("returnUrl", "users");
-        } else model.addAttribute("error", "Usuario no encontrado.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Usuario no encontrado");
         return "user/user-form";
     }
 
