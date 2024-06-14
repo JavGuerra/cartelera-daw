@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
@@ -29,7 +28,6 @@ public class FilmController {
     private final GlobalStateService globalStateService;
     private final IFilmService filmService;
     private final IRoomService roomService;
-    private final ICinemaService cinemaService;
 
     /**
      * Lista todas las películas.

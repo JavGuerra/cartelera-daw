@@ -36,7 +36,7 @@ public class UserController {
         Set<String> citiesNames = globalStateService.getCitiesNames();
         String selectedCity = globalStateService.getSelectedCity();
         List<User> users = userService.findAll();
-        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("cities", citiesNames);
         model.addAttribute("selectedCity", selectedCity);
         model.addAttribute("users", users);
         model.addAttribute("returnUrl", "users");
