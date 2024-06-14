@@ -1,0 +1,18 @@
+{
+  "name": "Cartelera DAW",
+  "short_name": "Cartelera",
+  "description": "Proyecto final FPGS DAW",
+  "lang": "es",
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://cartelera-daw.up.railway.app/img/appicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

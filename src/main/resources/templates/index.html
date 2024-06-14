@@ -1,13 +1,8 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cartelera - Cine de estreno</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <link rel="stylesheet" href="css/estilo.css">
+    <th:replace th:replace="meta" />
 </head>
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
@@ -17,11 +12,11 @@
 
     <h1 class="cartelera-h1 my-4">Bienvenido a todos los estrenos<span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
 
-        <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(premieres)}">
+        <div th:if="${#lists.isEmpty(premieres)}" role="alert" class="col mt-3 alert alert-info">
             Actualmente no hay ninguna sala para mostrar.
         </div>
 
-        <div class="row d-flex justify-content-center" th:if="${#lists.size(premieres) > 0}">
+        <div th:if="${#lists.size(premieres) > 0}" class="row d-flex justify-content-center">
 
             <div class="col-sm-12 col-lg-5 col-xl-6">
 

@@ -66,7 +66,7 @@ public class CinemaController {
             model.addAttribute("cinema", cinema);
             model.addAttribute("rooms", rooms);
             model.addAttribute("returnUrl", "cinemas");
-        } else model.addAttribute("error", "Cine no encontrado.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
         return "cinema/cinema-detail";
     }
 
@@ -101,7 +101,7 @@ public class CinemaController {
             model.addAttribute("selectedCity", selectedCity);
             model.addAttribute("cinema", cinemaService.findById(id).get());
             model.addAttribute("returnUrl", "cinemas");
-        } else model.addAttribute("error", "Cine no encontrado.");
+        } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
         return "cinema/cinema-form";
     }
 

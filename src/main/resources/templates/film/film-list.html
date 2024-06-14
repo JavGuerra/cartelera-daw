@@ -1,13 +1,10 @@
 <!Doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Películas</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+    <th:replace th:replace="~{meta :: meta}" />
 </head>
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>
@@ -52,7 +49,7 @@
                 <div class="my-1">
                     <small th:text="${film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light me-1"></small>
                     <small th:if="${film?.duration}" th:text="${film.duration} + ' min'" class="text-decoration-none badge text-secondary text-bg-light me-1"></small>
-                    <small th:if="${film.rating!= null}" th:text="${'⭐' * film.rating.intValue()}" class="me-3"></small>
+                    <small th:if="${film.rating!= null}" th:text="${'⭐' * film.rating.intValue()}" class="me-2"></small>
                     <a sec:authorize="isAuthenticated()" title="Cartelera" th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}" th:href="@{/rooms/film/{id}(id=${film.id})}" role="button" class="mx-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                             <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
