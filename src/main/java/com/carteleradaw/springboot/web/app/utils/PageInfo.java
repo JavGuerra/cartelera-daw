@@ -33,7 +33,7 @@ public class PageInfo {
         pageInfo.setPageSize(page.getSize());
         if (invalidPosNumber((long) pageInfo.getCurrentPage()) || pageInfo.getCurrentPage() < 0 || pageInfo.getCurrentPage() > pageInfo.getTotalPages()) pageInfo.setCurrentPage(0);
         if (invalidPosNumber((long) pageInfo.getPageSize()) || pageInfo.getPageSize() > pageInfo.getTotalPages()) pageInfo.setPageSize(10);
-        int halfRange = 4; // número de páginas antes y después de la página actual en la paginación.
+        int halfRange = 2; // número de páginas antes y después de la página actual en la paginación.
         pageInfo.setStartPage(Math.max(0, pageInfo.getCurrentPage() - halfRange));
         pageInfo.setEndPage(Math.min(pageInfo.getTotalPages(), pageInfo.getCurrentPage() + halfRange));
         return pageInfo;
