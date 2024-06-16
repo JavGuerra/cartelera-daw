@@ -1,6 +1,8 @@
 package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.Room;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -43,10 +45,11 @@ public interface IRoomService {
 
     /**
      * Obtiene la lista de salas de una ciudad.
+     * @param city Ciudad seleccionada.
+     * @param paging número y tamaño de página para paginación.
      * @return Lista de salas de cine.
      */
-    //List<Room> findAllByCity(String city);
-    List<Room> findAllByCity(String city);
+    Page<Room> findAllByCity(String city, Pageable paging);
 
     /**
      * Obtiene la lista de salas de un cine por el ID del cine.
@@ -64,8 +67,8 @@ public interface IRoomService {
 
     /**
      * Obtiene la lista de las salas de una ciudad que exhiben la misma película.
-     * @param id identificador.
-     * @param selectedCity ciudad seleccionada.
+     * @param id Identificador.
+     * @param selectedCity Ciudad seleccionada.
      * @return Lista de salas que contienen la misma película en la ciudad.
      */
     List<Room> findAllByFilmAndCity(Long id, String selectedCity);

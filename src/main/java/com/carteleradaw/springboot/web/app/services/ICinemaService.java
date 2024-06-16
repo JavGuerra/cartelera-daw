@@ -1,6 +1,8 @@
 package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,9 +45,11 @@ public interface ICinemaService {
 
     /**
      * Obtiene la lista de cines de una ciudad.
+     * @param city Ciudad.
+     * @param paging número y tamaño de página para paginación.
      * @return Lista de cines.
      */
-    List<Cinema> findAllByCity(String city);
+    Page<Cinema> findAllByCity(String city, Pageable paging);
 
     /**
      * Guarda un cine.

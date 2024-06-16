@@ -1,12 +1,12 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
-import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -20,7 +20,6 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @Service
 public class RoomServiceImpl implements IRoomService {
 
-    private final CinemaServiceImpl cinemaService;
     private final RoomRepository roomRepo;
 
     @Override
@@ -68,15 +67,15 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public List<Room> findAllByCity(String city) {
+    public Page<Room> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        List<Room> rooms;
+        Page<Room> rooms;
         if (stringIsEmpty(city)) {
-            if (isAuth()) rooms = this.findAll();
-            else rooms = roomRepo.findByActiveTrue();
+            if (isAuth()) rooms = roomRepo.findAll(paging);
+            else rooms = roomRepo.findByActiveTrue(paging);
         } else {
-            if (isAuth()) rooms = roomRepo.findByCityInRooms(city);
-            else rooms = roomRepo.findByCityAndActiveRoom(city);
+            if (isAuth()) rooms = roomRepo.findByCityInRooms(city, paging);
+            else rooms = roomRepo.findByCityAndActiveRoom(city, paging);
         }
          return rooms;
     }
@@ -101,7 +100,7 @@ public class RoomServiceImpl implements IRoomService {
     public List<Room> findAllByFilmAndCity(Long id, String selectedCity) {
         log.info("findAllByFilmAndCity {}", id);
         if (invalidPosNumber(id)) return new ArrayList<>();
-        List<Room> rooms = this.findAllByFilmId(id);
+        List<Room> rooms = roomRepo.findAllByFilm_Id(id);
         if (stringIsEmpty(selectedCity)) return rooms;
         rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
         if (!isAuth()) rooms.removeIf(room -> !room.getActive());

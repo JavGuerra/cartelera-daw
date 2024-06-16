@@ -4,19 +4,19 @@ import com.carteleradaw.springboot.web.app.entities.Film;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import com.carteleradaw.springboot.web.app.utils.PageInfo;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @Scope("session")
@@ -33,15 +33,29 @@ public class FilmController {
      * @param model Modelo.
      * @return Plantilla film-list.
      */
+
+    /**
+     * Lista todas las películas.
+     * @param page Número de página para paginación.
+     * @param size Tamaño de página para paginación.
+     * @param model Modelo.
+     * @return Plantilla film-list.
+     */
     @GetMapping("")
-    public String findAll(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        List<Film> films = filmService.findAllByCity(selectedCity);
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+    public String findAll(@RequestParam(defaultValue = "0") int page,
+                          @RequestParam(defaultValue = "10") int size,
+                          Model model) {
+
+        Pageable paging = PageRequest.of(page, size);
+        Page<Film> films = filmService.findAllByCity(globalStateService.getSelectedCity(), paging);
+        PageInfo pageInfo = PageInfo.createFromPage(films);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("page", pageInfo);
         model.addAttribute("films", films);
         model.addAttribute("returnUrl", "films");
+
         return "film/film-list";
     }
 
@@ -55,14 +69,15 @@ public class FilmController {
     public String findById(Model model, @PathVariable Long id) {
         // List<Film> filmOpt = filmService.findByIdWithGenre(id);
         if (!invalidPosNumber(id) && filmService.existsById(id) && filmService.isVisible(id)) {
-            Set<String> citiesNames = globalStateService.getCitiesNames();
-            String selectedCity = globalStateService.getSelectedCity();
-            model.addAttribute("cities", citiesNames);
-            model.addAttribute("selectedCity", selectedCity);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("film", filmService.findById(id).get());
             model.addAttribute("rooms", roomService.findAllByFilmId(id));
             model.addAttribute("returnUrl", "films");
+
         } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
+
         return "film/film-detail";
     }
 
@@ -73,13 +88,12 @@ public class FilmController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("film", new Film());
-        model.addAttribute("ratings", Arrays.asList(1, 2, 3, 4, 5));
         model.addAttribute("returnUrl", "films");
+
         return "film/film-form";
     }
 
@@ -92,14 +106,14 @@ public class FilmController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && filmService.existsById(id)){
-            Set<String> citiesNames = globalStateService.getCitiesNames();
-            String selectedCity = globalStateService.getSelectedCity();
-            model.addAttribute("cities", citiesNames);
-            model.addAttribute("selectedCity", selectedCity);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("film", filmService.findById(id).get());
-            model.addAttribute("ratings", Arrays.asList(1, 2, 3, 4, 5));
             model.addAttribute("returnUrl", "films");
+
         } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
+
         return "film/film-form";
     }
 

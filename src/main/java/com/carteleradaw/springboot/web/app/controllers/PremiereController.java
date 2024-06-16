@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
 import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
@@ -31,13 +30,14 @@ public class PremiereController {
     @GetMapping("/")
     public String findAll(Model model) {
         if (isAuth()) globalStateService.updateCitiesNames();
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        List<Room> premieres = roomService.findAllByPremiereDescDistinct(selectedCity);
+
+        List<Room> premieres = roomService.findAllByPremiereDescDistinct(globalStateService.getSelectedCity());
         if (premieres.size() > 4) premieres = premieres.subList(0, 4);
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("premieres", premieres);
+
         return "index";
     }
 
@@ -49,7 +49,9 @@ public class PremiereController {
     @PostMapping("/setCity")
     public String setSelectedCity(@RequestParam("cities") String selectedCity,
                                   @RequestParam(value = "returnUrl", required = false) String returnUrl) {
+
         globalStateService.setSelectedCity(selectedCity);
+
         if (!stringIsEmpty(returnUrl)) {
             return "redirect:" + returnUrl;
         } else {
