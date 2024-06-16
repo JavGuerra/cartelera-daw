@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Set;
-
 @AllArgsConstructor
 @Scope("session")
 @Controller
@@ -22,10 +20,8 @@ public class LegalController {
      */
     @GetMapping("/legal")
     public String showLegal(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "legal");
         return "legal";
     }
@@ -36,10 +32,8 @@ public class LegalController {
      */
     @GetMapping("/privacity")
     public String showPrivacity(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "privacity");
         return "privacity";
     }

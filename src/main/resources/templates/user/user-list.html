@@ -20,7 +20,7 @@
             Actualmente no hay ningún usuario para mostrar.
         </div>
 
-        <div class="col mt-3" th:if="${#lists.size(users) > 0}">
+        <div class="col mt-3 mb-4" th:if="${#lists.size(users) > 0}">
             <div class="table-responsive w-auto">
                 <table class="table table-hover">
                     <thead>
@@ -72,10 +72,11 @@
                 </table>
             </div>
 
-            <div class="text-center">
-                Actualmente hay <span th:text="${#lists.size(users)}"></span> usuarios.
-            </div>
         </div>
+    </div>
+
+    <div class="text-center">
+        Actualmente hay <span th:text="${#lists.size(users)}"></span> usuarios.
     </div>
 
     <div class="text-center my-4">

@@ -6,9 +6,13 @@ import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import com.carteleradaw.springboot.web.app.utils.PageInfo;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
@@ -37,14 +40,20 @@ public class CinemaController {
      * @return Plantilla cinemas-list.
      */
     @GetMapping("")
-    public String findAll(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        List<Cinema> cinemas = cinemaService.findAllByCity(selectedCity);
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+    public String findAll(@RequestParam(defaultValue = "0") int page,
+                          @RequestParam(defaultValue = "10") int size,
+                          Model model) {
+
+        Pageable paging = PageRequest.of(page, size);
+        Page<Cinema> cinemas = cinemaService.findAllByCity(globalStateService.getSelectedCity(), paging);
+        PageInfo pageInfo = PageInfo.createFromPage(cinemas);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("page", pageInfo);
         model.addAttribute("cinemas", cinemas);
         model.addAttribute("returnUrl", "cinemas");
+
         return "cinema/cinema-list";
     }
 
@@ -57,16 +66,18 @@ public class CinemaController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id) && cinemaService.isVisible(id)) {
-            Set<String> citiesNames = globalStateService.getCitiesNames();
-            String selectedCity = globalStateService.getSelectedCity();
+
             Cinema cinema = cinemaService.findById(id).get();
             List<Room> rooms = roomService.findAllByCinemaId(id);
-            model.addAttribute("cities", citiesNames);
-            model.addAttribute("selectedCity", selectedCity);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinema", cinema);
             model.addAttribute("rooms", rooms);
             model.addAttribute("returnUrl", "cinemas");
+
         } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
+
         return "cinema/cinema-detail";
     }
 
@@ -77,12 +88,12 @@ public class CinemaController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("cinema", new Cinema());
         model.addAttribute("returnUrl", "cinemas");
+
         return "cinema/cinema-form";
     }
 
@@ -95,13 +106,14 @@ public class CinemaController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
-            Set<String> citiesNames = globalStateService.getCitiesNames();
-            String selectedCity = globalStateService.getSelectedCity();
-            model.addAttribute("cities", citiesNames);
-            model.addAttribute("selectedCity", selectedCity);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinema", cinemaService.findById(id).get());
             model.addAttribute("returnUrl", "cinemas");
+
         } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
+
         return "cinema/cinema-form";
     }
 

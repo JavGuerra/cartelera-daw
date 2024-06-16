@@ -142,7 +142,7 @@
 
                 <label class="form-label">Valoración</label>
                 <div class="form-inline d-flex justify-content-evenly mb-4">
-                    <div th:each="rating, stat : ${ratings}" class="custom-control custom-radio custom-control-inline">
+                    <div th:each="rating, stat : ${#numbers.sequence(1, 5)}" class="custom-control custom-radio custom-control-inline">
                         <input type="radio" th:value="${rating}" id="option${stat.index + 1}" name="options" class="custom-control-input" th:field="*{rating}">
                         <label class="custom-control-label" for="option${stat.index + 1}" th:text="${rating}"></label>
                     </div>

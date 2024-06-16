@@ -1,6 +1,8 @@
 package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.Film;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,9 +45,10 @@ public interface IFilmService {
     /**
      * Obtiene la lista de películas de una ciudad.
      * @param city la ciudad.
+     * @param paging número y tamaño de página para paginación.
      * @return Lista de películas.
      */
-    List<Film> findAllByCity(String city);
+    Page<Film> findAllByCity(String city, Pageable paging);
 
     /**
      * Obtiene la lista de películas con el género dado.

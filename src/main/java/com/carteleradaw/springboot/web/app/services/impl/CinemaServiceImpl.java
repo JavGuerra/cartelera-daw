@@ -9,7 +9,8 @@ import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,13 +67,13 @@ public class CinemaServiceImpl implements ICinemaService {
     }
 
     @Override
-    public List<Cinema> findAllByCity(String city) {
+    public Page<Cinema> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) {
-            return this.findAll();
+            return cinemaRepo.findAll(paging);
         } else {
-            if (isAuth()) return cinemaRepo.findByCity(city);
-            else return cinemaRepo.findByCityAndActiveTrue(city);
+            if (isAuth()) return cinemaRepo.findByCity(city, paging);
+            else return cinemaRepo.findByCityAndActiveTrue(city, paging);
         }
     }
 
@@ -112,7 +113,7 @@ public class CinemaServiceImpl implements ICinemaService {
         cinemaRepo.deleteById(id);
 
         // Si ya no hay cines en una ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
-        if (findAllByCity(city).isEmpty()) {
+        if (findAllByCity(city, Pageable.unpaged()).getContent().isEmpty()) {
             globalStateService.setSelectedCity("");
             globalStateService.updateCitiesNames();
         }

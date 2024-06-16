@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
@@ -33,13 +32,14 @@ public class UserController {
      */
     @GetMapping("")
     public String findAll(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
+
         List<User> users = userService.findAll();
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("users", users);
         model.addAttribute("returnUrl", "users");
+
         return "user/user-list";
     }
 
@@ -52,13 +52,14 @@ public class UserController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && userService.existsById(id)) {
-            Set<String> citiesNames = globalStateService.getCitiesNames();
-            String selectedCity = globalStateService.getSelectedCity();
-            model.addAttribute("cities", citiesNames);
-            model.addAttribute("selectedCity", selectedCity);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("user", userService.findById(id).get());
             model.addAttribute("returnUrl", "users");
+
         } else model.addAttribute("error", "\uD83E\uDD74 Usuario no encontrado");
+
         return "user/user-detail";
     }
 
@@ -69,12 +70,12 @@ public class UserController {
      */
     @GetMapping("/create")
     public String createForm(Model model) {
-        Set<String> citiesNames = globalStateService.getCitiesNames();
-        String selectedCity = globalStateService.getSelectedCity();
-        model.addAttribute("cities", citiesNames);
-        model.addAttribute("selectedCity", selectedCity);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("user", new User());
         model.addAttribute("returnUrl", "users");
+
         return "user/user-form";
     }
 
@@ -87,13 +88,14 @@ public class UserController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
         if (!invalidPosNumber(id) && userService.existsById(id)) {
-            Set<String> citiesNames = globalStateService.getCitiesNames();
-            String selectedCity = globalStateService.getSelectedCity();
-            model.addAttribute("cities", citiesNames);
-            model.addAttribute("selectedCity", selectedCity);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("user", userService.findById(id).get());
             model.addAttribute("returnUrl", "users");
+
         } else model.addAttribute("error", "\uD83E\uDD74 Usuario no encontrado");
+
         return "user/user-form";
     }
 

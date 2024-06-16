@@ -7,6 +7,8 @@ import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -60,14 +62,14 @@ public class FilmServiceImpl implements IFilmService {
     }
 
     @Override
-    public List<Film> findAllByCity(String city) {
+    public Page<Film> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) {
-            if (isAuth()) return this.findAll();
-            else return filmRepo.findAllByActiveTrue();
+            if (isAuth()) return filmRepo.findAll(paging);
+            else return filmRepo.findAllByActiveTrue(paging);
         } else {
-            if (isAuth()) return filmRepo.findByCityInFilms(city);
-            else return filmRepo.findByCityInFilmsAndActiveTrue(city);
+            if (isAuth()) return filmRepo.findByCityInFilms(city, paging);
+            else return filmRepo.findByCityInFilmsAndActiveTrue(city, paging);
         }
     }
 
