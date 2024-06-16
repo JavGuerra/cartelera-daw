@@ -67,33 +67,33 @@
     <div th:if="${page?.totalPages gt 0}" class="row d-flex justify-content-center align-items-center">
 
         <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
-            <p th:text="'Mostrando los cines del ' + (${page.currentPage * page.pageSize + 1}) + ' al ' + ((${page.currentPage * page.pageSize} + ${page.pageSize})) + ' de un total de ' + ${page.totalElements} + ' cines.'"></p>
+            <p th:text="'Mostrando ' + ${page.numberOfElements} + ' cines, del ' + ${page.startElement} + ' al ' + ${page.endElement} + ', de un total de ' + ${page.totalElements} + ' cines.'"></p>
         </div>
 
         <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
             <ul class="pagination">
                 <li th:if="${page.currentPage > 0}" class="page-item">
-                    <a th:href="@{/rooms(page=0, size=${page.pageSize})}" class="page-link">Inicio</a>
+                    <a th:href="@{/cinemas(page=0, size=${page.pageSize})}" class="page-link">Inicio</a>
                 </li>
 
                 <li th:if="${page.currentPage > 0}" class="page-item">
-                    <a th:href="@{/rooms(page=${page.currentPage - 1}, size=${page.pageSize})}" class="page-link">Anterior</a>
+                    <a th:href="@{/cinemas(page=${page.currentPage - 1}, size=${page.pageSize})}" class="page-link">Anterior</a>
                 </li>
 
                 <li th:each="pageNumber : ${#numbers.sequence(page.startPage, page.endPage)}"
                     th:if="${pageNumber >= 0 && pageNumber < page.totalPages}"
                     class="page-item" th:classappend="${pageNumber == page.currentPage}? 'active'">
-                    <a th:href="@{/rooms(page=${pageNumber}, size=${page.pageSize})}"
+                    <a th:href="@{/cinemas(page=${pageNumber}, size=${page.pageSize})}"
                        th:text="${pageNumber + 1}"
                        class="page-link"></a>
                 </li>
 
                 <li th:if="${page.currentPage < page.totalPages - 1}" class="page-item">
-                    <a th:href="@{/rooms(page=${page.currentPage + 1}, size=${page.pageSize})}" class="page-link">Siguiente</a>
+                    <a th:href="@{/cinemas(page=${page.currentPage + 1}, size=${page.pageSize})}" class="page-link">Siguiente</a>
                 </li>
 
                 <li th:if="${page.currentPage < page.totalPages - 1}" class="page-item">
-                    <a th:href="@{/rooms(page=${page.totalPages - 1}, size=${page.pageSize})}" class="page-link">Fin</a>
+                    <a th:href="@{/cinemas(page=${page.totalPages - 1}, size=${page.pageSize})}" class="page-link">Fin</a>
                 </li>
             </ul>
         </nav>

@@ -15,13 +15,19 @@ public class PageInfo {
     private int totalPages;
     private int currentPage;
     private int pageSize;
-    private int startPage;
-    private int endPage;
+    private int startPage;  // A mostrar en la navegación de la paginación.
+    private int endPage;    // A mostrar en la navegación de la paginación.
+    private int startElement;
+    private int endElement;
+    private int numberOfElements;
     private long totalElements;
 
     public static PageInfo createFromPage(Page<?> page) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setTotalElements(page.getTotalElements());
+        pageInfo.setNumberOfElements(page.getNumberOfElements());
+        pageInfo.setStartElement(page.getNumber() * page.getSize() + 1);
+        pageInfo.setEndElement(pageInfo.startElement + pageInfo.getNumberOfElements() - 1);
         pageInfo.setTotalPages(page.getTotalPages());
         pageInfo.setCurrentPage(page.getNumber());
         pageInfo.setPageSize(page.getSize());

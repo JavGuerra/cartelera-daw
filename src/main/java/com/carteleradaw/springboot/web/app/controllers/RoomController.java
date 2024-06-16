@@ -106,10 +106,7 @@ public class RoomController {
      * @return Plantilla rooms-list.
      */
     @GetMapping("/cinema/{id}")
-    public String findByCinemaId(@RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size,
-                                 Model model, @PathVariable Long id) {
-        Pageable paging = PageRequest.of(page, size);
+    public String findByCinemaId(Model model, @PathVariable Long id) {
         // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
         globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
         List<Room> rooms = roomService.findAllByCinemaId(id);

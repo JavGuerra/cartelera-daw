@@ -36,6 +36,8 @@ public class CinemaController {
 
     /**
      * Lista todos los cines.
+     * @param page Número de página para paginación.
+     * @param size Tamaño de página para paginación.
      * @param model Modelo.
      * @return Plantilla cinemas-list.
      */

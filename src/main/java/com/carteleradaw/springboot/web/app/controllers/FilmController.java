@@ -33,6 +33,14 @@ public class FilmController {
      * @param model Modelo.
      * @return Plantilla film-list.
      */
+
+    /**
+     * Lista todas las películas.
+     * @param page Número de página para paginación.
+     * @param size Tamaño de página para paginación.
+     * @param model Modelo.
+     * @return Plantilla film-list.
+     */
     @GetMapping("")
     public String findAll(@RequestParam(defaultValue = "0") int page,
                           @RequestParam(defaultValue = "10") int size,
