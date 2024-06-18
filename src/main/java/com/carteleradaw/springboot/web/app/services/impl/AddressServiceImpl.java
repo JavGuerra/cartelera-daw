@@ -9,6 +9,7 @@ import com.carteleradaw.springboot.web.app.services.IAddressService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -48,14 +49,15 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     public boolean existsCity(String city) {
         log.info("existsCity {}", city);
-        return !stringIsEmpty(city) && !addressRepo.findByCityIgnoreCase(city).isEmpty();
+        return !stringIsEmpty(city) && !addressRepo.findAllByCityIgnoreCase(city).isEmpty();
     }
 
     @Override
     public Set<String> getCitiesNames() {
         log.info("citiesNames");
         Set<String> citiesNames = new HashSet<>();
-        List<Cinema> cinemas = isAuth() ? cinemaRepo.findAll() : cinemaRepo.findAllByActive();
+        List<Cinema> cinemas = isAuth() ?
+                cinemaRepo.findAll() : cinemaRepo.findAllByActiveTrue(Pageable.unpaged()).getContent();
         for (Cinema cinema : cinemas) citiesNames.add(cinema.getAddress().getCity());
         return citiesNames;
     }

@@ -70,7 +70,7 @@ public class CinemaController {
         if (!invalidPosNumber(id) && cinemaService.existsById(id) && cinemaService.isVisible(id)) {
 
             Cinema cinema = cinemaService.findById(id).get();
-            List<Room> rooms = roomService.findAllByCinemaId(id);
+            List<Room> rooms = roomService.findAllByCinemaId(id, Pageable.unpaged()).getContent();
 
             model.addAttribute("cities", globalStateService.getCitiesNames());
             model.addAttribute("selectedCity", globalStateService.getSelectedCity());

@@ -64,13 +64,9 @@ public class FilmServiceImpl implements IFilmService {
     @Override
     public Page<Film> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        if (stringIsEmpty(city)) {
-            if (isAuth()) return filmRepo.findAll(paging);
-            else return filmRepo.findAllByActiveTrue(paging);
-        } else {
-            if (isAuth()) return filmRepo.findByCityInFilms(city, paging);
-            else return filmRepo.findByCityInFilmsAndActiveTrue(city, paging);
-        }
+        if (stringIsEmpty(city)) return (isAuth()) ? filmRepo.findAll(paging) : filmRepo.findAllByActiveTrue(paging);
+        else return (isAuth()) ?
+                filmRepo.findAllByCityInFilms(city, paging) : filmRepo.findAllByCityInFilmsAndActiveTrue(city, paging);
     }
 
 //    @Override

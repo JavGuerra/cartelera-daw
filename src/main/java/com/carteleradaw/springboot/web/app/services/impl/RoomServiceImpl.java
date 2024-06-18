@@ -69,24 +69,17 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public Page<Room> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        Page<Room> rooms;
-        if (stringIsEmpty(city)) {
-            if (isAuth()) rooms = roomRepo.findAll(paging);
-            else rooms = roomRepo.findByActiveTrue(paging);
-        } else {
-            if (isAuth()) rooms = roomRepo.findByCityInRooms(city, paging);
-            else rooms = roomRepo.findByCityAndActiveRoom(city, paging);
-        }
-         return rooms;
+        if (stringIsEmpty(city)) return (isAuth()) ? roomRepo.findAll(paging) : roomRepo.findAllByActiveTrue(paging);
+        else return (isAuth()) ?
+                roomRepo.findAllByCityInRoom(city, paging) : roomRepo.findAllByCityInRoomAndActiveTrue(city, paging);
     }
 
     @Override
-    public List<Room> findAllByCinemaId(Long id) {
+    public Page<Room> findAllByCinemaId(Long id, Pageable paging) { // TODO ¿Devuelve vacío?
         log.info("findAllByCinemaId {}", id);
-        if (invalidPosNumber(id)) return new ArrayList<>();
-        List<Room> rooms = roomRepo.findAllByCinema_Id(id);
-        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
-        return rooms;
+        if (invalidPosNumber(id)) return Page.empty();
+        if (isAuth()) return roomRepo.findAllByCinema_Id(id, paging);
+        else return roomRepo.findAllByCinema_IdAndActiveTrue(id, paging);
     }
 
     @Override
@@ -97,28 +90,30 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public List<Room> findAllByFilmAndCity(Long id, String selectedCity) {
+    public Page<Room> findAllByFilmAndCity(Long id, String city, Pageable paging) {
         log.info("findAllByFilmAndCity {}", id);
-        if (invalidPosNumber(id)) return new ArrayList<>();
-        List<Room> rooms = roomRepo.findAllByFilm_Id(id);
-        if (stringIsEmpty(selectedCity)) return rooms;
-        rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
-        if (!isAuth()) rooms.removeIf(room -> !room.getActive());
-        return rooms;
+        if (invalidPosNumber(id)) return Page.empty();
+        if (stringIsEmpty(city)) {
+            if (isAuth()) return roomRepo.findAllByFilm_Id(id, paging);
+            else return roomRepo.findAllByFilm_IdAndActiveTrue(id, paging);
+        } else {
+            if (isAuth()) return roomRepo.findAllByFilm_IdAndCity(id, city, paging);
+            else return roomRepo.findAllByFilm_IdAndCityAndActiveTrue(id, city, paging);
+        }
     }
 
     @Override
-    public List<Room> findAllByPremiereDescDistinct(String selectedCity) {
+    public List<Room> findAllByPremiereDescDistinct(String city) {
         log.info("findAllByPremiereDesc");
 
-        List<Room> rooms = roomRepo.findAllActiveByPremiereDesc();
-
-        // Borra las salas de otras ciudades.
-        if (!stringIsEmpty(selectedCity)) rooms.removeIf(room -> !Objects.equals(room.getCity(), selectedCity));
+        List<Room> rooms;
+        if (stringIsEmpty(city)) rooms = (isAuth()) ?
+                roomRepo.findAllByPremiereDesc() : roomRepo.findAllByPremiereDescAndActiveTrue();
+        else rooms = (isAuth()) ?
+                roomRepo.findAllByCityAndPremiereDesc(city) : roomRepo.findAllByCityAndPremiereDescAndActiveTrue(city);
 
         List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados
         Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar filmId ya procesados
-
         // Elimina repeticiones, quedándose con el estreno más actual.
         for (Room room : rooms) {
             Long filmId = room.getFilmId();
@@ -148,7 +143,7 @@ public class RoomServiceImpl implements IRoomService {
         // Si esta sala está activada y el número de sala ya existe en ese cine,
         // entonces desactivar la otra sala activa.
         if (room.getActive()) {
-            Optional<Room> optRoom = roomRepo.findRoomByCinemaIdAndRoomNumberAndActive(
+            Optional<Room> optRoom = roomRepo.findRoomByCinemaIdAndRoomNumberAndActiveTrue(
                     room.getCinema().getId(), room.getRoomNumber());
             if (optRoom.isPresent()) {
                 Room oldRoom = optRoom.get();
@@ -168,7 +163,7 @@ public class RoomServiceImpl implements IRoomService {
     public void deactiveAllByCinemaId(Long id) {
         log.info("deactiveAllByCinemaId {}", id);
         if (invalidPosNumber(id)) return;
-        List<Room> rooms = this.findAllByCinemaId(id);
+        List<Room> rooms = roomRepo.findAllByCinema_Id(id);
         for (Room room : rooms) room.setActive(false);
     }
 

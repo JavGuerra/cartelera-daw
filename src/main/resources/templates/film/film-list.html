@@ -14,11 +14,11 @@
 
     <h1 class="cartelera-h1 mt-4">Películas <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
 
-    <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(films)}">
-        Actualmente no hay ninguna película para mostrar.
+    <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(films) || #lists.isEmpty(films.content)}">
+        No hay ninguna película para mostrar.
     </div>
 
-    <div class="row mt-4" th:if="${#lists.size(films) > 0}">
+    <div class="row mt-4" th:if="${#lists.size(films) > 0  || #lists.size(films.content) > 0}">
 
         <div th:each="film: ${films}" class="col d-flex flex-column align-items-center">
 
@@ -68,7 +68,8 @@
     <div th:if="${page?.totalPages gt 0}" class="row d-flex justify-content-center align-items-center">
 
         <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
-            <p th:text="'Mostrando ' + ${page.numberOfElements} + ' películas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de un total de ' + ${page.totalElements} + ' películas.'"></p>
+            <p th:if="${page?.totalPages gt 1}" th:text="'Mostrando ' + ${page.numberOfElements} + ' películas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de ' + ${page.totalElements} + ' películas.'"></p>
+            <p th:unless="${page?.totalPages gt 1}" th:text="'Hay ' + ${page.numberOfElements} + ' películas.'"></p>
         </div>
 
         <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">

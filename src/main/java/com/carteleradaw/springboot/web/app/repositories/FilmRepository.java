@@ -11,17 +11,18 @@ import java.util.List;
 
 public interface FilmRepository extends JpaRepository<Film, Long> {
 
+    @Query("SELECT f FROM Film f WHERE f.active = true")
     List<Film> findAllByActiveTrue();
 
     @Query("SELECT f FROM Film f WHERE f.active = true")
     Page<Film> findAllByActiveTrue(Pageable paging);
 
     @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
-    Page<Film> findByCityInFilms(@Param("city") String city, Pageable paging);
+    Page<Film> findAllByCityInFilms(@Param("city") String city, Pageable paging);
 
     @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND f.active = true")
-    Page<Film> findByCityInFilmsAndActiveTrue(@Param("city") String cit, Pageable pagingy);
+    Page<Film> findAllByCityInFilmsAndActiveTrue(@Param("city") String cit, Pageable pagingy);
 
 //    @Query("SELECT f FROM Film f JOIN f.genres g WHERE g.name = :genre")
-//    List<Film> findByGenreInFilms(@Param("genre") String genre);
+//    List<Film> findAllByGenreInFilms(@Param("genre") String genre);
 }

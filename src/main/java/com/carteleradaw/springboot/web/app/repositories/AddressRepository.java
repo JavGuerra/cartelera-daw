@@ -10,5 +10,5 @@ import java.util.List;
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
     @Query("SELECT a FROM Address a WHERE upper(a.city) = upper(:city)")
-    List<Address> findByCityIgnoreCase(@Param("city") String city);
+    List<Address> findAllByCityIgnoreCase(@Param("city") String city);
 }
