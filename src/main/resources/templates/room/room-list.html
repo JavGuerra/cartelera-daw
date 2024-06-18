@@ -17,11 +17,11 @@
         <span sec:authorize="isAuthenticated()">Salas <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></span>
     </h1>
 
-    <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms)}">
-        Actualmente no hay ninguna sala para mostrar.
+    <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms) || #lists.isEmpty(rooms.content)}">
+        No hay ninguna sala para mostrar.
     </div>
 
-    <div class="row mt-4" th:if="${#lists.size(rooms) > 0}">
+    <div class="row mt-4" th:if="${#lists.size(rooms) > 0 || #lists.size(rooms.content) > 0}">
 
         <div th:each="room: ${rooms}" class="col d-flex flex-column align-items-center">
 
@@ -69,7 +69,8 @@
     <div th:if="${page?.totalPages gt 0}" class="row d-flex justify-content-center align-items-center">
 
         <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
-            <p th:text="'Mostrando ' + ${page.numberOfElements} + ' salas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de un total de ' + ${page.totalElements} + ' salas.'"></p>
+            <p th:if="${page?.totalPages gt 1}" th:text="'Mostrando ' + ${page.numberOfElements} + ' salas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de ' + ${page.totalElements} + ' salas.'"></p>
+            <p th:unless="${page?.totalPages gt 1}" th:text="'Hay ' + ${page.numberOfElements} + ' salas.'"></p>
         </div>
 
         <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">

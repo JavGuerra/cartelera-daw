@@ -30,12 +30,6 @@ public class FilmController {
 
     /**
      * Lista todas las películas.
-     * @param model Modelo.
-     * @return Plantilla film-list.
-     */
-
-    /**
-     * Lista todas las películas.
      * @param page Número de página para paginación.
      * @param size Tamaño de página para paginación.
      * @param model Modelo.

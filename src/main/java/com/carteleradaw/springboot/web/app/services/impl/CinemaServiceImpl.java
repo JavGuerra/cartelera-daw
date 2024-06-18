@@ -32,7 +32,7 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public List<Cinema> findAll() {
         if (isAuth()) return cinemaRepo.findAll();
-        else return cinemaRepo.findAllActiveCinemas();
+        else return cinemaRepo.findAllByCinemasAndActiveTrue();
     }
 
     @Override
@@ -69,12 +69,10 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public Page<Cinema> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        if (stringIsEmpty(city)) {
-            return cinemaRepo.findAll(paging);
-        } else {
-            if (isAuth()) return cinemaRepo.findByCity(city, paging);
-            else return cinemaRepo.findByCityAndActiveTrue(city, paging);
-        }
+        if (stringIsEmpty(city)) return (isAuth()) ?
+                cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveTrue(paging);
+        else return (isAuth()) ?
+                cinemaRepo.findAllByCity(city, paging) : cinemaRepo.findAllByCityAndActiveTrue(city, paging);
     }
 
     @Override

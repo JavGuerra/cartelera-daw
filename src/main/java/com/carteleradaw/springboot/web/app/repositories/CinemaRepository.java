@@ -16,17 +16,17 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     Cinema findByAddress_Id(@Param("id") Long id);
 
     @Query("SELECT c from Cinema c WHERE c.active = true")
-    List<Cinema> findAllByActive();
+    Page<Cinema> findAllByActiveTrue(Pageable paging);
 
     @Query("SELECT c from Cinema c WHERE upper(c.cif) = upper(:cif)")
     Optional<Cinema> findByCif(@Param("cif") String cif);
 
     @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
-    Page<Cinema> findByCity(@Param("city") String city, Pageable paging);
+    Page<Cinema> findAllByCity(@Param("city") String city, Pageable paging);
 
     @Query("SELECT c FROM Cinema c WHERE c.active = true")
-    List<Cinema> findAllActiveCinemas();
+    List<Cinema> findAllByCinemasAndActiveTrue();
 
     @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND c.active = true")
-    Page<Cinema> findByCityAndActiveTrue(@Param("city") String city, Pageable paging);
+    Page<Cinema> findAllByCityAndActiveTrue(@Param("city") String city, Pageable paging);
 }
