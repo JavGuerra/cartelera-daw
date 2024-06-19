@@ -73,12 +73,16 @@
 
         <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
             <ul class="pagination pagination-sm">
-                <li th:if="${page.currentPage > 0}" class="page-item">
-                    <a th:href="@{/films(page=0, size=${page.pageSize})}" aria-label="Inicio" class="page-link">&LeftArrowBar;</a>
+                <li class="page-item">
+                    <a th:href="@{/films(page=0, size=${page.pageSize})}"
+                       th:aria-label="${page.currentPage == 0? 'Inicio (desactivado)' : 'Inicio'}"
+                       th:class="${page.currentPage == 0? 'page-link disabled' : 'page-link'}">&LeftArrowBar;</a>
                 </li>
 
-                <li th:if="${page.currentPage > 0}" class="page-item">
-                    <a th:href="@{/films(page=${page.currentPage - 1}, size=${page.pageSize})}" aria-label="Anterior" class="page-link">&RightArrow;</a>
+                <li class="page-item">
+                    <a th:href="@{/films(page=${page.currentPage - 1}, size=${page.pageSize})}"
+                       th:aria-label="${page.currentPage == 0? 'Anterior (desactivado)' : 'Anterior'}"
+                       th:class="${page.currentPage == 0? 'page-link disabled' : 'page-link'}">&RightArrow;</a>
                 </li>
 
                 <li th:each="pageNumber : ${#numbers.sequence(page.startPage, page.endPage)}"
@@ -89,12 +93,16 @@
                        class="page-link"></a>
                 </li>
 
-                <li th:if="${page.currentPage < page.totalPages - 1}" class="page-item">
-                    <a th:href="@{/films(page=${page.currentPage + 1}, size=${page.pageSize})}" aria-label="Siguiente" class="page-link">&rightarrow;</a>
+                <li class="page-item">
+                    <a th:href="@{/films(page=${page.currentPage + 1}, size=${page.pageSize})}"
+                       th:aria-label="${page.currentPage == page.totalPages - 1? 'Siguiente (desactivado)' : 'Siguiente'}"
+                       th:class="${page.currentPage == page.totalPages - 1? 'page-link disabled' : 'page-link'}">&rightarrow;</a>
                 </li>
 
-                <li th:if="${page.currentPage < page.totalPages - 1}" class="page-item">
-                    <a th:href="@{/films(page=${page.totalPages - 1}, size=${page.pageSize})}" aria-label="Fin" class="page-link">&RightArrowBar;</a>
+                <li class="page-item">
+                    <a th:href="@{/films(page=${page.totalPages - 1}, size=${page.pageSize})}"
+                       th:aria-label="${page.currentPage == page.totalPages - 1? 'Fin (desactivado)' : 'Fin'}"
+                       th:class="${page.currentPage == page.totalPages - 1? 'page-link disabled' : 'page-link'}">&RightArrowBar;</a>
                 </li>
             </ul>
         </nav>

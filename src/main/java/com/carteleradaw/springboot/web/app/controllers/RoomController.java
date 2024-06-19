@@ -8,6 +8,8 @@ import com.carteleradaw.springboot.web.app.services.IRoomService;
 import com.carteleradaw.springboot.web.app.utils.PageInfo;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @RequestMapping("/rooms")
 public class RoomController {
 
+    private static final Logger log = LoggerFactory.getLogger(RoomController.class);
     private final GlobalStateService globalStateService;
     private final IRoomService roomService;
     private final ICinemaService cinemaService;
@@ -112,7 +115,8 @@ public class RoomController {
                 model.addAttribute("rooms", rooms);
                 model.addAttribute("returnUrl", "rooms");
 
-            } else model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
+            } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Película sin salas");
+            else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
         } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
 
         return "room/room-list";
@@ -147,7 +151,8 @@ public class RoomController {
                 model.addAttribute("rooms", rooms);
                 model.addAttribute("returnUrl", "rooms");
 
-            } else model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
+            } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
+            else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
         } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
 
         return "room/room-list";
