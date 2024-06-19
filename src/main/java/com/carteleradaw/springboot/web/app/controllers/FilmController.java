@@ -42,13 +42,17 @@ public class FilmController {
 
         Pageable paging = PageRequest.of(page, size);
         Page<Film> films = filmService.findAllByCity(globalStateService.getSelectedCity(), paging);
-        PageInfo pageInfo = PageInfo.createFromPage(films);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("page", pageInfo);
-        model.addAttribute("films", films);
-        model.addAttribute("returnUrl", "films");
+        if (!films.isEmpty()) {
+            PageInfo pageInfo = PageInfo.createFromPage(films);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("page", pageInfo);
+            model.addAttribute("films", films);
+            model.addAttribute("returnUrl", "films");
+
+        } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna película que mostrar");
 
         return "film/film-list";
     }

@@ -21,6 +21,8 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 public class RoomServiceImpl implements IRoomService {
 
     private final RoomRepository roomRepo;
+    private final CinemaServiceImpl cinemaService;
+    private final FilmServiceImpl filmService;
 
     @Override
     public List<Room> findAll() {
@@ -77,7 +79,7 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public Page<Room> findAllByCinemaId(Long id, Pageable paging) { // TODO ¿Devuelve vacío?
         log.info("findAllByCinemaId {}", id);
-        if (invalidPosNumber(id)) return Page.empty();
+        if (invalidPosNumber(id) || !cinemaService.existsById(id)) return Page.empty();
         if (isAuth()) return roomRepo.findAllByCinema_Id(id, paging);
         else return roomRepo.findAllByCinema_IdAndActiveTrue(id, paging);
     }
@@ -92,7 +94,7 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public Page<Room> findAllByFilmAndCity(Long id, String city, Pageable paging) {
         log.info("findAllByFilmAndCity {}", id);
-        if (invalidPosNumber(id)) return Page.empty();
+        if (invalidPosNumber(id) || !filmService.existsById(id)) return Page.empty();
         if (stringIsEmpty(city)) {
             if (isAuth()) return roomRepo.findAllByFilm_Id(id, paging);
             else return roomRepo.findAllByFilm_IdAndActiveTrue(id, paging);

@@ -8,6 +8,8 @@ import com.carteleradaw.springboot.web.app.services.IRoomService;
 import com.carteleradaw.springboot.web.app.utils.PageInfo;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @RequestMapping("/rooms")
 public class RoomController {
 
+    private static final Logger log = LoggerFactory.getLogger(RoomController.class);
     private final GlobalStateService globalStateService;
     private final IRoomService roomService;
     private final ICinemaService cinemaService;
@@ -50,13 +53,17 @@ public class RoomController {
 
         Pageable paging = PageRequest.of(page, size);
         Page<Room> rooms = roomService.findAllByCity(globalStateService.getSelectedCity(), paging);
-        PageInfo pageInfo = PageInfo.createFromPage(rooms);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("page", pageInfo);
-        model.addAttribute("rooms", rooms);
-        model.addAttribute("returnUrl", "rooms");
+        if (!rooms.isEmpty()) {
+            PageInfo pageInfo = PageInfo.createFromPage(rooms);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("page", pageInfo);
+            model.addAttribute("rooms", rooms);
+            model.addAttribute("returnUrl", "rooms");
+
+        } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna sala que mostrar");
 
         return "room/room-list";
     }
@@ -94,15 +101,23 @@ public class RoomController {
                                @RequestParam(defaultValue = "10") int size,
                                @PathVariable Long id, Model model) {
 
-        Pageable paging = PageRequest.of(page, size);
-        Page<Room> rooms = roomService.findAllByFilmAndCity(id, globalStateService.getSelectedCity(), paging);
-        PageInfo pageInfo = PageInfo.createFromPage(rooms);
+        if (!invalidPosNumber(id) && filmService.existsById(id)) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("page", pageInfo);
-        model.addAttribute("rooms", rooms);
-        model.addAttribute("returnUrl", "rooms");
+            Pageable paging = PageRequest.of(page, size);
+            Page<Room> rooms = roomService.findAllByFilmAndCity(id, globalStateService.getSelectedCity(), paging);
+
+            if (!rooms.isEmpty()) {
+                PageInfo pageInfo = PageInfo.createFromPage(rooms);
+
+                model.addAttribute("cities", globalStateService.getCitiesNames());
+                model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+                model.addAttribute("page", pageInfo);
+                model.addAttribute("rooms", rooms);
+                model.addAttribute("returnUrl", "rooms");
+
+            } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Película sin salas");
+            else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
+        } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
 
         return "room/room-list";
     }
@@ -120,18 +135,25 @@ public class RoomController {
                                  @RequestParam(defaultValue = "10") int size,
                                  @PathVariable Long id, Model model) {
 
-        // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
-        globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
+        if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
 
-        Pageable paging = PageRequest.of(page, size);
-        Page<Room> rooms = roomService.findAllByCinemaId(id, paging);
-        PageInfo pageInfo = PageInfo.createFromPage(rooms);
+            Pageable paging = PageRequest.of(page, size);
+            Page<Room> rooms = roomService.findAllByCinemaId(id, paging);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("page", pageInfo);
-        model.addAttribute("rooms", rooms);
-        model.addAttribute("returnUrl", "rooms");
+            if (!rooms.isEmpty()) {
+                PageInfo pageInfo = PageInfo.createFromPage(rooms);
+                // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
+                globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
+
+                model.addAttribute("cities", globalStateService.getCitiesNames());
+                model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+                model.addAttribute("page", pageInfo);
+                model.addAttribute("rooms", rooms);
+                model.addAttribute("returnUrl", "rooms");
+
+            } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
+            else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
+        } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
 
         return "room/room-list";
     }

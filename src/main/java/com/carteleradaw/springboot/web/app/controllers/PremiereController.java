@@ -32,11 +32,15 @@ public class PremiereController {
         if (isAuth()) globalStateService.updateCitiesNames();
 
         List<Room> premieres = roomService.findAllByPremiereDescDistinct(globalStateService.getSelectedCity());
-        if (premieres.size() > 4) premieres = premieres.subList(0, 4);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("premieres", premieres);
+        if (!premieres.isEmpty()) {
+            if (premieres.size() > 4) premieres = premieres.subList(0, 4);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("premieres", premieres);
+
+        } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna sala que mostrar");
 
         return "index";
     }

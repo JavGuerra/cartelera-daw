@@ -48,13 +48,17 @@ public class CinemaController {
 
         Pageable paging = PageRequest.of(page, size);
         Page<Cinema> cinemas = cinemaService.findAllByCity(globalStateService.getSelectedCity(), paging);
-        PageInfo pageInfo = PageInfo.createFromPage(cinemas);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("page", pageInfo);
-        model.addAttribute("cinemas", cinemas);
-        model.addAttribute("returnUrl", "cinemas");
+        if (!cinemas.isEmpty()) {
+            PageInfo pageInfo = PageInfo.createFromPage(cinemas);
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("page", pageInfo);
+            model.addAttribute("cinemas", cinemas);
+            model.addAttribute("returnUrl", "cinemas");
+
+        } else model.addAttribute("error", "\uD83E\uDD74 No hay ningun cine que mostrar");
 
         return "cinema/cinema-list";
     }
