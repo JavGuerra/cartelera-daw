@@ -15,7 +15,7 @@
     <h1 class="cartelera-h1 mt-4">Cines<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></h1>
 
     <h2 th:if="${error != null || (#lists.isEmpty(cinemas) || #lists.isEmpty(cinemas.content))}"
-        th:text="${error}" role="alert" class="col mt-3 alert alert-info"></h2>
+        th:text="${error}" role="alert" class="col mt-3 alert alert-danger"></h2>
 
     <div th:if="${error == null && (#lists.size(cinemas) > 0 || #lists.size(cinemas.content) > 0)}" class="row mt-4">
 
