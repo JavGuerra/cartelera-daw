@@ -12,13 +12,12 @@
 
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
-    <h1 class="cartelera-h1 mt-4">Cines <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
+    <h1 class="cartelera-h1 mt-4">Cines<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></h1>
 
-    <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(cinemas) || #lists.isEmpty(cinemas.content)}">
-        No hay ningún cine para mostrar.
-    </div>
+    <h2 th:if="${error != null || (#lists.isEmpty(cinemas) || #lists.isEmpty(cinemas.content))}"
+        th:text="${error}" role="alert" class="col mt-3 alert alert-info"></h2>
 
-    <div class="row mt-4" th:if="${#lists.size(cinemas) > 0 || #lists.size(cinemas.content) > 0}">
+    <div th:if="${error == null && (#lists.size(cinemas) > 0 || #lists.size(cinemas.content) > 0)}" class="row mt-4">
 
         <div th:each="cinema : ${cinemas}" class="col d-flex flex-column align-items-center">
 

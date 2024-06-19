@@ -13,15 +13,14 @@
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
     <h1 class="cartelera-h1 mt-4">
-        <span sec:authorize="isAnonymous()">Cartelera <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></span>
-        <span sec:authorize="isAuthenticated()">Salas <span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></span>
+        <span sec:authorize="isAnonymous()">Cartelera<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></span>
+        <span sec:authorize="isAuthenticated()">Salas<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></span>
     </h1>
 
-    <div class="col mt-3 alert alert-info" role="alert" th:if="${#lists.isEmpty(rooms) || #lists.isEmpty(rooms.content)}">
-        No hay ninguna sala para mostrar.
-    </div>
+    <h2 th:if="${error != null || (#lists.isEmpty(rooms) || #lists.isEmpty(rooms.content))}"
+        th:text="${error}" role="alert" class="col my-3 alert alert-danger"></h2>
 
-    <div class="row mt-4" th:if="${#lists.size(rooms) > 0 || #lists.size(rooms.content) > 0}">
+    <div th:if="${error == null && (#lists.size(rooms) > 0 || #lists.size(rooms.content) > 0)}" class="row mt-4">
 
         <div th:each="room: ${rooms}" class="col d-flex flex-column align-items-center">
 

@@ -10,13 +10,12 @@
 
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
 
-    <h1 class="cartelera-h1 my-4">Bienvenido a todos los estrenos<span th:if="${selectedCity != ''}" th:text="| de ${selectedCity}|"></span></h1>
+    <h1 class="cartelera-h1 my-4">Bienvenido a todos los estrenos<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></h1>
 
-        <div th:if="${#lists.isEmpty(premieres)}" role="alert" class="col mt-3 alert alert-info">
-            Actualmente no hay ninguna sala para mostrar.
-        </div>
+        <h2 th:if="${error != null || #lists.isEmpty(premieres)}"
+            th:text="${error}" role="alert" class="col mt-3 alert alert-info"></h2>
 
-        <div th:if="${#lists.size(premieres) > 0}" class="row d-flex justify-content-center">
+        <div th:if="${error == null && #lists.size(premieres) > 0}" class="row d-flex justify-content-center">
 
             <div class="col-sm-12 col-lg-5 col-xl-6">
 
