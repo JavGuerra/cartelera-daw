@@ -5,7 +5,6 @@ import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @Service
 public class CinemaServiceImpl implements ICinemaService {
 
-    private final GlobalStateService globalStateService;
+    private final GlobalStateServiceImpl globalStateService;
     private final CinemaRepository cinemaRepo;
     private final RoomRepository roomRepo;
     private final AddressRepository addressRepo;

@@ -1,7 +1,7 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Room;
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
+import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +19,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 @Controller
 public class PremiereController {
 
-    private final GlobalStateService globalStateService;
+    private final GlobalStateServiceImpl globalStateService;
     private final IRoomService roomService;
 
     /**
@@ -47,7 +47,7 @@ public class PremiereController {
 
     /**
      * Actualiza la variable de sesión selectedCity con el valor seleccionado.
-     * @param selectedCity.
+     * @param selectedCity ciudad seleccionada.
      * @return Plantilla index.
      */
     @PostMapping("/setCity")

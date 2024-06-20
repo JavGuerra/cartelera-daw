@@ -75,9 +75,7 @@
         </div>
     </div>
 
-    <div class="text-center">
-        Actualmente hay <span th:text="${#lists.size(users)}"></span> usuarios.
-    </div>
+    <div class="text-center">Hay <span th:text="${#lists.size(users)}"></span> usuarios.</div>
 
     <div class="text-center my-4">
         <a class="btn btn-outline-primary" th:href="@{/users/create}"

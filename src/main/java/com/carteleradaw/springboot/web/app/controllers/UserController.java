@@ -1,7 +1,7 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.User;
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
+import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.IUserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private final GlobalStateService globalStateService;
+    private final GlobalStateServiceImpl globalStateService;
     private final IUserService userService;
     private final PasswordEncoder passwordEncoder;
 
