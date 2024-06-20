@@ -23,7 +23,7 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Debe ingresar un título.")
+    @NotBlank(message = "Debe ingresar un título.")
     @Column(nullable = false)
     private String title;
 
@@ -69,7 +69,7 @@ public class Film {
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String poster;
 
-    @NotNull(message = "Debe ingresar una sinopsis.")
+    @NotBlank(message = "Debe ingresar una sinopsis.")
     @Column(nullable = false)
     private String synopsis;
 

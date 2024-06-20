@@ -1,7 +1,7 @@
 package com.carteleradaw.springboot.web.app.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -26,7 +26,7 @@ public class Address {
     @Column(length = 5)
     private String postalCode;
 
-    @NotEmpty(message = "Debe ingresar una ciudad.")
+    @NotBlank(message = "Debe ingresar una ciudad.")
     private String city;
 
     private String country;

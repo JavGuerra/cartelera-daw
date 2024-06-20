@@ -2,6 +2,7 @@ package com.carteleradaw.springboot.web.app.entities;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -32,7 +33,7 @@ public class Cinema {
     @Column(nullable = false)
     private Boolean active;
 
-    @NotEmpty(message = "Debe ingresar un nombre.")
+    @NotBlank(message = "Debe ingresar un nombre.")
     @Column(nullable = false)
     private String name;
 
@@ -63,6 +64,7 @@ public class Cinema {
     @NotNull(message = "La dirección no puede estar vacía.")
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
+    @Valid // Importante para poder validar los campos de la entidad Address asociada en el formulario.
     private Address address;
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
