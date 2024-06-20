@@ -20,12 +20,6 @@ footer {
     background: linear-gradient(to bottom, Tan 10%, moccasin 90%);
 }
 
-.carousel-caption {
-    background: rgba(0, 0, 0, 0.5); /* Cambia el último valor para ajustar la opacidad */
-    padding: 10px; /* Ajusta el padding según sea necesario */
-    color: #fff; /* Cambia el color del texto si es necesario */
-}
-
 .cartelera-h1 {
     font-size: 3em;
 }
