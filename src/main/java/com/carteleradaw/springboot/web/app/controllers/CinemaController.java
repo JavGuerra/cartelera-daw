@@ -135,6 +135,8 @@ public class CinemaController {
     public String saveForm(@Valid @ModelAttribute Cinema cinema, BindingResult result) {
         if (result.hasErrors()) {
             return "cinema/cinema-form";
+//        } else if (!result.getFieldErrors("address").isEmpty()) { // Ejemplo de validación de un campo
+//            return "cinema/cinema-form";
         } else {
             if (cinemaService.existsByCif(cinema.getCif())) {
                 Long existingId = cinemaRepository.findByCif(cinema.getCif()).get().getId();
