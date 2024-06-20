@@ -47,7 +47,7 @@ public class PremiereController {
 
     /**
      * Actualiza la variable de sesión selectedCity con el valor seleccionado.
-     * @param selectedCity.
+     * @param selectedCity ciudad seleccionada.
      * @return Plantilla index.
      */
     @PostMapping("/setCity")
