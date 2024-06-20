@@ -30,11 +30,11 @@ public class LegalController {
      * Crea la ruta para la página de política de privacidad.
      * @return página de la política de privacidad.
      */
-    @GetMapping("/privacity")
-    public String showPrivacity(Model model) {
+    @GetMapping("/privacy")
+    public String showPrivacy(Model model) {
         model.addAttribute("cities", globalStateService.getCitiesNames());
         model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("returnUrl", "privacity");
-        return "privacity";
+        model.addAttribute("returnUrl", "privacy");
+        return "privacy";
     }
 }

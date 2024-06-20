@@ -10,7 +10,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
 
     <div class="row mt-4">
         <h1 class="cartelera-h1">Listado de usuarios</h1>
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div class="text-center">Hay <span th:text="${#lists.size(users)}"></span> usuarios.</div>
+    <div class="text-center"><span th:text="${#lists.size(users)}"></span> usuarios.</div>
 
     <div class="text-center my-4">
         <a class="btn btn-outline-primary" th:href="@{/users/create}"

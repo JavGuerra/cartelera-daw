@@ -10,7 +10,7 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
-<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white opacity-75 rounded-4 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
 
     <h1 class="cartelera-h1 mt-4">
         <span sec:authorize="isAnonymous()">Cartelera<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></span>
@@ -44,8 +44,8 @@
 
             <div class="mb-5">
                 <div class="my-1">
-                    <small th:text="|Sala ${room.roomNumber}|" class="badge text-secondary text-bg-light mx-1"></small>
-                    <small th:if="${room.film != null}" th:text="${room.film?.classification?: ''}" class="text-decoration-none badge text-secondary text-bg-light mx-1"></small>
+                    <small th:text="|Sala ${room.roomNumber}|" class="badge text-secondary bg-white mx-1"></small>
+                    <small th:if="${room.film != null}" th:text="${room.film?.classification?: ''}" class="badge text-secondary bg-white mx-1"></small>
                     <small th:if="${room.film != null}" th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}" class="ms-1 me-2"></small>
                     <a title="Cartelera" th:if="${room.film != null}" th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
@@ -68,8 +68,8 @@
     <div th:if="${page?.totalPages gt 0}" class="row d-flex justify-content-center align-items-center">
 
         <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
-            <p th:if="${page?.totalPages gt 1}" th:text="'Mostrando ' + ${page.numberOfElements} + ' salas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de ' + ${page.totalElements} + ' salas.'"></p>
-            <p th:unless="${page?.totalPages gt 1}" th:text="'Hay ' + ${page.numberOfElements} + ' salas.'"></p>
+            <p th:if="${page?.totalPages gt 1}" th:text="${page.numberOfElements} + ' salas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de ' + ${page.totalElements} + ' salas.'"></p>
+            <p th:unless="${page?.totalPages gt 1}" th:text="${page.numberOfElements} + ' salas.'"></p>
         </div>
 
         <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
