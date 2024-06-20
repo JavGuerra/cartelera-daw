@@ -3,7 +3,7 @@ package com.carteleradaw.springboot.web.app.controllers;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
+import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import com.carteleradaw.springboot.web.app.utils.PageInfo;
@@ -29,7 +29,9 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @RequestMapping("/cinemas")
 public class CinemaController {
 
-    private final GlobalStateService globalStateService;
+    private final GlobalStateServiceImpl globalStateService;
+    private final PageInfo pageInfoComponent;
+
     private final ICinemaService cinemaService;
     private final IRoomService roomService;
     private final CinemaRepository cinemaRepository;
@@ -50,7 +52,7 @@ public class CinemaController {
         Page<Cinema> cinemas = cinemaService.findAllByCity(globalStateService.getSelectedCity(), paging);
 
         if (!cinemas.isEmpty()) {
-            PageInfo pageInfo = PageInfo.createFromPage(cinemas);
+            PageInfo pageInfo = pageInfoComponent.createFromPage(cinemas);
 
             model.addAttribute("cities", globalStateService.getCitiesNames());
             model.addAttribute("selectedCity", globalStateService.getSelectedCity());

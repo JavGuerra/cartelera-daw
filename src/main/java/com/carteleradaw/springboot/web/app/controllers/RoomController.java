@@ -1,7 +1,7 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Room;
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
+import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
@@ -30,8 +30,9 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @RequestMapping("/rooms")
 public class RoomController {
 
-    private static final Logger log = LoggerFactory.getLogger(RoomController.class);
-    private final GlobalStateService globalStateService;
+    private final GlobalStateServiceImpl globalStateService;
+    private final PageInfo pageInfoComponent;
+
     private final IRoomService roomService;
     private final ICinemaService cinemaService;
     private final IFilmService filmService;
@@ -55,7 +56,7 @@ public class RoomController {
         Page<Room> rooms = roomService.findAllByCity(globalStateService.getSelectedCity(), paging);
 
         if (!rooms.isEmpty()) {
-            PageInfo pageInfo = PageInfo.createFromPage(rooms);
+            PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
 
             model.addAttribute("cities", globalStateService.getCitiesNames());
             model.addAttribute("selectedCity", globalStateService.getSelectedCity());
@@ -107,7 +108,7 @@ public class RoomController {
             Page<Room> rooms = roomService.findAllByFilmAndCity(id, globalStateService.getSelectedCity(), paging);
 
             if (!rooms.isEmpty()) {
-                PageInfo pageInfo = PageInfo.createFromPage(rooms);
+                PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
 
                 model.addAttribute("cities", globalStateService.getCitiesNames());
                 model.addAttribute("selectedCity", globalStateService.getSelectedCity());
@@ -141,7 +142,7 @@ public class RoomController {
             Page<Room> rooms = roomService.findAllByCinemaId(id, paging);
 
             if (!rooms.isEmpty()) {
-                PageInfo pageInfo = PageInfo.createFromPage(rooms);
+                PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
                 // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
                 globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
 

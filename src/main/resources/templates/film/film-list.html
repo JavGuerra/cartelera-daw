@@ -82,7 +82,7 @@
                 <li class="page-item">
                     <a th:href="@{/films(page=${page.currentPage - 1}, size=${page.pageSize})}"
                        th:aria-label="${page.currentPage == 0? 'Anterior (desactivado)' : 'Anterior'}"
-                       th:class="${page.currentPage == 0? 'page-link disabled' : 'page-link'}">&RightArrow;</a>
+                       th:class="${page.currentPage == 0? 'page-link disabled' : 'page-link'}">&LeftArrow;</a>
                 </li>
 
                 <li th:each="pageNumber : ${#numbers.sequence(page.startPage, page.endPage)}"
@@ -96,7 +96,7 @@
                 <li class="page-item">
                     <a th:href="@{/films(page=${page.currentPage + 1}, size=${page.pageSize})}"
                        th:aria-label="${page.currentPage == page.totalPages - 1? 'Siguiente (desactivado)' : 'Siguiente'}"
-                       th:class="${page.currentPage == page.totalPages - 1? 'page-link disabled' : 'page-link'}">&rightarrow;</a>
+                       th:class="${page.currentPage == page.totalPages - 1? 'page-link disabled' : 'page-link'}">&RightArrow;</a>
                 </li>
 
                 <li class="page-item">

@@ -4,7 +4,6 @@ import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
-import com.carteleradaw.springboot.web.app.services.GlobalStateService;
 import com.carteleradaw.springboot.web.app.services.IAddressService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,7 @@ import java.util.*;
 @Service
 public class AddressServiceImpl implements IAddressService {
 
-    private final GlobalStateService globalStateService;
+    private final GlobalStateServiceImpl globalStateService;
     private final AddressRepository addressRepo;
     private final CinemaRepository cinemaRepo;
 
