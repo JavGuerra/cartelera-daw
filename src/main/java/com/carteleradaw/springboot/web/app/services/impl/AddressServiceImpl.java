@@ -76,19 +76,18 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
-        if (invalidPosNumber(id) && !existsById(id)) return;
-        if (cinemaRepo.findByAddress_Id(id) != null) {
-            cinemaRepo.findByAddress_Id(id).setAddress(null);
-        }
+        if (invalidPosNumber(id) || !existsById(id)) return;
 
-        Optional<Address> addressOpt = this.findById(id);
+        String city = findById(id).get().getCity();
+
+        if (cinemaRepo.findByAddress_Id(id) != null) cinemaRepo.findByAddress_Id(id).setAddress(null);
+        addressRepo.deleteById(id);
 
         // Si ya no hay direcciones con esta ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
-        if (!existsCity(addressOpt.get().getCity())) {
+        if (!existsCity(city)) {
             globalStateService.setSelectedCity("");
             globalStateService.updateCitiesNames();
         }
 
-        addressRepo.deleteById(id);
     }
 }

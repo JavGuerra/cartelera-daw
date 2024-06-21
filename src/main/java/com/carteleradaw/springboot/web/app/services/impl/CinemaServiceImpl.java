@@ -41,9 +41,8 @@ public class CinemaServiceImpl implements ICinemaService {
         log.info("isActive {}", id);
         if (invalidPosNumber(id)) return false;
         if (isAuth()) return true;
-        else if (this.existsById(id)) {
-            return this.findById(id).get().getActive();
-        } else return false;
+        if (existsById(id)) return findById(id).get().getActive();
+        return false;
     }
 
     @Override
@@ -57,7 +56,7 @@ public class CinemaServiceImpl implements ICinemaService {
     public boolean existsByCif(String cif) {
         log.info("existsByCif {}", cif);
         if (stringIsEmpty(cif)) return false;
-        else return cinemaRepo.findByCif(cif).isPresent();
+        return cinemaRepo.findByCif(cif).isPresent();
     }
 
     @Override
@@ -70,9 +69,8 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public Page<Cinema> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        if (stringIsEmpty(city)) return (isAuth()) ?
-                cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveTrue(paging);
-        else return (isAuth()) ?
+        if (stringIsEmpty(city)) return (isAuth()) ? cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveTrue(paging);
+        return (isAuth()) ?
                 cinemaRepo.findAllByCity(city, paging) : cinemaRepo.findAllByCityAndActiveTrue(city, paging);
     }
 
@@ -80,17 +78,12 @@ public class CinemaServiceImpl implements ICinemaService {
     public Cinema save(Cinema cinema) {
         log.info("save {}", cinema);
         Address address = cinema.getAddress();
-        if(!invalidPosNumber(address.getId()) && addressRepo.existsById(address.getId()))
-            addressRepo.save(address);
+        if(!invalidPosNumber(address.getId()) && addressRepo.existsById(address.getId())) addressRepo.save(address);
 
         if (cinema.getActive()) {
-            if (existsById(cinema.getId())) {
-                if (roomRepo.findAllByCinema_Id(cinema.getId()).isEmpty()) {
-                    cinema.setActive(false);
-                }
-            } else {
-                cinema.setActive(false);
-            }
+            if (existsById(cinema.getId())) { // ¿existe ya?
+                if (roomRepo.findAllByCinema_Id(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
+            } else cinema.setActive(false);
         }
 
         Cinema newCinema = cinemaRepo.save(cinema);

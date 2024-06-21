@@ -45,9 +45,8 @@ public class FilmServiceImpl implements IFilmService {
         log.info("isActive {}", id);
         if (invalidPosNumber(id)) return false;
         if (isAuth()) return true;
-        else if (filmRepo.existsById(id)) {
-                return filmRepo.findById(id).get().getActive();
-            } else return false;
+        if (filmRepo.existsById(id)) return filmRepo.findById(id).get().getActive();
+        return false;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class FilmServiceImpl implements IFilmService {
     public Page<Film> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) return (isAuth()) ? filmRepo.findAll(paging) : filmRepo.findAllByActiveTrue(paging);
-        else return (isAuth()) ?
+        return (isAuth()) ?
                 filmRepo.findAllByCityInFilms(city, paging) : filmRepo.findAllByCityInFilmsAndActiveTrue(city, paging);
     }
 
