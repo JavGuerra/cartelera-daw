@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+/**
+ * Controladores de rutas para películas.
+ */
 @AllArgsConstructor
 @Scope("session")
 @Controller

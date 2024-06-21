@@ -8,6 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Configuración de permisos de rutas.
+ */
 @Configuration
 public class  SecurityConfig {
 
@@ -16,6 +19,12 @@ public class  SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Gestiona permisos en las peticiones de rutas.
+     * @param http La petición.
+     * @return La ruta.
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -43,7 +52,7 @@ public class  SecurityConfig {
             .requestMatchers(HttpMethod.GET,"/films/**").permitAll()
             .requestMatchers(HttpMethod.GET,"/film/**").permitAll()
 
-            .requestMatchers(HttpMethod.GET,"/users/create").permitAll()
+            .requestMatchers(HttpMethod.GET,"/users/create").authenticated()
             .requestMatchers(HttpMethod.GET,"/users/{id}/edit").authenticated()
             .requestMatchers(HttpMethod.GET,"/users/{id}/delete").authenticated()
             .requestMatchers(HttpMethod.GET,"/users/**").authenticated()

@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz para servicios de películas.
+ */
 public interface IFilmService {
 
     /**
@@ -50,11 +53,11 @@ public interface IFilmService {
      */
     Page<Film> findAllByCity(String city, Pageable paging);
 
-    /**
-     * Obtiene la lista de películas con el género dado.
-     * @param genre el género.
-     * @return Lista de películas.
-     */
+//    /**
+//     * Obtiene la lista de películas con el género dado.
+//     * @param genre el género.
+//     * @return Lista de películas.
+//     */
 //     List<Film> findAllByGenre(String genre);
 
     /**

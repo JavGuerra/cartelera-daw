@@ -2,6 +2,9 @@ package com.carteleradaw.springboot.web.app.services;
 
 import java.util.Set;
 
+/**
+ * Interfaz para servicios de sesión.
+ */
 public interface IGlobalStateService {
 
     /**

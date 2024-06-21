@@ -1,5 +1,8 @@
 package com.carteleradaw.springboot.web.app.entities.enums;
 
+/**
+ * Tipo de clasificación.
+ */
 public enum Classification {
 
     ALL_AGES("TP"),

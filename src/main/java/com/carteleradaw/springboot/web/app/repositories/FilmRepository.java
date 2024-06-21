@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * Repositorio de películas.
+ */
 public interface FilmRepository extends JpaRepository<Film, Long> {
 
     @Query("SELECT f FROM Film f WHERE f.active = true")

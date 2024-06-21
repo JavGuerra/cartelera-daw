@@ -8,6 +8,9 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz para servicios de salas.
+ */
 public interface IRoomService {
 
     /**

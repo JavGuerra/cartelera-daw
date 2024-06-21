@@ -5,11 +5,12 @@ import com.carteleradaw.springboot.web.app.repositories.UserRepository;
 import com.carteleradaw.springboot.web.app.services.IUserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -20,9 +21,9 @@ public class UserServiceImpl implements IUserService {
     private final UserRepository userRepo;
 
     @Override
-    public List<User> findAll() {
+    public Page<User> findAll(Pageable paging) {
         log.info("findAll");
-        return userRepo.findAll();
+        return userRepo.findAll(paging);
     }
 
     @Override

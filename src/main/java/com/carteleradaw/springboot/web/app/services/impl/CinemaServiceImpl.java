@@ -17,7 +17,9 @@ import java.util.Optional;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
-
+/**
+ * Implementación de servicios de cines.
+ */
 @Slf4j
 @AllArgsConstructor
 @Service

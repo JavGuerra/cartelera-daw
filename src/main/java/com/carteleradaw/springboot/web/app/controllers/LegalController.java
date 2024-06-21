@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Controladores de rutas para legal y privacidad.
+ */
 @AllArgsConstructor
 @Scope("session")
 @Controller

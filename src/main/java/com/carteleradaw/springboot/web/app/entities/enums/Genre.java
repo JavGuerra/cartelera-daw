@@ -1,5 +1,8 @@
 package com.carteleradaw.springboot.web.app.entities.enums;
 
+/**
+ * tipo de género.
+ */
 public enum Genre {
 
     COMEDY("Comedia"),

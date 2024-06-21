@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.invalidPosNumber;
 
+/**
+ * Componente para información de páginas.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -15,6 +15,9 @@ import java.util.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+/**
+ * Implementación de servicios de salas.
+ */
 @Slf4j
 @AllArgsConstructor
 @Service
