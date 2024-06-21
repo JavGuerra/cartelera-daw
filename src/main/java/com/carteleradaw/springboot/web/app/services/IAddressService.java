@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Interfaz para servicios de direcciones.
+ */
 public interface IAddressService {
 
     /**

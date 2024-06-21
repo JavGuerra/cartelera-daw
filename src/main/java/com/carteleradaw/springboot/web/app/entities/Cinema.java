@@ -13,6 +13,9 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.CIF_PATTERN;
 import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 import static com.carteleradaw.springboot.web.app.utils.Utils.PHONE_PATTERN;
 
+/**
+ * Entidad para cines.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

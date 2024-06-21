@@ -11,6 +11,9 @@ import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 
+/**
+ * Entidad para películas.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
 <head>
     <title>Cartelera - Cine de estreno</title>
-    <th:replace th:replace="meta" />
+    <th:replace th:replace="~{meta :: meta}" />
 </head>
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{navbar :: navbar}"></div>

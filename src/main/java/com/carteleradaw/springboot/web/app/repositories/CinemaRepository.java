@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repositorio de cines.
+ */
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
     @Query("SELECT c from Cinema c WHERE c.address.id = :id")

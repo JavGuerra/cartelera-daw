@@ -15,6 +15,9 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 import java.util.*;
 
+/**
+ * Implementación de servicios de direcciones.
+ */
 @Scope("session")
 @Slf4j
 @AllArgsConstructor

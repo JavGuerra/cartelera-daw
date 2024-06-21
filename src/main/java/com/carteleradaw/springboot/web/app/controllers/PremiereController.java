@@ -14,6 +14,9 @@ import java.util.List;
 import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
 import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 
+/**
+ * Controlador de ruta para estrenos.
+ */
 @AllArgsConstructor
 @Scope("session")
 @Controller

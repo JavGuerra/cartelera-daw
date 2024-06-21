@@ -23,6 +23,9 @@ import java.util.Objects;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+/**
+ * Controladores de rutas para cines.
+ */
 @AllArgsConstructor
 @Scope("session")
 @Controller

@@ -14,6 +14,9 @@ import java.util.*;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.FormatDate;
 
+/**
+ * Entidad para salas.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

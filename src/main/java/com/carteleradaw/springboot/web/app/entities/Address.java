@@ -8,6 +8,9 @@ import lombok.*;
 import static com.carteleradaw.springboot.web.app.utils.Utils.POSTAL_CODE_PATTERN;
 import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 
+/**
+ * Entidad para direcciones.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

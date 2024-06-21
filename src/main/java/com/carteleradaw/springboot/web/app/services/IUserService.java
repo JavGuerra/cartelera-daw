@@ -1,17 +1,21 @@
 package com.carteleradaw.springboot.web.app.services;
 
 import com.carteleradaw.springboot.web.app.entities.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz para servicios de usuarios.
+ */
 public interface IUserService {
 
     /**
      * Obtiene la lista completa de usuarios.
      * @return Lista de usuarios.
      */
-    List<User> findAll();
+    Page<User> findAll(Pageable paging);
 
     /**
      * Comprueba si existe un usuario por si ID.

@@ -3,25 +3,33 @@ package com.carteleradaw.springboot.web.app.controllers;
 import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.IUserService;
+import com.carteleradaw.springboot.web.app.utils.PageInfo;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+/**
+ * Controladores de rutas para usuarios.
+ */
 @AllArgsConstructor
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
     private final GlobalStateServiceImpl globalStateService;
+    private final PageInfo pageInfoComponent;
+
     private final IUserService userService;
     private final PasswordEncoder passwordEncoder;
 
@@ -31,12 +39,17 @@ public class UserController {
      * @return Plantilla users-list.
      */
     @GetMapping("")
-    public String findAll(Model model) {
+    public String findAll(@RequestParam(defaultValue = "0") int page,
+                          @RequestParam(defaultValue = "10") int size,
+                          Model model) {
 
-        List<User> users = userService.findAll();
+        Pageable paging = PageRequest.of(page, size);
+        Page<User> users = userService.findAll(paging);
+        PageInfo pageInfo = pageInfoComponent.createFromPage(users);
 
         model.addAttribute("cities", globalStateService.getCitiesNames());
         model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("page", pageInfo);
         model.addAttribute("users", users);
         model.addAttribute("returnUrl", "users");
 

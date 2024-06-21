@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Controlador de ruta para la ayuda.
+ */
 @AllArgsConstructor
 @Scope("session")
 @Controller

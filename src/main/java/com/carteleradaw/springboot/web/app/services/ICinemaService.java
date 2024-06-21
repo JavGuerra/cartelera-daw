@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz para servicios de cines.
+ */
 public interface ICinemaService {
 
     /**

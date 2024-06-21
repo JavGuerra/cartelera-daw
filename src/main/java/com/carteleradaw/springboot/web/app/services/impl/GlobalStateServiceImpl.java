@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+/**
+ * Implementación de servicios de sesiones.
+ */
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Slf4j
 @AllArgsConstructor

@@ -12,6 +12,9 @@ import java.util.Collection;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 
+/**
+ * Entidad para usuarios.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

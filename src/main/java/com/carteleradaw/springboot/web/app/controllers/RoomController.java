@@ -22,6 +22,9 @@ import java.util.List;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
+/**
+ * Controladores de rutas para salas.
+ */
 @AllArgsConstructor
 @Scope("session")
 @Controller

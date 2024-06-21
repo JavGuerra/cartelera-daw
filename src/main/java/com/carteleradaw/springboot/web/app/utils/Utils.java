@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * Utilidades para la aplicación.
+ */
 public abstract class Utils {
 
     // Cinco dígitos o vacío
