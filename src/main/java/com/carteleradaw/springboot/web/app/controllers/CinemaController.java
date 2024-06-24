@@ -62,6 +62,7 @@ public class CinemaController {
             model.addAttribute("page", pageInfo);
             model.addAttribute("cinemas", cinemas);
             model.addAttribute("returnUrl", "cinemas");
+            model.addAttribute("entity", "cines");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ningun cine que mostrar");
 

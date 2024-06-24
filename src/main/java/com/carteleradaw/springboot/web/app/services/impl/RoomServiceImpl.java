@@ -38,9 +38,8 @@ public class RoomServiceImpl implements IRoomService {
         log.info("isActive {}", id);
         if (invalidPosNumber(id)) return false;
         if (isAuth()) return true;
-        else if (this.existsById(id)) {
-            return this.findById(id).get().getActive();
-        } else return false;
+        if (this.existsById(id)) return this.findById(id).get().getActive();
+        return false;
     }
 
     @Override
@@ -75,7 +74,7 @@ public class RoomServiceImpl implements IRoomService {
     public Page<Room> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) return (isAuth()) ? roomRepo.findAll(paging) : roomRepo.findAllByActiveTrue(paging);
-        else return (isAuth()) ?
+        return (isAuth()) ?
                 roomRepo.findAllByCityInRoom(city, paging) : roomRepo.findAllByCityInRoomAndActiveTrue(city, paging);
     }
 
@@ -84,7 +83,7 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findAllByCinemaId {}", id);
         if (invalidPosNumber(id) || !cinemaService.existsById(id)) return Page.empty();
         if (isAuth()) return roomRepo.findAllByCinema_Id(id, paging);
-        else return roomRepo.findAllByCinema_IdAndActiveTrue(id, paging);
+        return roomRepo.findAllByCinema_IdAndActiveTrue(id, paging);
     }
 
     @Override
@@ -98,13 +97,10 @@ public class RoomServiceImpl implements IRoomService {
     public Page<Room> findAllByFilmAndCity(Long id, String city, Pageable paging) {
         log.info("findAllByFilmAndCity {}", id);
         if (invalidPosNumber(id) || !filmService.existsById(id)) return Page.empty();
-        if (stringIsEmpty(city)) {
-            if (isAuth()) return roomRepo.findAllByFilm_Id(id, paging);
-            else return roomRepo.findAllByFilm_IdAndActiveTrue(id, paging);
-        } else {
-            if (isAuth()) return roomRepo.findAllByFilm_IdAndCity(id, city, paging);
-            else return roomRepo.findAllByFilm_IdAndCityAndActiveTrue(id, city, paging);
-        }
+        if (stringIsEmpty(city)) return (isAuth()) ?
+                roomRepo.findAllByFilm_Id(id, paging) : roomRepo.findAllByFilm_IdAndActiveTrue(id, paging);
+        return (isAuth()) ?
+                roomRepo.findAllByFilm_IdAndCity(id, city, paging) : roomRepo.findAllByFilm_IdAndCityAndActiveTrue(id, city, paging);
     }
 
     @Override

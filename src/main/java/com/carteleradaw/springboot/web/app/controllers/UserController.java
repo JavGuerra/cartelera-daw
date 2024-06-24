@@ -52,6 +52,7 @@ public class UserController {
         model.addAttribute("page", pageInfo);
         model.addAttribute("users", users);
         model.addAttribute("returnUrl", "users");
+        model.addAttribute("entity", "usuarios");
 
         return "user/user-list";
     }

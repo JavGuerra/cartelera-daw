@@ -64,6 +64,7 @@ public class RoomController {
             model.addAttribute("page", pageInfo);
             model.addAttribute("rooms", rooms);
             model.addAttribute("returnUrl", "rooms");
+            model.addAttribute("entity", "salas");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna sala que mostrar");
 
@@ -116,6 +117,7 @@ public class RoomController {
                 model.addAttribute("page", pageInfo);
                 model.addAttribute("rooms", rooms);
                 model.addAttribute("returnUrl", "rooms");
+                model.addAttribute("entity", "salas");
 
             } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Película sin salas");
             else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
@@ -152,6 +154,7 @@ public class RoomController {
                 model.addAttribute("page", pageInfo);
                 model.addAttribute("rooms", rooms);
                 model.addAttribute("returnUrl", "rooms");
+                model.addAttribute("entity", "salas");
 
             } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
             else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
