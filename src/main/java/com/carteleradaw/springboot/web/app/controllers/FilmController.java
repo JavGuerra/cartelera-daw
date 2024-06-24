@@ -56,6 +56,7 @@ public class FilmController {
             model.addAttribute("page", pageInfo);
             model.addAttribute("films", films);
             model.addAttribute("returnUrl", "films");
+            model.addAttribute("entity", "peliculas");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna película que mostrar");
 

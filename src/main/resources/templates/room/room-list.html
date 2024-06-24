@@ -4,10 +4,10 @@
       prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
 <head>
     <title>Cartelera</title>
-    <th:replace th:replace="~{meta :: meta}" />
+    <th:replace th:replace="~{fragments/meta :: meta}" />
 </head>
 <body class="d-flex flex-column vh-100">
-<div th:replace="~{navbar :: navbar}"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="flex-grow-1">
 
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
@@ -64,52 +64,7 @@
 
     </div>
 
-<!--Paginación-->
-    <div th:if="${page?.totalPages gt 0}" class="row d-flex justify-content-center align-items-center">
-
-        <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
-            <p th:if="${page?.totalPages gt 1}" th:text="${page.numberOfElements} + ' salas, de la ' + ${page.startElement} + ' a la ' + ${page.endElement} + ', de ' + ${page.totalElements} + ' salas.'"></p>
-            <p th:unless="${page?.totalPages gt 1}" th:text="${page.numberOfElements} + ' salas.'"></p>
-        </div>
-
-        <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
-            <ul class="pagination pagination-sm">
-                <li class="page-item">
-                    <a th:href="@{/rooms(page=0, size=${page.pageSize})}"
-                       th:aria-label="${page.currentPage == 0? 'Inicio (desactivado)' : 'Inicio'}"
-                       th:class="${page.currentPage == 0? 'page-link disabled' : 'page-link'}">&LeftArrowBar;</a>
-                </li>
-
-                <li class="page-item">
-                    <a th:href="@{/rooms(page=${page.currentPage - 1}, size=${page.pageSize})}"
-                       th:aria-label="${page.currentPage == 0? 'Anterior (desactivado)' : 'Anterior'}"
-                       th:class="${page.currentPage == 0? 'page-link disabled' : 'page-link'}">&LeftArrow;</a>
-                </li>
-
-                <li th:each="pageNumber : ${#numbers.sequence(page.startPage, page.endPage)}"
-                    th:if="${pageNumber >= 0 && pageNumber < page.totalPages}"
-                    class="page-item" th:classappend="${pageNumber == page.currentPage}? 'active'">
-                    <a th:href="@{/rooms(page=${pageNumber}, size=${page.pageSize})}"
-                       th:text="${pageNumber + 1}"
-                       class="page-link"></a>
-                </li>
-
-                <li class="page-item">
-                    <a th:href="@{/rooms(page=${page.currentPage + 1}, size=${page.pageSize})}"
-                       th:aria-label="${page.currentPage == page.totalPages - 1? 'Siguiente (desactivado)' : 'Siguiente'}"
-                       th:class="${page.currentPage == page.totalPages - 1? 'page-link disabled' : 'page-link'}">&RightArrow;</a>
-                </li>
-
-                <li class="page-item">
-                    <a th:href="@{/rooms(page=${page.totalPages - 1}, size=${page.pageSize})}"
-                       th:aria-label="${page.currentPage == page.totalPages - 1? 'Fin (desactivado)' : 'Fin'}"
-                       th:class="${page.currentPage == page.totalPages - 1? 'page-link disabled' : 'page-link'}">&RightArrowBar;</a>
-                </li>
-            </ul>
-        </nav>
-
-    </div>
-<!--Fin paginación-->
+    <div th:replace="~{fragments/pagination :: pagination}"></div>
 
     <div class="text-center my-4">
         <a class="btn btn-outline-primary" th:href="@{/rooms/create}"
@@ -128,6 +83,6 @@
 </div>
 
 </div>
-<div th:replace="~{footer :: footer}"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
