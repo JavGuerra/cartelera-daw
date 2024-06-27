@@ -14,4 +14,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
     @Query("SELECT a FROM Address a WHERE upper(a.city) = upper(:city)")
     List<Address> findAllByCityIgnoreCase(@Param("city") String city);
+
+    @Query("SELECT c.address FROM Cinema c WHERE c.active = true")
+    List<Address> findByCinemaActiveTrue();
 }

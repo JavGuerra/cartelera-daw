@@ -132,7 +132,7 @@ public class FilmController {
         if (result.hasErrors()) {
             return "film/film-form";
         } else {
-            if (!film.getActive()) filmService.deactiveById(film.getId());
+            if (!film.getActive()) filmService.deactivateById(film.getId());
             filmService.save(film);
             return "redirect:/films";
         }

@@ -6,6 +6,7 @@ import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,7 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public List<Cinema> findAll() {
         if (isAuth()) return cinemaRepo.findAll();
-        else return cinemaRepo.findAllByCinemasAndActiveTrue();
+        else return cinemaRepo.findAllByCinemaAndActiveTrue();
     }
 
     @Override
@@ -53,17 +54,17 @@ public class CinemaServiceImpl implements ICinemaService {
     }
 
     @Override
-    public boolean existsByCif(String cif) {
-        log.info("existsByCif {}", cif);
-        if (stringIsEmpty(cif)) return false;
-        return cinemaRepo.findByCif(cif).isPresent();
-    }
-
-    @Override
     public Optional<Cinema> findById(Long id) {
         log.info("findById {}", id);
         if (invalidPosNumber(id)) return Optional.empty();
         return cinemaRepo.findById(id);
+    }
+
+    @Override
+    public boolean existsByCif(String cif) {
+        log.info("existsByCif {}", cif);
+        if (stringIsEmpty(cif)) return false;
+        return cinemaRepo.findByCif(cif).isPresent();
     }
 
     @Override
@@ -75,6 +76,7 @@ public class CinemaServiceImpl implements ICinemaService {
     }
 
     @Override
+    @Transactional
     public Cinema save(Cinema cinema) {
         log.info("save {}", cinema);
         Address address = cinema.getAddress();
@@ -95,6 +97,7 @@ public class CinemaServiceImpl implements ICinemaService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (invalidPosNumber(id) && !cinemaRepo.existsById(id)) return;

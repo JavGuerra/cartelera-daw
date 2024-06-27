@@ -1,14 +1,13 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.services.IAddressService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -58,13 +57,13 @@ public class AddressServiceImpl implements IAddressService {
     public Set<String> getCitiesNames() {
         log.info("citiesNames");
         Set<String> citiesNames = new HashSet<>();
-        List<Cinema> cinemas = isAuth() ?
-                cinemaRepo.findAll() : cinemaRepo.findAllByActiveTrue(Pageable.unpaged()).getContent();
-        for (Cinema cinema : cinemas) citiesNames.add(cinema.getAddress().getCity());
+        List<Address> addresses = isAuth() ? addressRepo.findAll() : addressRepo.findByCinemaActiveTrue();
+        for (Address address : addresses) citiesNames.add(address.getCity());
         return citiesNames;
     }
 
     @Override
+    @Transactional
     public Address save(Address address) {
         log.info("save {}", address);
         // Al crear o actualizar la dirección actualiza selectedCity y la lista de ciudades.
@@ -74,6 +73,7 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (invalidPosNumber(id) || !existsById(id)) return;

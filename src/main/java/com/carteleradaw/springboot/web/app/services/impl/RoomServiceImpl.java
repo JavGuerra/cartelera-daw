@@ -3,6 +3,7 @@ package com.carteleradaw.springboot.web.app.services.impl;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,8 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 public class RoomServiceImpl implements IRoomService {
 
     private final RoomRepository roomRepo;
-    private final CinemaServiceImpl cinemaService;
-    private final FilmServiceImpl filmService;
+    private CinemaServiceImpl cinemaService;
+    private FilmServiceImpl filmService;
 
     @Override
     public List<Room> findAll() {
@@ -113,8 +114,8 @@ public class RoomServiceImpl implements IRoomService {
         else rooms = (isAuth()) ?
                 roomRepo.findAllByCityAndPremiereDesc(city) : roomRepo.findAllByCityAndPremiereDescAndActiveTrue(city);
 
-        List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados
-        Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar filmId ya procesados
+        List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados.
+        Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar los filmId ya procesados.
         // Elimina repeticiones, quedándose con el estreno más actual.
         for (Room room : rooms) {
             Long filmId = room.getFilmId();
@@ -128,6 +129,7 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
+    @Transactional
     public Room save(Room room) {
         log.info("save {}", room);
 
@@ -161,14 +163,16 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public void deactiveAllByCinemaId(Long id) {
-        log.info("deactiveAllByCinemaId {}", id);
+    @Transactional
+    public void deactivateAllByCinemaId(Long id) {
+        log.info("deactivateAllByCinemaId {}", id);
         if (invalidPosNumber(id)) return;
         List<Room> rooms = roomRepo.findAllByCinema_Id(id);
         for (Room room : rooms) room.setActive(false);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (invalidPosNumber(id) && !roomRepo.existsById(id)) return;
