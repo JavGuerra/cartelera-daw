@@ -64,7 +64,7 @@ public class CinemaController {
             model.addAttribute("returnUrl", "cinemas");
             model.addAttribute("entity", "cines");
 
-        } else model.addAttribute("error", "\uD83E\uDD74 No hay ningun cine que mostrar");
+        } else model.addAttribute("error", "\uD83E\uDD74 No hay ningún cine que mostrar");
 
         return "cinema/cinema-list";
     }
@@ -145,14 +145,14 @@ public class CinemaController {
             if (cinemaService.existsByCif(cinema.getCif())) {
                 Long existingId = cinemaRepository.findByCif(cinema.getCif()).get().getId();
                 if (!Objects.equals(existingId, cinema.getId())) {
-                    result.rejectValue("cif", "error.cif", "El CIF indicado ya existe.");
+                    result.rejectValue("cif", "error.cif", "El CIF indicado ya existe");
                     return "cinema/cinema-form";
                 }
             }
 
             if (cinemaService.existsById(cinema.getId())) {
                 if (cinemaService.findById(cinema.getId()).get().getActive() != cinema.getActive()) {
-                    if (!cinema.getActive()) roomService.deactiveAllByCinemaId(cinema.getId());
+                    if (!cinema.getActive()) roomService.deactivateAllByCinemaId(cinema.getId());
                 }
             }
 

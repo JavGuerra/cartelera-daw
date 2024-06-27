@@ -36,8 +36,6 @@ INSERT INTO `cinema` (`id`, `active`, `image`, `cif`, `email`, `facebook`, `inst
 (5, b'1', '/img/cinema/05.jpg', 'B0621334S', 'cinevictoria@hotmail.com', '', '', '', 'Victoria', '', '', 'https://www.cinesvictoria.com/carteleradonbenito.html', 5),
 (6, b'1', '/img/cinema/06.jpg', 'B8272147G', 'atencionalcliente@yelmocines.es', '', '', '', 'Yelmo Premium El Faro', '', '', 'https://yelmocines.es/cartelera/badajoz/premium-el-faro', 6);
 
-
-
 -- --------------------------------------------------------
 
 ALTER TABLE `film` MODIFY COLUMN `synopsis` VARCHAR(1000);
@@ -79,6 +77,7 @@ INSERT INTO `film` (`id`, `active`, `actor`, `classification`, `company`, `count
 (30, b'1', 'Selma Alaoui, Veerle Baetens, Guillaume Duhesme, Anne Dorval', 2, 'Versus Production, Colonelle Films, Haut et Court', 'Bélgica', 'Delphine Girard', 108, 'Ben Shemie', 'Juliette Van Dormael','/img/poster/30.jpg', 3,'La fiesta se tuerce: Dary agrede a Aly. Cuando Aly llama a la policía, es Anna quien responde y consigue evitar que la agresión vaya a más. Al día siguiente, Aly intenta seguir con su vida como si nada y relativiza los efectos de la agresión. Dary trata de autoconvencerse de una versión de los hechos que no le quita el sueño. Anna hace por seguir involucrada en el asunto. Comienza el juicio. ¿Qué consigue la justicia? ¿Qué se puede reparar?', 'https://www.filmaffinity.com/es/reviews/1/590938.html','Delphine Girard', 'Víctima imperfecta', 'https://www.filmaffinity.com/es/evideos.php?movie_id=590938', 2023),
 (31, b'1', 'Paula Grimaldo, Ariadna Gil, Pol Hermoso, Luis Bermejo.', 3, 'Calladita Films, Potenza Producciones, Decentralized Pictures', 'España', 'Miguel Faus', 92, 'Paula Olaz', 'Antonio Galisteo','/img/poster/31.jpg', 4,'Ana, recién llegada de Colombia, es empleada doméstica en una lujosa mansión donde veranea una adinerada familia de marchantes de arte. La joven trabaja de sol a sol, sin contrato, bajo la promesa de conseguir condiciones dignas al final del verano, siempre y cuando sea discreta y calladita. Pero a través de Gisela, la empleada de la casa vecina, Ana descubrirá que las cosas no funcionan exactamente como le han contado, y aprenderá a divertirse un poco más durante su verano en la Costa Brava.', 'https://www.filmaffinity.com/es/reviews/1/166600.html','Miguel Faus', 'Calladita', 'https://www.filmaffinity.com/es/evideos.php?movie_id=166600', 2023),
 (32, b'1', 'Laia Artigas, Nuria Prims, Nunu Sales, Jaume Vilalta, Mercé Pons.', 2, 'Atiende Films', 'España', 'Mònica Cambra, Ariadna Fortuny', 79, 'Guillermo Martorell', 'Àssia J. La-Roca','/img/poster/32.jpg', 3,'Mila (Laia Artigas), su hermana mayor (Nunu Sales) y su madre (Núria Prims), pasan unos días en una casa de campo, aisladas del mundanal ruido. Sin embargo, se respira en el ambiente una calma cada vez más tensa, y los nervios están a flor de piel. Las incómodas miradas, los silencios y las ausencias revelan la inminencia de un hecho irreversible, y para exorcizar todo eso Mila decide organizar una fiesta que se irá convirtiendo, a medida que se acerca, en mucho más que una simple celebración.', 'https://www.filmaffinity.com/es/reviews/1/458270.html','Ariadna Fortuny, Clàudia Garcia de Dios', 'Un sol radiant', 'https://www.filmaffinity.com/es/evideos.php?movie_id=458270', 2023);
+
 -- --------------------------------------------------------
 
 --

@@ -5,6 +5,7 @@ import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.FilmRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,9 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 public class FilmServiceImpl implements IFilmService {
 
     private final FilmRepository filmRepo;
-    private final RoomRepository roomRepo;
+    private final RoomRepository roomRepository;
+    // Nota: Se usa RoomRepository porque no es posible usar RoomService, pues se generaría una referencia circular,
+    // ya que FilmService se usa ya en RoomService.
 
     @Override
     public List<Film> findAll() {
@@ -82,17 +85,19 @@ public class FilmServiceImpl implements IFilmService {
 //    }
 
     @Override
+    @Transactional
     public Film save(Film film) {
         log.info("save {}", film);
         return filmRepo.save(film);
     }
 
     @Override
-    public void deactiveById(Long id) {
-        log.info("deactiveById {}", id);
+    @Transactional
+    public void deactivateById(Long id) {
+        log.info("deactivateById {}", id);
         if (invalidPosNumber(id)) return;
         // Desasociar film de rooms.
-        List<Room> rooms = roomRepo.findAllByFilm_Id(id);
+        List<Room> rooms = roomRepository.findAllByFilm_Id(id);
         for (Room room : rooms) {
             room.setFilm(null);
             room.setPremiere(null);
@@ -103,11 +108,12 @@ public class FilmServiceImpl implements IFilmService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (invalidPosNumber(id)) return;
         // Desasociar film de rooms.
-        List<Room> rooms = roomRepo.findAllByFilm_Id(id);
+        List<Room> rooms = roomRepository.findAllByFilm_Id(id);
         for (Room room : rooms) {
             room.setFilm(null);
             room.setPremiere(null);

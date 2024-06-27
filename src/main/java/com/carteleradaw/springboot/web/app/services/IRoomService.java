@@ -95,7 +95,7 @@ public interface IRoomService {
      * Desactiva las salas por el Id del Cine.
      * @param id identificador.
      */
-    void deactiveAllByCinemaId(Long id);
+    void deactivateAllByCinemaId(Long id);
 
     /**
      * Borra una sala por el ID.

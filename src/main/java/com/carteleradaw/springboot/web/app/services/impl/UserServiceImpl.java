@@ -3,6 +3,7 @@ package com.carteleradaw.springboot.web.app.services.impl;
 import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.repositories.UserRepository;
 import com.carteleradaw.springboot.web.app.services.IUserService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -69,12 +70,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional
     public User save(User user) {
         log.info("save {}", user);
         return userRepo.save(user);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
         if (!invalidPosNumber(id) && userRepo.existsById(id)) userRepo.deleteById(id);
