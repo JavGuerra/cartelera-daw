@@ -57,7 +57,7 @@ public class AddressServiceImpl implements IAddressService {
     public Set<String> getCitiesNames() {
         log.info("citiesNames");
         Set<String> citiesNames = new HashSet<>();
-        List<Address> addresses = isAuth() ? addressRepo.findAll() : addressRepo.findByCinemaActiveTrue();
+        List<Address> addresses = isAuth() ? addressRepo.findAll() : addressRepo.findAllByCinemaActiveTrue();
         for (Address address : addresses) citiesNames.add(address.getCity());
         return citiesNames;
     }

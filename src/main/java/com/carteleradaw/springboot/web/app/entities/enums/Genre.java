@@ -1,8 +1,11 @@
 package com.carteleradaw.springboot.web.app.entities.enums;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * tipo de género.
  */
+@RequiredArgsConstructor
 public enum Genre {
 
     COMEDY("Comedia"),
@@ -21,12 +24,6 @@ public enum Genre {
 
     private final String genre;
 
-    Genre(String genre) {
-        this.genre = genre;
-    }
-
     @Override
-    public String toString() {
-        return genre;
-    }
+    public String toString() { return genre; }
 }

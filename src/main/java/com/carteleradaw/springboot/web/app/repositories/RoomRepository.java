@@ -37,10 +37,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Page<Room> findAllByFilm_IdAndActiveTrue(@Param("id") Long id, Pageable paging);
 
     @Query("SELECT r FROM Room r WHERE r.film.id = :id AND upper(r.cinema.address.city) = upper(:city)")
-    Page<Room> findAllByFilm_IdAndCity(@Param("id") Long id, @Param("city") String city, Pageable paging);
+    Page<Room> findAllByFilm_IdAndCityIgnoreCase(@Param("id") Long id, @Param("city") String city, Pageable paging);
 
     @Query("SELECT r FROM Room r WHERE r.film.id = :id AND upper(r.cinema.address.city) = upper(:city) AND r.active = true")
-    Page<Room> findAllByFilm_IdAndCityAndActiveTrue(@Param("id") Long filmId, @Param("city") String city, Pageable paging);
+    Page<Room> findAllByFilm_IdAndCityIgnoreCaseAndActiveTrue(@Param("id") Long filmId, @Param("city") String city, Pageable paging);
 
     @Query("SELECT r FROM Room r ORDER BY r.premiere DESC")
     List<Room> findAllByPremiereDesc();
@@ -49,16 +49,16 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllByPremiereDescAndActiveTrue();
 
     @Query("SELECT r FROM Room r WHERE upper(r.cinema.address.city) = upper(:city) ORDER BY r.premiere DESC")
-    List<Room> findAllByCityAndPremiereDesc(@Param("city") String city);
+    List<Room> findAllByCityIgnoreCaseAndPremiereDesc(@Param("city") String city);
 
     @Query("SELECT r FROM Room r WHERE upper(r.cinema.address.city) = upper(:city) AND r.active = true ORDER BY r.premiere DESC")
-    List<Room> findAllByCityAndPremiereDescAndActiveTrue(@Param("city") String city);
+    List<Room> findAllByCityIgnoreCaseAndPremiereDescAndActiveTrue(@Param("city") String city);
 
     @Query("SELECT r FROM Room r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
-    Page<Room> findAllByCityInRoom(@Param("city") String city, Pageable pageable);
+    Page<Room> findAllByCityIgnoreCaseInRoom(@Param("city") String city, Pageable pageable);
 
     @Query("SELECT r FROM Room r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND r.active = true")
-    Page<Room> findAllByCityInRoomAndActiveTrue(@Param("city") String city, Pageable pageable);
+    Page<Room> findAllByCityIgnoreCaseInRoomAndActiveTrue(@Param("city") String city, Pageable pageable);
 
     @Query("SELECT r FROM Room r WHERE r.cinema.id = :id AND r.active = true")
     List<Room> findAllByCinema_IdAndActiveTrue(@Param("id") Long id);

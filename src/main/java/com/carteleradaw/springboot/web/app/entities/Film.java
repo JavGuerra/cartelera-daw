@@ -79,7 +79,7 @@ public class Film {
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String review;
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
     private Set<Room> rooms = new HashSet<>();
 
     @Override

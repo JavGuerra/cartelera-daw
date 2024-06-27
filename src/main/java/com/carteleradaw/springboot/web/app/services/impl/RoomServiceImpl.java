@@ -76,7 +76,7 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) return (isAuth()) ? roomRepo.findAll(paging) : roomRepo.findAllByActiveTrue(paging);
         return (isAuth()) ?
-                roomRepo.findAllByCityInRoom(city, paging) : roomRepo.findAllByCityInRoomAndActiveTrue(city, paging);
+                roomRepo.findAllByCityIgnoreCaseInRoom(city, paging) : roomRepo.findAllByCityIgnoreCaseInRoomAndActiveTrue(city, paging);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class RoomServiceImpl implements IRoomService {
         if (stringIsEmpty(city)) return (isAuth()) ?
                 roomRepo.findAllByFilm_Id(id, paging) : roomRepo.findAllByFilm_IdAndActiveTrue(id, paging);
         return (isAuth()) ?
-                roomRepo.findAllByFilm_IdAndCity(id, city, paging) : roomRepo.findAllByFilm_IdAndCityAndActiveTrue(id, city, paging);
+                roomRepo.findAllByFilm_IdAndCityIgnoreCase(id, city, paging) : roomRepo.findAllByFilm_IdAndCityIgnoreCaseAndActiveTrue(id, city, paging);
     }
 
     @Override
@@ -112,7 +112,8 @@ public class RoomServiceImpl implements IRoomService {
         if (stringIsEmpty(city)) rooms = (isAuth()) ?
                 roomRepo.findAllByPremiereDesc() : roomRepo.findAllByPremiereDescAndActiveTrue();
         else rooms = (isAuth()) ?
-                roomRepo.findAllByCityAndPremiereDesc(city) : roomRepo.findAllByCityAndPremiereDescAndActiveTrue(city);
+                roomRepo.findAllByCityIgnoreCaseAndPremiereDesc(city) :
+                roomRepo.findAllByCityIgnoreCaseAndPremiereDescAndActiveTrue(city);
 
         List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados.
         Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar los filmId ya procesados.

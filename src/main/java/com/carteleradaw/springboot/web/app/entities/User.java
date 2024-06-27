@@ -22,7 +22,10 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 @ToString
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "UK_UserName", columnList = "username", unique = true),
+        @Index(name = "UK_Email", columnList = "email", unique = true)
+})
 public class User implements UserDetails {
 
     @Id

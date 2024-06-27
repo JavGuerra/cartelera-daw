@@ -119,7 +119,6 @@ public class UserController {
      * @param result estado de la validación.
      * @return Plantilla users.
      */
-    
     @PostMapping("")
     public String save(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -178,13 +177,9 @@ public class UserController {
      */
     @GetMapping("/{id}/delete")
     public String deleteById(@PathVariable Long id) {
-        if (!invalidPosNumber(id) && userService.existsById(id)) {
-            Long loginId = null;
-            // Comprueba si hay un usuario logueado y, si es así, obtiene su id.
-            if (isAuth()) loginId = userAuth().get().getId();
-
-            // Si el usuario está logueado y el usuario que queremos borrar NO es el mismo, borrarlo.
-            if (!id.equals(loginId)) userService.deleteById(id);
+        if (!invalidPosNumber(id) && userService.existsById(id) && isAuth()) {
+            // Si el usuario que queremos borrar NO es el mismo que el usuario autenticado, borrarlo.
+            if (!id.equals(userAuth().get().getId())) userService.deleteById(id);
         }
         return "redirect:/users";
     }

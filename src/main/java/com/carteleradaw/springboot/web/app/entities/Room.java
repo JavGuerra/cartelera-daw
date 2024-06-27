@@ -24,6 +24,10 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.FormatDate;
 @ToString
 @Builder
 @Entity
+@Table(indexes = {
+        @Index(name = "PK_FilmID", columnList = "film_id"),
+        @Index(name = "PK_CinemaID", columnList = "cinema_id")
+})
 public class Room {
 
     @Id
