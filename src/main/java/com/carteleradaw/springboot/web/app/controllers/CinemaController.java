@@ -143,7 +143,7 @@ public class CinemaController {
 //            return "cinema/cinema-form";
         } else {
             if (cinemaService.existsByCif(cinema.getCif())) {
-                Long existingId = cinemaRepository.findByCif(cinema.getCif()).get().getId();
+                Long existingId = cinemaRepository.findByCifIgnoreCase(cinema.getCif()).get().getId();
                 if (!Objects.equals(existingId, cinema.getId())) {
                     result.rejectValue("cif", "error.cif", "El CIF indicado ya existe");
                     return "cinema/cinema-form";

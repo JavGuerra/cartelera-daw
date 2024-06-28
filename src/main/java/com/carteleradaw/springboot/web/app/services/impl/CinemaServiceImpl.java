@@ -64,7 +64,7 @@ public class CinemaServiceImpl implements ICinemaService {
     public boolean existsByCif(String cif) {
         log.info("existsByCif {}", cif);
         if (stringIsEmpty(cif)) return false;
-        return cinemaRepo.findByCif(cif).isPresent();
+        return cinemaRepo.findByCifIgnoreCase(cif).isPresent();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class CinemaServiceImpl implements ICinemaService {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) return (isAuth()) ? cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveTrue(paging);
         return (isAuth()) ?
-                cinemaRepo.findAllByCity(city, paging) : cinemaRepo.findAllByCityAndActiveTrue(city, paging);
+                cinemaRepo.findAllByCityIgnoreCase(city, paging) : cinemaRepo.findAllByCityIgnoreCaseAndActiveTrue(city, paging);
     }
 
     @Override
@@ -102,10 +102,9 @@ public class CinemaServiceImpl implements ICinemaService {
         log.info("deleteById {}", id);
         if (invalidPosNumber(id) && !cinemaRepo.existsById(id)) return;
 
-        Cinema cinema = findById(id).get();
-        String city = cinema.getAddress().getCity();
+        String city = findById(id).get().getAddress().getCity();
 
-        cinemaRepo.deleteById(id);
+        cinemaRepo.deleteById(id); // Borra rooms en cascada.
 
         // Si ya no hay cines en una ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
         if (findAllByCity(city, Pageable.unpaged()).getContent().isEmpty()) {

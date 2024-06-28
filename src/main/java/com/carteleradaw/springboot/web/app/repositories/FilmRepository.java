@@ -21,10 +21,10 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
     Page<Film> findAllByActiveTrue(Pageable paging);
 
     @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
-    Page<Film> findAllByCityInFilms(@Param("city") String city, Pageable paging);
+    Page<Film> findAllByCityIgnoreCaseInFilms(@Param("city") String city, Pageable paging);
 
     @Query("SELECT f FROM Film f JOIN f.rooms r JOIN r.cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND f.active = true")
-    Page<Film> findAllByCityInFilmsAndActiveTrue(@Param("city") String cit, Pageable pagingy);
+    Page<Film> findAllByCityIgnoreCaseInFilmsAndActiveTrue(@Param("city") String cit, Pageable pagingy);
 
 //    @Query("SELECT f FROM Film f JOIN f.genres g WHERE g.name = :genre")
 //    List<Film> findAllByGenreInFilms(@Param("genre") String genre);

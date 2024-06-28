@@ -16,5 +16,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     List<Address> findAllByCityIgnoreCase(@Param("city") String city);
 
     @Query("SELECT c.address FROM Cinema c WHERE c.active = true")
-    List<Address> findByCinemaActiveTrue();
+    List<Address> findAllByCinemaActiveTrue();
 }

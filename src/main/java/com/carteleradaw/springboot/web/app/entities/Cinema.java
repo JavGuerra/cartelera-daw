@@ -22,6 +22,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.PHONE_PATTERN;
 @Setter
 @Builder
 @Entity
+@Table(indexes = {@Index(name = "PK_AddressID", columnList = "address_id", unique = true)})
 public class Cinema {
 
     @Id
@@ -66,11 +67,11 @@ public class Cinema {
 
     @NotNull(message = "La dirección no puede estar vacía.")
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", unique = true)
     @Valid // Importante para poder validar los campos de la entidad Address asociada en el formulario.
     private Address address;
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Room> rooms = new HashSet<>();
 
     @Override

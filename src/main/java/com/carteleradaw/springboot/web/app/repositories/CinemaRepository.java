@@ -22,14 +22,14 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     Page<Cinema> findAllByActiveTrue(Pageable paging);
 
     @Query("SELECT c from Cinema c WHERE upper(c.cif) = upper(:cif)")
-    Optional<Cinema> findByCif(@Param("cif") String cif);
+    Optional<Cinema> findByCifIgnoreCase(@Param("cif") String cif);
 
     @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
-    Page<Cinema> findAllByCity(@Param("city") String city, Pageable paging);
+    Page<Cinema> findAllByCityIgnoreCase(@Param("city") String city, Pageable paging);
 
     @Query("SELECT c FROM Cinema c WHERE c.active = true")
     List<Cinema> findAllByCinemaAndActiveTrue();
 
     @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND c.active = true")
-    Page<Cinema> findAllByCityAndActiveTrue(@Param("city") String city, Pageable paging);
+    Page<Cinema> findAllByCityIgnoreCaseAndActiveTrue(@Param("city") String city, Pageable paging);
 }

@@ -1,8 +1,11 @@
 package com.carteleradaw.springboot.web.app.entities.enums;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Tipo de clasificación.
  */
+@RequiredArgsConstructor
 public enum Classification {
 
     ALL_AGES("TP"),
@@ -12,10 +15,6 @@ public enum Classification {
     OLDER18("+18");
 
     private final String classification;
-
-    Classification(String classification) {
-        this.classification = classification;
-    }
 
     @Override
     public String toString() {
