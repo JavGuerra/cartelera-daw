@@ -169,14 +169,17 @@ public class RoomController {
      * @return Plantilla rooms-form.
      */
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String createForm(@RequestParam(required = false) Long id, Model model) {
 
+        Room room = new Room();
+        if (id != null && !invalidPosNumber(id) && cinemaService.existsById(id)) {
+            room.setCinema(cinemaService.findById(id).get());}
         List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
         Byte nextRoomNumber = roomService.getNextRoomNumber();
 
         model.addAttribute("cities", globalStateService.getCitiesNames());
         model.addAttribute("selectedCity", globalStateService.getSelectedCity());
-        model.addAttribute("room", new Room());
+        model.addAttribute("room", room);
         model.addAttribute("nextRoomNumber", String.valueOf(nextRoomNumber));
         model.addAttribute("cinemas", cinemaService.findAll());
         model.addAttribute("films", filmService.findAllActive());
