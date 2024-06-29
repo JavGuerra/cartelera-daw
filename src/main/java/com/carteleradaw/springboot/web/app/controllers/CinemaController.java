@@ -132,12 +132,18 @@ public class CinemaController {
     /**
      * Guarda el cine obtenido desde el formulario.
      * @param cinema Cine.
-     * @param result estado de la validación.
+     * @param result Estado de la validación.
+     * @param model Modelo.
      * @return Plantilla cinemas.
      */
     @PostMapping("")
-    public String saveForm(@Valid @ModelAttribute Cinema cinema, BindingResult result) {
+    public String saveForm(@Valid @ModelAttribute Cinema cinema, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("cinema", cinema);
+            model.addAttribute("returnUrl", "cinemas");
+
             return "cinema/cinema-form";
 //        } else if (!result.getFieldErrors("address").isEmpty()) { // Ejemplo de validación de un campo
 //            return "cinema/cinema-form";

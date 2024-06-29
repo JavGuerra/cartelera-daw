@@ -220,11 +220,22 @@ public class RoomController {
      * Guarda la sala obtenida desde el formulario.
      * @param room Dirección.
      * @param result estado de la validación.
+     * @param model Modelo.
      * @return Plantilla rooms.
      */
     @PostMapping("")
-    public String saveForm(@Valid @ModelAttribute Room room, BindingResult result) {
+    public String saveForm(@Valid @ModelAttribute Room room, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
+
+            model.addAttribute("room", room);
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("cinemas", cinemaService.findAll());
+            model.addAttribute("films", filmService.findAllActive());
+            model.addAttribute("schedulesList", schedulesList);
+            model.addAttribute("returnUrl", "rooms");
+
             return "room/room-form";
         } else {
             roomService.save(room);

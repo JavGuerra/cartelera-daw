@@ -3,6 +3,7 @@ package com.carteleradaw.springboot.web.app.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -48,6 +49,7 @@ public class Room {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate premiere;
 
+    @NotEmpty(message = "Se debe seleccionar al menos un horario.")
     @ElementCollection
     @ToString.Exclude
     private List<LocalTime> schedules = new ArrayList<>();

@@ -109,11 +109,8 @@ public class RoomServiceImpl implements IRoomService {
         log.info("findAllByPremiereDesc");
 
         List<Room> rooms;
-        if (stringIsEmpty(city)) rooms = (isAuth()) ?
-                roomRepo.findAllByPremiereDesc() : roomRepo.findAllByPremiereDescAndActiveTrue();
-        else rooms = (isAuth()) ?
-                roomRepo.findAllByCityIgnoreCaseAndPremiereDesc(city) :
-                roomRepo.findAllByCityIgnoreCaseAndPremiereDescAndActiveTrue(city);
+        if (stringIsEmpty(city)) rooms = roomRepo.findAllByPremiereDescAndActiveTrue();
+        else rooms = roomRepo.findAllByCityIgnoreCaseAndPremiereDescAndActiveTrue(city);
 
         List<Room> filteredRooms = new ArrayList<>(); // Lista para almacenar los elementos filtrados.
         Set<Long> processedFilmIds = new HashSet<>(); // Conjunto para almacenar los filmId ya procesados.

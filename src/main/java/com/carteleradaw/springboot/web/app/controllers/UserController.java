@@ -117,11 +117,18 @@ public class UserController {
      * Guarda el usuario obtenido desde el formulario.
      * @param user Dirección.
      * @param result estado de la validación.
+     * @param model Modelo.
      * @return Plantilla users.
      */
     @PostMapping("")
     public String save(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
+
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("user",user);
+            model.addAttribute("returnUrl", "users");
+
             return "user/user-form";
         } else {
             Long id = user.getId();
