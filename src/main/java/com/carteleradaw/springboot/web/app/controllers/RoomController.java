@@ -175,7 +175,7 @@ public class RoomController {
         if (id != null && !invalidPosNumber(id) && cinemaService.existsById(id)) {
             room.setCinema(cinemaService.findById(id).get());}
         List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
-        Byte nextRoomNumber = roomService.getNextRoomNumber();
+        Integer nextRoomNumber = roomService.getNextRoomNumber();
 
         model.addAttribute("cities", globalStateService.getCitiesNames());
         model.addAttribute("selectedCity", globalStateService.getSelectedCity());

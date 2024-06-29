@@ -79,7 +79,8 @@
                                 </svg><span class="align-middle">&nbsp;&nbsp;Sitio web</span></a>
                         </li>
 
-                        <li th:if="!${#lists.isEmpty(rooms)}" class="list-group-item mt-3"><strong>Salas:</strong></li>
+                        <li th:if="!${#lists.isEmpty(rooms)}" class="list-group-item mt-3">
+                            <strong th:text="|${cinema.getCountRooms()} salas:|"></strong></li>
 
                         <li class="list-group-item" th:each="room: ${rooms}">
                             <a class="btn btn-sm btn-light cartelera-btn"

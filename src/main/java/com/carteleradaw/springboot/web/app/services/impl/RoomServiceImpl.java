@@ -58,13 +58,13 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public Byte getNextRoomNumber() {
-        Set<Byte> existingRoomNumbers = new HashSet<>();
+    public Integer getNextRoomNumber() {
+        Set<Integer> existingRoomNumbers = new HashSet<>();
         for (Room room : roomRepo.findAll()) {
-            Byte roomNumber = room.getRoomNumber();
+            Integer roomNumber = Integer.valueOf(room.getRoomNumber());
             existingRoomNumbers.add(roomNumber);
         }
-        Byte nextRoomNumber = 1;
+        Integer nextRoomNumber = 1;
         while (existingRoomNumbers.contains(nextRoomNumber)) {
             nextRoomNumber++;
         }

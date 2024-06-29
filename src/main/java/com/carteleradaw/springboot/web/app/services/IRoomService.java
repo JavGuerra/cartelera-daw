@@ -44,7 +44,7 @@ public interface IRoomService {
      * Obtiene el id no usado más bajo.
      * @return id.
      */
-    Byte getNextRoomNumber();
+    Integer getNextRoomNumber();
 
     /**
      * Obtiene la lista de salas de una ciudad.

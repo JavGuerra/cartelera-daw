@@ -35,12 +35,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(value = 1, message = "El valor debe ser mayor o igual a 1.")
-    @Digits(integer = 2, fraction = 0, message = "Sólo se permiten números enteros.")
+    @Min(value = 1, message = "{Room.roomnumber.min}")
+    @Digits(integer = 2, fraction = 0, message = "{Room.roomnumber.digits}")
     private Byte roomNumber; // Único, pero para cada cine.
 
-    @Min(value = 1, message = "El valor debe ser mayor o igual a 1.")
-    @Digits(integer = 4, fraction = 0, message = "Sólo se permiten números enteros.")
+    @Min(value = 1, message = "{Room.capacity.min}")
+    @Digits(integer = 4, fraction = 0, message = "{Room.capacity.digits}")
     private Integer capacity;
 
     @Column(nullable = false)
@@ -49,7 +49,7 @@ public class Room {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate premiere;
 
-    @NotEmpty(message = "Se debe seleccionar al menos un horario.")
+    @NotEmpty(message = "{Room.schedules.notempty}")
     @ElementCollection
     @ToString.Exclude
     private List<LocalTime> schedules = new ArrayList<>();
@@ -58,7 +58,7 @@ public class Room {
     @JoinColumn(name = "film_id")
     private Film film;
 
-    @NotNull(message = "El campo cine no puede estar vacío.")
+    @NotNull(message = "{Room.cinema.notnull}")
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;
