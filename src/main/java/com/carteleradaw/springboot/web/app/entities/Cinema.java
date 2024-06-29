@@ -29,7 +29,7 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Pattern(regexp = CIF_PATTERN, message = "Debe ingresar un CIF válido (a1234567Z).")
+    @Pattern(regexp = CIF_PATTERN, message = "Debe ingresar un CIF válido. (a1234567Z)")
     @Size(max = 9, message = "El CIF debe tener máximo {max} caracteres.")
     @Column(nullable = false, length = 9)
     private String cif;
@@ -37,7 +37,7 @@ public class Cinema {
     @Column(nullable = false)
     private Boolean active;
 
-    @NotBlank(message = "Debe ingresar un nombre.")
+    @NotBlank(message = "Se debe ingresar un nombre.")
     @Column(nullable = false)
     private String name;
 
@@ -65,7 +65,7 @@ public class Cinema {
     @Pattern(regexp = PHONE_PATTERN, message = "Formato de teléfono internacional no válido.")
     private String phone;
 
-    @NotNull(message = "La dirección no puede estar vacía.")
+    @NotNull(message = "El campo dirección no puede estar vacío.")
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", unique = true)
     @Valid // Importante para poder validar los campos de la entidad Address asociada en el formulario.

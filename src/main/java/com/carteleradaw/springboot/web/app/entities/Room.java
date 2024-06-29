@@ -35,12 +35,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(value = 1, message = "El valor debe ser mayor o igual a 1")
-    @Digits(integer = 2, fraction = 0, message = "Solo se permiten números enteros")
+    @Min(value = 1, message = "El valor debe ser mayor o igual a 1.")
+    @Digits(integer = 2, fraction = 0, message = "Sólo se permiten números enteros.")
     private Byte roomNumber; // Único, pero para cada cine.
 
-    @Min(value = 1, message = "El valor debe ser mayor o igual a 1")
-    @Digits(integer = 4, fraction = 0, message = "Solo se permiten números enteros")
+    @Min(value = 1, message = "El valor debe ser mayor o igual a 1.")
+    @Digits(integer = 4, fraction = 0, message = "Sólo se permiten números enteros.")
     private Integer capacity;
 
     @Column(nullable = false)

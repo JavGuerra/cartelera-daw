@@ -26,19 +26,19 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Debe ingresar un título.")
+    @NotBlank(message = "Se debe ingresar un título.")
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private Boolean active;
 
-    @Min(value = 1, message = "El valor debe ser mayor o igual a 1")
-    @Digits(integer = 5, fraction = 0, message = "Solo se permiten números enteros")
+    @Min(value = 1, message = "El valor debe ser mayor o igual a 1.")
+    @Digits(integer = 5, fraction = 0, message = "Solo se permiten números enteros.")
     private Integer duration;
 
-    @Min(value = 1900, message = "El valor debe ser mayor o igual a 1900")
-    @Digits(integer = 4, fraction = 0, message = "Debe ingresar un año (2024)")
+    @Min(value = 1900, message = "El valor debe ser mayor o igual a 1900.")
+    @Digits(integer = 4, fraction = 0, message = "Debe ingresar un año. (2024)")
     @Column(nullable = false)
     private Integer year;
 
@@ -50,7 +50,7 @@ public class Film {
 
     @Min(value = 1, message = "El valor debe estar entre 1 y 5.")
     @Max(value = 5, message = "El valor debe estar entre 1 y 5.")
-    @Digits(integer = 1, fraction = 0, message = "Solo se permiten números enteros")
+    @Digits(integer = 1, fraction = 0, message = "Solo se permiten números enteros.")
     private Byte rating;
 
     private String music;
@@ -72,7 +72,7 @@ public class Film {
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String poster;
 
-    @NotBlank(message = "Debe ingresar una sinopsis.")
+    @NotBlank(message = "Se debe ingresar una sinopsis.")
     @Column(nullable = false)
     private String synopsis;
 

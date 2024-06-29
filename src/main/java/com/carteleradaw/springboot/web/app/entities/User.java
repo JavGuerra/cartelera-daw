@@ -35,21 +35,21 @@ public class User implements UserDetails {
     @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
     private String image;
 
-    @NotBlank(message = "Debe ingresar un nombre.")
+    @NotBlank(message = "Se debe ingresar un nombre.")
     private String name;
 
-    @NotBlank(message = "Debe ingresar los apellidos.")
+    @NotBlank(message = "Se debe ingresar los apellidos.")
     private String surname;
 
-    @NotBlank(message = "Debe ingresar un nombre de usuario.")
+    @NotBlank(message = "Se debe ingresar un nombre de usuario.")
     @Column(unique = true, nullable = false)
     private String username;
 
-    @NotBlank(message = "Debe ingresar un correo.")
+    @NotBlank(message = "Se debe ingresar un correo.")
     @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank(message = "Debe ingresar una contraseña.")
+    @NotBlank(message = "Se debe ingresar una contraseña.")
     @Column(nullable = false)
     private String password;
 

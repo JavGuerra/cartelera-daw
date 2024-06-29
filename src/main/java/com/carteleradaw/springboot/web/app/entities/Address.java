@@ -25,11 +25,11 @@ public class Address {
 
     private String street; // ( calle, número, escalera, piso )
 
-    @Pattern(regexp = POSTAL_CODE_PATTERN, message = "Debe ingresar exactamente 5 dígitos o dejar el campo vacío.")
+    @Pattern(regexp = POSTAL_CODE_PATTERN, message = "Se debe ingresar exactamente 5 dígitos o dejar el campo vacío.")
     @Column(length = 5)
     private String postalCode;
 
-    @NotBlank(message = "Debe ingresar una ciudad.")
+    @NotBlank(message = "Se debe ingresar un nombre de ciudad.")
     private String city;
 
     private String country;
