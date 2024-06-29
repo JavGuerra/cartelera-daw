@@ -124,12 +124,18 @@ public class FilmController {
     /**
      * Guarda la película obtenida desde el formulario.
      * @param film Película.
-     * @param result estado de la validación.
+     * @param result Estado de la validación.
+     * @param model Modelo.
      * @return Plantilla films.
      */
     @PostMapping("")
-    public String saveForm(@Valid @ModelAttribute Film film, BindingResult result) {
+    public String saveForm(@Valid @ModelAttribute Film film, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("cities", globalStateService.getCitiesNames());
+            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            model.addAttribute("film", film);
+            model.addAttribute("returnUrl", "films");
+
             return "film/film-form";
         } else {
             if (!film.getActive()) filmService.deactivateById(film.getId());
