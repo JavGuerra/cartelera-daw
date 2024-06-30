@@ -51,17 +51,18 @@ public class CinemaController {
                           @RequestParam(defaultValue = "10") int size,
                           Model model) {
 
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "cinemas");
+
         Pageable paging = PageRequest.of(page, size);
         Page<Cinema> cinemas = cinemaService.findAllByCity(globalStateService.getSelectedCity(), paging);
 
         if (!cinemas.isEmpty()) {
             PageInfo pageInfo = pageInfoComponent.createFromPage(cinemas);
 
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("page", pageInfo);
             model.addAttribute("cinemas", cinemas);
-            model.addAttribute("returnUrl", "cinemas");
             model.addAttribute("entity", "cines");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ningún cine que mostrar");
@@ -77,16 +78,18 @@ public class CinemaController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "cinemas");
+
         if (!invalidPosNumber(id) && cinemaService.existsById(id) && cinemaService.isVisible(id)) {
 
             Cinema cinema = cinemaService.findById(id).get();
             List<Room> rooms = roomService.findAllByCinemaId(id, Pageable.unpaged()).getContent();
 
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinema", cinema);
             model.addAttribute("rooms", rooms);
-            model.addAttribute("returnUrl", "cinemas");
 
         } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
 
@@ -117,13 +120,13 @@ public class CinemaController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "cinemas");
+
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinema", cinemaService.findById(id).get());
-            model.addAttribute("returnUrl", "cinemas");
-
         } else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
 
         return "cinema/cinema-form";
@@ -138,7 +141,9 @@ public class CinemaController {
      */
     @PostMapping("")
     public String saveForm(@Valid @ModelAttribute Cinema cinema, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
+
             model.addAttribute("cities", globalStateService.getCitiesNames());
             model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinema", cinema);

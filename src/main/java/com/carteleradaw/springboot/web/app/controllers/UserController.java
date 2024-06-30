@@ -65,13 +65,13 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "users");
+
         if (!invalidPosNumber(id) && userService.existsById(id)) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("user", userService.findById(id).get());
-            model.addAttribute("returnUrl", "users");
-
         } else model.addAttribute("error", "\uD83E\uDD74 Usuario no encontrado");
 
         return "user/user-detail";
@@ -101,13 +101,13 @@ public class UserController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "users");
+
         if (!invalidPosNumber(id) && userService.existsById(id)) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("user", userService.findById(id).get());
-            model.addAttribute("returnUrl", "users");
-
         } else model.addAttribute("error", "\uD83E\uDD74 Usuario no encontrado");
 
         return "user/user-form";
@@ -122,6 +122,7 @@ public class UserController {
      */
     @PostMapping("")
     public String save(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
 
             model.addAttribute("cities", globalStateService.getCitiesNames());

@@ -25,16 +25,16 @@ public class Address {
 
     private String street; // ( calle, número, escalera, piso )
 
-    @Pattern(regexp = POSTAL_CODE_PATTERN, message = "Debe ingresar exactamente 5 dígitos o dejar el campo vacío.")
+    @Pattern(regexp = POSTAL_CODE_PATTERN, message = "{Address.postalcode.pattern}")
     @Column(length = 5)
     private String postalCode;
 
-    @NotBlank(message = "Debe ingresar una ciudad.")
+    @NotBlank(message = "{Address.city.notblank}")
     private String city;
 
     private String country;
 
-    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "{Address.map.pattern}")
     private String map;
 
     @Override

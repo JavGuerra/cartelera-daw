@@ -32,24 +32,24 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Pattern(regexp = URL_PATTERN, message = "Formato de URL no válido.")
+    @Pattern(regexp = URL_PATTERN, message = "{User.image.pattern}")
     private String image;
 
-    @NotBlank(message = "Debe ingresar un nombre.")
+    @NotBlank(message = "{User.name.notblank}")
     private String name;
 
-    @NotBlank(message = "Debe ingresar los apellidos.")
+    @NotBlank(message = "{User.surname.notblank}")
     private String surname;
 
-    @NotBlank(message = "Debe ingresar un nombre de usuario.")
+    @NotBlank(message = "{User.username.notblank}")
     @Column(unique = true, nullable = false)
     private String username;
 
-    @NotBlank(message = "Debe ingresar un correo.")
+    @NotBlank(message = "{User.email.notblank}")
     @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank(message = "Debe ingresar una contraseña.")
+    @NotBlank(message = "{User.password.notblank}")
     @Column(nullable = false)
     private String password;
 

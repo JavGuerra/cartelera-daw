@@ -45,17 +45,18 @@ public class FilmController {
                           @RequestParam(defaultValue = "10") int size,
                           Model model) {
 
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "films");
+
         Pageable paging = PageRequest.of(page, size);
         Page<Film> films = filmService.findAllByCity(globalStateService.getSelectedCity(), paging);
 
         if (!films.isEmpty()) {
             PageInfo pageInfo = pageInfoComponent.createFromPage(films);
 
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("page", pageInfo);
             model.addAttribute("films", films);
-            model.addAttribute("returnUrl", "films");
             model.addAttribute("entity", "peliculas");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna película que mostrar");
@@ -72,13 +73,15 @@ public class FilmController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         // List<Film> filmOpt = filmService.findByIdWithGenre(id);
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "films");
+
         if (!invalidPosNumber(id) && filmService.existsById(id) && filmService.isVisible(id)) {
 
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("film", filmService.findById(id).get());
             model.addAttribute("rooms", roomService.findAllByFilmId(id));
-            model.addAttribute("returnUrl", "films");
 
         } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
 
@@ -109,13 +112,13 @@ public class FilmController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "films");
+
         if (!invalidPosNumber(id) && filmService.existsById(id)){
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("film", filmService.findById(id).get());
-            model.addAttribute("returnUrl", "films");
-
         } else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
 
         return "film/film-form";
@@ -130,7 +133,9 @@ public class FilmController {
      */
     @PostMapping("")
     public String saveForm(@Valid @ModelAttribute Film film, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
+
             model.addAttribute("cities", globalStateService.getCitiesNames());
             model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("film", film);
