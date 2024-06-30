@@ -51,8 +51,8 @@
             </div>
 
             <div class="mb-4">
-                <span sec:authorize="isAuthenticated()" th:if="${!#lists.isEmpty(film.rooms) and selectedCity == ''}" class="badge text-bg-primary ms-1">En salas</span>
-                <span sec:authorize="isAuthenticated()" th:if="${#lists.isEmpty(film.rooms) and selectedCity == ''}" class="badge text-bg-warning ms-1">Sin salas</span>
+                <span sec:authorize="isAuthenticated()" th:if="${!#lists.isEmpty(film.rooms) and session.selectedCity == ''}" class="badge text-bg-primary ms-1">En salas</span>
+                <span sec:authorize="isAuthenticated()" th:if="${#lists.isEmpty(film.rooms) and session.selectedCity == ''}" class="badge text-bg-warning ms-1">Sin salas</span>
                 <span sec:authorize="isAuthenticated()" th:if="${film.active}" class="badge text-bg-success ms-1">En exhibición</span>
                 <span sec:authorize="isAuthenticated()" th:if="${!film.active}" class="badge text-bg-danger mx-1">Sin exhibición</span>
             </div>

@@ -13,8 +13,8 @@
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
 
     <h1 class="cartelera-h1 mt-4">
-        <span sec:authorize="isAnonymous()">Cartelera<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></span>
-        <span sec:authorize="isAuthenticated()">Salas<span th:if="${selectedCity != '' && error == null}" th:text="| de ${selectedCity}|"></span></span>
+        <span sec:authorize="isAnonymous()">Cartelera<span th:if="${session.selectedCity != '' && error == null}"th:text="| de ${session.selectedCity}|"></span></span>
+        <span sec:authorize="isAuthenticated()">Salas<span th:if="${session.selectedCity != '' && error == null}" th:text="| de ${session.selectedCity}|"></span></span>
     </h1>
 
     <h2 th:if="${error != null || (#lists.isEmpty(rooms) || #lists.isEmpty(rooms.content))}"

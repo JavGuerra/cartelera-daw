@@ -8,7 +8,7 @@ import java.util.Set;
 public interface IGlobalStateService {
 
     /**
-     * obtiene la ciudad seleccionada.
+     * Obtiene la ciudad seleccionada.
      * @return ciudad seleccionada.
      */
     String getSelectedCity();

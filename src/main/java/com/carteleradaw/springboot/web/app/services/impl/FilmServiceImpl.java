@@ -6,7 +6,7 @@ import com.carteleradaw.springboot.web.app.repositories.FilmRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
  * Implementación de servicios de películas.
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class FilmServiceImpl implements IFilmService {
 

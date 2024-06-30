@@ -2,14 +2,12 @@ package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
-import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
-import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import com.carteleradaw.springboot.web.app.utils.PageInfo;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Scope;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,37 +24,34 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 /**
  * Controladores de rutas para cines.
  */
-@AllArgsConstructor
-@Scope("session")
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/cinemas")
 public class CinemaController {
 
-    private final GlobalStateServiceImpl globalStateService;
     private final PageInfo pageInfoComponent;
 
     private final ICinemaService cinemaService;
     private final IRoomService roomService;
-    private final CinemaRepository cinemaRepository;
 
     /**
      * Lista todos los cines.
      * @param page Número de página para paginación.
      * @param size Tamaño de página para paginación.
+     * @param session Sesión HTTP.
      * @param model Modelo.
      * @return Plantilla cinemas-list.
      */
     @GetMapping("")
     public String findAll(@RequestParam(defaultValue = "0") int page,
                           @RequestParam(defaultValue = "10") int size,
-                          Model model) {
+                          HttpSession session, Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "cinemas");
 
+        String city = (String) session.getAttribute("selectedCity");
         Pageable paging = PageRequest.of(page, size);
-        Page<Cinema> cinemas = cinemaService.findAllByCity(globalStateService.getSelectedCity(), paging);
+        Page<Cinema> cinemas = cinemaService.findAllByCity(city, paging);
 
         if (!cinemas.isEmpty()) {
             PageInfo pageInfo = pageInfoComponent.createFromPage(cinemas);
@@ -79,8 +74,6 @@ public class CinemaController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "cinemas");
 
         if (!invalidPosNumber(id) && cinemaService.existsById(id) && cinemaService.isVisible(id)) {
@@ -104,8 +97,6 @@ public class CinemaController {
     @GetMapping("/create")
     public String createForm(Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("cinema", new Cinema());
         model.addAttribute("returnUrl", "cinemas");
 
@@ -121,8 +112,6 @@ public class CinemaController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "cinemas");
 
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
@@ -143,18 +132,14 @@ public class CinemaController {
     public String saveForm(@Valid @ModelAttribute Cinema cinema, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinema", cinema);
             model.addAttribute("returnUrl", "cinemas");
-
             return "cinema/cinema-form";
 //        } else if (!result.getFieldErrors("address").isEmpty()) { // Ejemplo de validación de un campo
 //            return "cinema/cinema-form";
         } else {
             if (cinemaService.existsByCif(cinema.getCif())) {
-                Long existingId = cinemaRepository.findByCifIgnoreCase(cinema.getCif()).get().getId();
+                Long existingId = cinemaService.findByCif(cinema.getCif()).get().getId();
                 if (!Objects.equals(existingId, cinema.getId())) {
                     result.rejectValue("cif", "error.cif", "El CIF indicado ya existe");
                     return "cinema/cinema-form";

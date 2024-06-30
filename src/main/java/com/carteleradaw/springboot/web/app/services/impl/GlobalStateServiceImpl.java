@@ -4,7 +4,6 @@ import com.carteleradaw.springboot.web.app.services.IAddressService;
 import com.carteleradaw.springboot.web.app.services.IGlobalStateService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
@@ -12,6 +11,9 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+
+import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
+import static com.carteleradaw.springboot.web.app.utils.Utils.logoutAuth;
 
 /**
  * Implementación de servicios de sesiones.
@@ -27,24 +29,16 @@ public class GlobalStateServiceImpl implements IGlobalStateService {
 
     @PostConstruct
     public void init() {
-        // Invalida la sesión existente para asegurar una nueva sesión
-        session.invalidate();
+        if (isAuth()) logoutAuth();
 
         // Inicializa el atributo "selectedCity" como una cadena vacía si no existe
-        if (session.getAttribute("selectedCity") == null) {
+        if (session.getAttribute("selectedCity") == null)
             session.setAttribute("selectedCity", "");
-        }
 
         // Obtiene los nombres de las ciudades del servicio IAddressService
         Set<String> citiesNames = addressService.getCitiesNames();
 
-        // Inicializa el conjunto de nombres de ciudades como un Set vacío si no existe
-        if (session.getAttribute("citiesNames") == null) {
-            session.setAttribute("citiesNames", citiesNames);
-        } else {
-            // Actualiza el conjunto de nombres de ciudades si ya existe
-            session.setAttribute("citiesNames", citiesNames);
-        }
+        session.setAttribute("citiesNames", citiesNames);
     }
 
     @Override

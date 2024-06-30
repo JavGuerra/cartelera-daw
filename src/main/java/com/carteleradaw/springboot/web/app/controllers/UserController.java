@@ -1,11 +1,10 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.User;
-import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.IUserService;
 import com.carteleradaw.springboot.web.app.utils.PageInfo;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,12 +21,11 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 /**
  * Controladores de rutas para usuarios.
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
-    private final GlobalStateServiceImpl globalStateService;
     private final PageInfo pageInfoComponent;
 
     private final IUserService userService;
@@ -47,8 +45,6 @@ public class UserController {
         Page<User> users = userService.findAll(paging);
         PageInfo pageInfo = pageInfoComponent.createFromPage(users);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("page", pageInfo);
         model.addAttribute("users", users);
         model.addAttribute("returnUrl", "users");
@@ -66,8 +62,6 @@ public class UserController {
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "users");
 
         if (!invalidPosNumber(id) && userService.existsById(id)) {
@@ -85,8 +79,6 @@ public class UserController {
     @GetMapping("/create")
     public String createForm(Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("user", new User());
         model.addAttribute("returnUrl", "users");
 
@@ -102,8 +94,6 @@ public class UserController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "users");
 
         if (!invalidPosNumber(id) && userService.existsById(id)) {
@@ -124,12 +114,8 @@ public class UserController {
     public String save(@Valid @ModelAttribute User user, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("user",user);
             model.addAttribute("returnUrl", "users");
-
             return "user/user-form";
         } else {
             Long id = user.getId();

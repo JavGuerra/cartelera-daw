@@ -4,7 +4,7 @@ import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.repositories.UserRepository;
 import com.carteleradaw.springboot.web.app.services.IUserService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 import java.util.Optional;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements IUserService {
 
