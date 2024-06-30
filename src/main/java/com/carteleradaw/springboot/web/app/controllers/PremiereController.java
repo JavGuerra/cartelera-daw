@@ -4,6 +4,7 @@ import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 /**
  * Controlador de ruta para estrenos.
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Scope("session")
 @Controller
 public class PremiereController {
@@ -34,13 +35,15 @@ public class PremiereController {
     public String findAll(Model model) {
         if (isAuth()) globalStateService.updateCitiesNames();
 
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "/");
+
         List<Room> premieres = roomService.findAllByPremiereDescDistinct(globalStateService.getSelectedCity());
 
         if (!premieres.isEmpty()) {
-            if (premieres.size() > 4) premieres = premieres.subList(0, 4);
 
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+            if (premieres.size() > 4) premieres = premieres.subList(0, 4);
             model.addAttribute("premieres", premieres);
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna sala que mostrar");

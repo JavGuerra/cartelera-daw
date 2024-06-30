@@ -53,17 +53,18 @@ public class RoomController {
                           @RequestParam(defaultValue = "10") int size,
                           Model model) {
 
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "rooms");
+
         Pageable paging = PageRequest.of(page, size);
         Page<Room> rooms = roomService.findAllByCity(globalStateService.getSelectedCity(), paging);
 
         if (!rooms.isEmpty()) {
             PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
 
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("page", pageInfo);
             model.addAttribute("rooms", rooms);
-            model.addAttribute("returnUrl", "rooms");
             model.addAttribute("entity", "salas");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna sala que mostrar");
@@ -79,13 +80,13 @@ public class RoomController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "rooms");
+
         if (!invalidPosNumber(id) && roomService.existsById(id) && roomService.isVisible(id)) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("room", roomService.findById(id).get());
-            model.addAttribute("returnUrl", "rooms");
-
         } else model.addAttribute("error", "\uD83E\uDD74 Sala no encontrada");
 
         return "room/room-detail";
@@ -104,6 +105,10 @@ public class RoomController {
                                @RequestParam(defaultValue = "10") int size,
                                @PathVariable Long id, Model model) {
 
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "rooms");
+
         if (!invalidPosNumber(id) && filmService.existsById(id)) {
 
             Pageable paging = PageRequest.of(page, size);
@@ -112,11 +117,8 @@ public class RoomController {
             if (!rooms.isEmpty()) {
                 PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
 
-                model.addAttribute("cities", globalStateService.getCitiesNames());
-                model.addAttribute("selectedCity", globalStateService.getSelectedCity());
                 model.addAttribute("page", pageInfo);
                 model.addAttribute("rooms", rooms);
-                model.addAttribute("returnUrl", "rooms");
                 model.addAttribute("entity", "salas");
 
             } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Película sin salas");
@@ -139,6 +141,10 @@ public class RoomController {
                                  @RequestParam(defaultValue = "10") int size,
                                  @PathVariable Long id, Model model) {
 
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "rooms");
+
         if (!invalidPosNumber(id) && cinemaService.existsById(id)) {
 
             Pageable paging = PageRequest.of(page, size);
@@ -148,12 +154,10 @@ public class RoomController {
                 PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
                 // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
                 globalStateService.setSelectedCity(cinemaService.findById(id).get().getAddress().getCity());
-
-                model.addAttribute("cities", globalStateService.getCitiesNames());
                 model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+
                 model.addAttribute("page", pageInfo);
                 model.addAttribute("rooms", rooms);
-                model.addAttribute("returnUrl", "rooms");
                 model.addAttribute("entity", "salas");
 
             } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
@@ -172,13 +176,11 @@ public class RoomController {
     public String createForm(@RequestParam(required = false) Long id, Model model) {
 
         Room room = new Room();
-        if (id != null && !invalidPosNumber(id) && cinemaService.existsById(id)) {
-            room.setCinema(cinemaService.findById(id).get());}
+        if (id != null && !invalidPosNumber(id) && cinemaService.existsById(id))
+            room.setCinema(cinemaService.findById(id).get());
         List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
         Integer nextRoomNumber = roomService.getNextRoomNumber();
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("room", room);
         model.addAttribute("nextRoomNumber", String.valueOf(nextRoomNumber));
         model.addAttribute("cinemas", cinemaService.findAll());
@@ -197,6 +199,11 @@ public class RoomController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
+
+        model.addAttribute("cities", globalStateService.getCitiesNames());
+        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        model.addAttribute("returnUrl", "rooms");
+
         if (!invalidPosNumber(id) && roomService.existsById(id)) {
 
             List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
@@ -204,12 +211,9 @@ public class RoomController {
             Long cinemaId = room.getCinema().getId();
 
             model.addAttribute("room", room);
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("cinemas", cinemaService.findById(cinemaId).get());
             model.addAttribute("films", filmService.findAllActive());
             model.addAttribute("schedulesList", schedulesList);
-            model.addAttribute("returnUrl", "rooms");
 
         } else model.addAttribute("error", "\uD83E\uDD74 Sala no encontrada");
 
@@ -225,6 +229,7 @@ public class RoomController {
      */
     @PostMapping("")
     public String saveForm(@Valid @ModelAttribute Room room, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
             List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
 
