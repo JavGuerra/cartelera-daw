@@ -69,14 +69,14 @@ public class  SecurityConfig {
                 .loginPage("/login")
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/", true)
+                //.defaultSuccessUrl("/", true) // Deshabilitado para que funcione el manejador poersonalizado.
                 .permitAll())
 
             .logout(logout -> logout
-                .logoutUrl("/logout")
                 .addLogoutHandler(customLogoutHandler)
+                .logoutUrl("/logout")
                 //.logoutSuccessUrl("/login?logout=true")
-                .logoutSuccessUrl("/")
+                //.logoutSuccessUrl("/")
                 .permitAll())
 
             .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/error"));

@@ -34,8 +34,6 @@ public class PremiereController {
     @GetMapping("/")
     public String findAll(HttpSession session, Model model) {
 
-        if (isAuth()) session.setAttribute("citiesNames", addressService.getCitiesNames());
-
         model.addAttribute("returnUrl", "/");
 
         String city = (String) session.getAttribute("selectedCity");

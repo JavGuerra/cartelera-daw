@@ -23,8 +23,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     private final IAddressService addressService;
 
-    // TODO No funciona. Operativa movida a controlador "/" en PremiereController.
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
