@@ -1,20 +1,20 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
+import com.carteleradaw.springboot.web.app.services.IAddressService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Set;
+
 @RequiredArgsConstructor
-@Scope("session")
 @Controller
 public class LoginController {
 
-    private final GlobalStateServiceImpl globalStateService;
+    private final IAddressService addressService;
 
     /**
      * Muestra la página de login.
@@ -24,8 +24,6 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "login");
 
         return "login";
@@ -33,21 +31,22 @@ public class LoginController {
 
     /**
      * Muestra la páginan de logout.
-     * @param request Sesión.
+     * @param session Sesión.
      * @param model Modelo.
      * @return Plantilla logout.
      */
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest request, Model model) {
+    public String logout(HttpSession session, Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "/");
 
-        HttpSession session = request.getSession(false);
-        if (session!= null) {
-            session.invalidate();
-        }
+        SecurityContextHolder.getContext().setAuthentication(null);
+
+        Set<String> citiesNames = addressService.getCitiesNames();
+        String selectedCity = (String) session.getAttribute("selectedCity");
+        session.setAttribute("citiesNames", citiesNames);
+        if (!citiesNames.contains(selectedCity)) session.setAttribute("selectedCity", "");
+
         return "logout";
     }
 }

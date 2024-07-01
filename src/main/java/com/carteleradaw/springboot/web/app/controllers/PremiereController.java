@@ -1,16 +1,16 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Room;
-import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
+import com.carteleradaw.springboot.web.app.services.IAddressService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
-import lombok.AllArgsConstructor;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
 import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
@@ -19,27 +19,27 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
  * Controlador de ruta para estrenos.
  */
 @RequiredArgsConstructor
-@Scope("session")
 @Controller
 public class PremiereController {
 
-    private final GlobalStateServiceImpl globalStateService;
+    private final IAddressService addressService;
     private final IRoomService roomService;
 
     /**
-     * Lista los últimnos seis estrenos.
+     * Lista los últimos estrenos.
+     * @param session Sesión HTTP.
      * @param model Modelo.
      * @return Plantilla index.
      */
     @GetMapping("/")
-    public String findAll(Model model) {
-        if (isAuth()) globalStateService.updateCitiesNames();
+    public String findAll(HttpSession session, Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
+        if (isAuth()) session.setAttribute("citiesNames", addressService.getCitiesNames());
+
         model.addAttribute("returnUrl", "/");
 
-        List<Room> premieres = roomService.findAllByPremiereDescDistinct(globalStateService.getSelectedCity());
+        String city = (String) session.getAttribute("selectedCity");
+        List<Room> premieres = roomService.findAllByPremiereDescDistinct(city);
 
         if (!premieres.isEmpty()) {
 
@@ -53,14 +53,22 @@ public class PremiereController {
 
     /**
      * Actualiza la variable de sesión selectedCity con el valor seleccionado.
+     * @param session Sesión HTTP.
      * @param selectedCity ciudad seleccionada.
      * @return Plantilla index.
      */
     @PostMapping("/setCity")
-    public String setSelectedCity(@RequestParam("cities") String selectedCity,
+    public String setSelectedCity(HttpSession session, @RequestParam("cities") String selectedCity,
                                   @RequestParam(value = "returnUrl", required = false) String returnUrl) {
 
-        globalStateService.setSelectedCity(selectedCity);
+        if (selectedCity.trim().isEmpty()) session.setAttribute("selectedCity", "");
+        else {
+            String lowerCaseSelectedCity = selectedCity.toLowerCase();
+            Set<String> cities = addressService.getCitiesNames();
+
+            if (cities.stream().anyMatch(city -> city.toLowerCase().equals(lowerCaseSelectedCity)))
+                session.setAttribute("selectedCity", selectedCity);
+        }
 
         if (!stringIsEmpty(returnUrl)) {
             return "redirect:" + returnUrl;

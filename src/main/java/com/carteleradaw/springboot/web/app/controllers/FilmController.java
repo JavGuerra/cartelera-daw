@@ -1,13 +1,12 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
 import com.carteleradaw.springboot.web.app.entities.Film;
-import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
 import com.carteleradaw.springboot.web.app.utils.PageInfo;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Scope;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +20,11 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 /**
  * Controladores de rutas para películas.
  */
-@AllArgsConstructor
-@Scope("session")
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/films")
 public class FilmController {
 
-    private final GlobalStateServiceImpl globalStateService;
     private final PageInfo pageInfoComponent;
 
     private final IFilmService filmService;
@@ -43,21 +40,20 @@ public class FilmController {
     @GetMapping("")
     public String findAll(@RequestParam(defaultValue = "0") int page,
                           @RequestParam(defaultValue = "10") int size,
-                          Model model) {
+                          HttpSession session, Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "films");
 
+        String city = (String) session.getAttribute("selectedCity");
         Pageable paging = PageRequest.of(page, size);
-        Page<Film> films = filmService.findAllByCity(globalStateService.getSelectedCity(), paging);
+        Page<Film> films = filmService.findAllByCity(city, paging);
 
         if (!films.isEmpty()) {
             PageInfo pageInfo = pageInfoComponent.createFromPage(films);
 
             model.addAttribute("page", pageInfo);
             model.addAttribute("films", films);
-            model.addAttribute("entity", "peliculas");
+            model.addAttribute("entity", "películas");
 
         } else model.addAttribute("error", "\uD83E\uDD74 No hay ninguna película que mostrar");
 
@@ -74,8 +70,6 @@ public class FilmController {
     public String findById(Model model, @PathVariable Long id) {
         // List<Film> filmOpt = filmService.findByIdWithGenre(id);
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "films");
 
         if (!invalidPosNumber(id) && filmService.existsById(id) && filmService.isVisible(id)) {
@@ -96,8 +90,6 @@ public class FilmController {
     @GetMapping("/create")
     public String createForm(Model model) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("film", new Film());
         model.addAttribute("returnUrl", "films");
 
@@ -113,8 +105,6 @@ public class FilmController {
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable Long id) {
 
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "films");
 
         if (!invalidPosNumber(id) && filmService.existsById(id)){
@@ -135,12 +125,8 @@ public class FilmController {
     public String saveForm(@Valid @ModelAttribute Film film, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-
-            model.addAttribute("cities", globalStateService.getCitiesNames());
-            model.addAttribute("selectedCity", globalStateService.getSelectedCity());
             model.addAttribute("film", film);
             model.addAttribute("returnUrl", "films");
-
             return "film/film-form";
         } else {
             if (!film.getActive()) filmService.deactivateById(film.getId());

@@ -33,7 +33,7 @@ public interface ICinemaService {
     boolean existsById(Long id);
 
     /**
-     * Obtiene una dirección por su ID.
+     * Obtiene, opcionalmente, una dirección por su ID.
      * @param id Identificador.
      * @return Opcionalmente, el cine solicitado.
      */
@@ -46,6 +46,12 @@ public interface ICinemaService {
      */
     boolean existsByCif(String cif);
 
+    /**
+     * Obtiene, opcionalmente, un cine por su CIF.
+     * @param cif Identificador.
+     * @return  Opcionalmente, el cine solicitado.
+     */
+    Optional<Cinema> findByCif(String cif);
     /**
      * Obtiene la lista de cines de una ciudad.
      * @param city Ciudad.

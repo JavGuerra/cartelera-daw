@@ -2,7 +2,7 @@ package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * Implementación de servicios de detalle de usuario.
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

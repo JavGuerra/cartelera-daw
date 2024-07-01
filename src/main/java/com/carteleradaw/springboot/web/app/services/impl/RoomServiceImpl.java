@@ -80,7 +80,7 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public Page<Room> findAllByCinemaId(Long id, Pageable paging) { // TODO ¿Devuelve vacío?
+    public Page<Room> findAllByCinemaId(Long id, Pageable paging) {
         log.info("findAllByCinemaId {}", id);
         if (invalidPosNumber(id) || !cinemaService.existsById(id)) return Page.empty();
         if (isAuth()) return roomRepo.findAllByCinema_Id(id, paging);

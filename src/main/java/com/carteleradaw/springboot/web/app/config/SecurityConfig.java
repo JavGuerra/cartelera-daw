@@ -1,9 +1,12 @@
 package com.carteleradaw.springboot.web.app.config;
 
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -11,8 +14,15 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * Configuración de permisos de rutas.
  */
+@AllArgsConstructor
+@EnableWebSecurity
 @Configuration
 public class  SecurityConfig {
+
+    @Autowired
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    @Autowired
+    private final CustomLogoutHandler customLogoutHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -23,8 +33,8 @@ public class  SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)  throws Exception {
         return http
             .authorizeHttpRequests(authRequest -> authRequest
-                .requestMatchers(HttpMethod.GET,"/", "/favicon.ico", "/legal", "/privacy",
-                        "/css/**", "/js/**", "/img/**", "/webjars/**", "/auth/**", "/login").permitAll()
+                .requestMatchers(HttpMethod.GET,"/", "/legal", "/privacy", "/login", "/error",
+                        "/css/**", "/js/**", "/img/**", "/webjars/**", "/auth/**", "/favicon.ico").permitAll()
 
                 .requestMatchers(HttpMethod.GET,"/help").authenticated()
 
@@ -55,10 +65,13 @@ public class  SecurityConfig {
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
+                .successHandler(customAuthenticationSuccessHandler)
                 .defaultSuccessUrl("/", true)
                 .permitAll())
             .logout(logout -> logout
+                .addLogoutHandler(customLogoutHandler)
                 .logoutUrl("/logout")
+                //.logoutSuccessUrl("/login?loggedOut=true")
                 .logoutSuccessUrl("/")
                 .permitAll())
             .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/error"))

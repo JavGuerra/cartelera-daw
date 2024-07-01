@@ -4,10 +4,10 @@ import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.services.IAddressService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -17,13 +17,12 @@ import java.util.*;
 /**
  * Implementación de servicios de direcciones.
  */
-@Scope("session")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class AddressServiceImpl implements IAddressService {
 
-    private final GlobalStateServiceImpl globalStateService;
+    private final HttpSession session;
     private final AddressRepository addressRepo;
     private final CinemaRepository cinemaRepo;
 
@@ -67,8 +66,8 @@ public class AddressServiceImpl implements IAddressService {
     public Address save(Address address) {
         log.info("save {}", address);
         // Al crear o actualizar la dirección actualiza selectedCity y la lista de ciudades.
-        globalStateService.setSelectedCity(address.getCity());
-        globalStateService.updateCitiesNames();
+        session.setAttribute("selectedCity", address.getCity());
+        session.setAttribute("citiesNames", getCitiesNames());
         return addressRepo.save(address);
     }
 
@@ -85,8 +84,10 @@ public class AddressServiceImpl implements IAddressService {
 
         // Si ya no hay direcciones con esta ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
         if (!existsCity(city)) {
-            globalStateService.setSelectedCity("");
-            globalStateService.updateCitiesNames();
+            session.setAttribute("selectedCity", "");
+            session.setAttribute("citiesNames", getCitiesNames());
+
+
         }
 
     }

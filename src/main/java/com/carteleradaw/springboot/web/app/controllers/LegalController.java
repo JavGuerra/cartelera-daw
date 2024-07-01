@@ -1,8 +1,5 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.services.impl.GlobalStateServiceImpl;
-import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Controladores de rutas para legal y privacidad.
  */
-@AllArgsConstructor
-@Scope("session")
 @Controller
 public class LegalController {
-
-    private final GlobalStateServiceImpl globalStateService;
 
     /**
      * Crea la ruta para la página de aviso legal.
@@ -23,8 +16,6 @@ public class LegalController {
      */
     @GetMapping("/legal")
     public String showLegal(Model model) {
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "legal");
         return "legal";
     }
@@ -35,8 +26,6 @@ public class LegalController {
      */
     @GetMapping("/privacy")
     public String showPrivacy(Model model) {
-        model.addAttribute("cities", globalStateService.getCitiesNames());
-        model.addAttribute("selectedCity", globalStateService.getSelectedCity());
         model.addAttribute("returnUrl", "privacy");
         return "privacy";
     }

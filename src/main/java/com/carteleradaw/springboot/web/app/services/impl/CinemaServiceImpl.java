@@ -2,12 +2,13 @@ package com.carteleradaw.springboot.web.app.services.impl;
 
 import com.carteleradaw.springboot.web.app.entities.Address;
 import com.carteleradaw.springboot.web.app.entities.Cinema;
-import com.carteleradaw.springboot.web.app.repositories.AddressRepository;
 import com.carteleradaw.springboot.web.app.repositories.CinemaRepository;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
+import com.carteleradaw.springboot.web.app.services.IAddressService;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,14 +23,14 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
  * Implementación de servicios de cines.
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CinemaServiceImpl implements ICinemaService {
 
-    private final GlobalStateServiceImpl globalStateService;
+    private final HttpSession session;
+    private final IAddressService addressService;
     private final CinemaRepository cinemaRepo;
     private final RoomRepository roomRepo;
-    private final AddressRepository addressRepo;
 
     @Override
     public List<Cinema> findAll() {
@@ -68,6 +69,13 @@ public class CinemaServiceImpl implements ICinemaService {
     }
 
     @Override
+    public Optional<Cinema> findByCif(String cif) {
+        log.info("findByCif {}", cif);
+        if (stringIsEmpty(cif)) return Optional.empty();
+        return cinemaRepo.findByCifIgnoreCase(cif);
+    }
+
+    @Override
     public Page<Cinema> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
         if (stringIsEmpty(city)) return (isAuth()) ? cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveTrue(paging);
@@ -80,7 +88,7 @@ public class CinemaServiceImpl implements ICinemaService {
     public Cinema save(Cinema cinema) {
         log.info("save {}", cinema);
         Address address = cinema.getAddress();
-        if(!invalidPosNumber(address.getId()) && addressRepo.existsById(address.getId())) addressRepo.save(address);
+        if(!invalidPosNumber(address.getId()) && addressService.existsById(address.getId())) addressService.save(address);
 
         if (cinema.getActive()) {
             if (existsById(cinema.getId())) { // ¿existe ya?
@@ -90,8 +98,8 @@ public class CinemaServiceImpl implements ICinemaService {
 
         Cinema newCinema = cinemaRepo.save(cinema);
 
-        globalStateService.setSelectedCity(address.getCity());
-        globalStateService.updateCitiesNames();
+        session.setAttribute("selectedCity", address.getCity());
+        session.setAttribute("citiesNames", addressService.getCitiesNames());
 
         return newCinema;
     }
@@ -108,8 +116,8 @@ public class CinemaServiceImpl implements ICinemaService {
 
         // Si ya no hay cines en una ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
         if (findAllByCity(city, Pageable.unpaged()).getContent().isEmpty()) {
-            globalStateService.setSelectedCity("");
-            globalStateService.updateCitiesNames();
+            session.setAttribute("selectedCity", "");
+            session.setAttribute("citiesNames", addressService.getCitiesNames());
         }
     }
 }
