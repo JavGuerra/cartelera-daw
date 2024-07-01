@@ -25,13 +25,15 @@ public class SessionInitializationFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        HttpSession session = httpRequest.getSession(false);
+        HttpSession session = httpRequest.getSession(true);
 
+        if (session!= null) {
             if (session.getAttribute("selectedCity") == null)
                 session.setAttribute("selectedCity", "");
 
             if (session.getAttribute("citiesNames") == null)
                 session.setAttribute("citiesNames", addressService.getCitiesNames());
+        }
 
         chain.doFilter(request, response);
     }
