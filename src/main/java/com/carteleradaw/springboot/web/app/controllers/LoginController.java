@@ -1,16 +1,20 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.carteleradaw.springboot.web.app.services.IAddressService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Set;
 
-import static com.carteleradaw.springboot.web.app.utils.Utils.logoutAuth;
-
+@RequiredArgsConstructor
 @Controller
 public class LoginController {
+
+    private final IAddressService addressService;
 
     /**
      * Muestra la página de login.
@@ -36,7 +40,13 @@ public class LoginController {
 
         model.addAttribute("returnUrl", "/");
 
-        if (session!= null) logoutAuth();
+        SecurityContextHolder.getContext().setAuthentication(null);
+
+        Set<String> citiesNames = addressService.getCitiesNames();
+        String selectedCity = (String) session.getAttribute("selectedCity");
+        session.setAttribute("citiesNames", citiesNames);
+        if (!citiesNames.contains(selectedCity)) session.setAttribute("selectedCity", "");
+
         return "logout";
     }
 }

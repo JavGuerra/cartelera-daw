@@ -86,11 +86,4 @@ public abstract class Utils {
         if (isAuth()) return Optional.ofNullable((User) authentication.getPrincipal());
         return Optional.empty();
     }
-
-    /**
-     * Elimina la autenticación del usuario en la sesión.
-     */
-    public static void logoutAuth() {
-        if (isAuth()) SecurityContextHolder.getContext().setAuthentication(null);
-    }
 }

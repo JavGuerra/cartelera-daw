@@ -14,6 +14,9 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
 import java.util.Optional;
 
+/**
+ * Implementación de servicios de usuarios.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
