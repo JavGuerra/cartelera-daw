@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.carteleradaw.springboot.web.app.utils.Utils.isAuth;
+
 /**
  * Manejador para el inicio de sesión.
  */
@@ -19,16 +21,16 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    // TODO No funciona. Operativa movida a controlador "/" en PremiereController.
-
     private final IAddressService addressService;
+
+    // TODO No funciona. Operativa movida a controlador "/" en PremiereController.
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        HttpSession session = request.getSession();
-        session.setAttribute("citiesNames", addressService.getCitiesNames());
+        HttpSession session = request.getSession(false);
+        if (isAuth()) session.setAttribute("citiesNames", addressService.getCitiesNames());
 
         response.sendRedirect("/");
     }
