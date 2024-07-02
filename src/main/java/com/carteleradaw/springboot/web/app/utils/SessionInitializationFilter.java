@@ -33,6 +33,9 @@ public class SessionInitializationFilter implements Filter {
 
             if (session.getAttribute("citiesNames") == null)
                 session.setAttribute("citiesNames", addressService.getCitiesNames());
+
+            if (session.getAttribute("cookieWarning") == null)
+                session.setAttribute("cookieWarning", true);
         }
 
         chain.doFilter(request, response);

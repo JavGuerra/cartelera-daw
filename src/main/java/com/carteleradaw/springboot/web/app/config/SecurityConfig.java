@@ -40,7 +40,7 @@ public class  SecurityConfig {
 
                 .requestMatchers(HttpMethod.GET,"/help").authenticated()
 
-                .requestMatchers(HttpMethod.POST,"/setCity").permitAll()
+                .requestMatchers(HttpMethod.POST,"/setCity", "/cookie").permitAll()
 
                 .requestMatchers(HttpMethod.GET,"/cinemas/create").authenticated()
                 .requestMatchers(HttpMethod.GET,"/cinemas/{id}/edit").authenticated()

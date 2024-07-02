@@ -7,7 +7,6 @@ En el caso del desarrollo que nos ocupa, estas son algunas de las funcionalidade
 ## Mejoras en la interfaz
 
 * Mostrar notificaciones de aviso de borrado en cines y salas. 
-* Personalizar la página de login.
 * Subir las fotos al servidor como alternativa al uso de enlaces a los recursos externos.
 * Implementar filtrado por género.
 * Implementar nuevos filtrados de listados por estados (activo, inactivo, alfabético…)
@@ -17,5 +16,4 @@ En el caso del desarrollo que nos ocupa, estas son algunas de las funcionalidade
 
 * Implementar el doble patrón de autenticación de los accesos por contraseña.
 * Activar y desactivar usuarios.
-* Al desactivar película, se desactivan las salas. Si todas las salas de un cine se desactivan como consecuencia de ello, desactivar el cine.
 * Elaborar clases de test.

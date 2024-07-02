@@ -53,7 +53,8 @@ public class PremiereController {
      * Actualiza la variable de sesión selectedCity con el valor seleccionado.
      * @param session Sesión HTTP.
      * @param selectedCity ciudad seleccionada.
-     * @return Plantilla index.
+     * @param returnUrl Ruta a la que volver opcionalmente.
+     * @return Plantilla indicada o plantilla index.
      */
     @PostMapping("/setCity")
     public String setSelectedCity(HttpSession session, @RequestParam("cities") String selectedCity,
