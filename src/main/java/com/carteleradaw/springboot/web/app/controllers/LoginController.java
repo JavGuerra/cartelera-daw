@@ -38,9 +38,9 @@ public class LoginController {
     @RequestMapping("/logout")
     public String logout(HttpSession session, Model model) {
 
-        model.addAttribute("returnUrl", "/");
-
         SecurityContextHolder.getContext().setAuthentication(null);
+
+        model.addAttribute("returnUrl", "/");
 
         Set<String> citiesNames = addressService.getCitiesNames();
         String selectedCity = (String) session.getAttribute("selectedCity");

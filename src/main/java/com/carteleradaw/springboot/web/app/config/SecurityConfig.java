@@ -1,6 +1,6 @@
 package com.carteleradaw.springboot.web.app.config;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,14 +14,14 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * Configuración de permisos de rutas.
  */
-@AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class  SecurityConfig {
 
+    @Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    @Autowired
     private CustomLogoutHandler customLogoutHandler;
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -69,15 +69,16 @@ public class  SecurityConfig {
                 .loginPage("/login")
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureUrl("/login?error=true")
-                //.defaultSuccessUrl("/", true) // Deshabilitado para que funcione el manejador poersonalizado.
-                .permitAll())
+                //.defaultSuccessUrl("/", true) // Deshabilitado para que funcione el manejador personalizado.
+                .permitAll()
+            )
 
             .logout(logout -> logout
-                .addLogoutHandler(customLogoutHandler)
                 .logoutUrl("/logout")
+                .addLogoutHandler(customLogoutHandler)
                 //.logoutSuccessUrl("/login?logout=true")
-                //.logoutSuccessUrl("/")
-                .permitAll())
+                .permitAll()
+            )
 
             .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/error"));
 
