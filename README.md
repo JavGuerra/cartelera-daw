@@ -12,6 +12,8 @@ En su desarrollo se ha empleado **Spring security**, **Hibernate**, **Tymeleaft*
 
 La planificación y codificación se han llevado a cabo usando **Trello** y **GitHub**.
 
+![Banner](src/main/resources/static/img/banner.png)
+
 Además de los requisitos para el MVP, la app implementa:
 
 - Segurización de rutas
@@ -20,6 +22,7 @@ Además de los requisitos para el MVP, la app implementa:
 - Automatizaciones
 - Documentación con JavaDoc
 - Implementación de Logs
+- Aviso de cookies
 
 ## Indicaciones de instalación
 
@@ -34,8 +37,6 @@ El acceso al panel de administración requiere de un usuario y contraseña. Por 
 ADVERTENCIA: Se recomienda que, tras el primer acceso, la contraseña de admin sea cambiada o se cree una nueva cuenta de usuario desde la que eliminar la cuenta «admin».
 
 ## Acceso a la App
-
-![QR](src/main/resources/static/img/qr-app.svg)
 
 Ir a [Cartelera DAW](https://cartelera-daw.up.railway.app/)
 

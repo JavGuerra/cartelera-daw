@@ -7,6 +7,7 @@
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="flex-grow-1">
+<div th:replace="~{fragments/cookieWarning :: cookieWarning}"></div>
 
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow">
 
@@ -144,6 +145,13 @@
         </tr>
         </thead>
         <tbody>
+        <tr>
+            <td>JSESSIONID</td>
+            <td>De sesión</td>
+            <td>Al finalizar la sesión</td>
+            <td>Se usa para distinguir usuarios y sesiones</td>
+            <td>No Exenta</td>
+        </tr>
         <tr>
             <td>__utma</td>
             <td>De Terceros (Google Analytics)</td>

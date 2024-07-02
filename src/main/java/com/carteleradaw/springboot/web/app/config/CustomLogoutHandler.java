@@ -25,17 +25,24 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        try {
 
-        System.out.println("Se está cerrando sesión del usuario: " + authentication.getName());
+            System.out.println("********************************************************************************");
+            System.out.println("Se está cerrando sesión del usuario: " + authentication.getName());
 
-        SecurityContextHolder.getContext().setAuthentication(null);
+            SecurityContextHolder.getContext().setAuthentication(null);
 
-        HttpSession session = request.getSession();
+            HttpSession session = request.getSession(false); // Usa false para no crear una nueva sesión si no es necesario
+            if (session!= null) {
+                Set<String> citiesNames = addressService.getCitiesNames();
+                String selectedCity = (String) session.getAttribute("selectedCity");
 
-        Set<String> citiesNames = addressService.getCitiesNames();
-        String selectedCity = (String) session.getAttribute("selectedCity");
-
-        session.setAttribute("citiesNames", citiesNames);
-        if (!citiesNames.contains(selectedCity)) session.setAttribute("selectedCity", "");
+                session.setAttribute("citiesNames", citiesNames);
+                if (!citiesNames.contains(selectedCity)) session.setAttribute("selectedCity", "");
+            }
+        } catch (Exception e) {
+            // Log the error or handle it appropriately
+            System.err.println("Error during logout: " + e.getMessage());
+        }
     }
 }

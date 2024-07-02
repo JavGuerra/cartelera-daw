@@ -1,10 +1,10 @@
 package com.carteleradaw.springboot.web.app.config;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,15 +14,14 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * Configuración de permisos de rutas.
  */
-@AllArgsConstructor
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class  SecurityConfig {
 
     @Autowired
-    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Autowired
-    private final CustomLogoutHandler customLogoutHandler;
+    private CustomLogoutHandler customLogoutHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -31,14 +30,17 @@ public class  SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)  throws Exception {
-        return http
+
+        http
+            .csrf(Customizer.withDefaults())
+
             .authorizeHttpRequests(authRequest -> authRequest
                 .requestMatchers(HttpMethod.GET,"/", "/legal", "/privacy", "/login", "/error",
                         "/css/**", "/js/**", "/img/**", "/webjars/**", "/auth/**", "/favicon.ico").permitAll()
 
                 .requestMatchers(HttpMethod.GET,"/help").authenticated()
 
-                .requestMatchers(HttpMethod.POST,"/setCity").permitAll()
+                .requestMatchers(HttpMethod.POST,"/setCity", "/cookie").permitAll()
 
                 .requestMatchers(HttpMethod.GET,"/cinemas/create").authenticated()
                 .requestMatchers(HttpMethod.GET,"/cinemas/{id}/edit").authenticated()
@@ -62,20 +64,25 @@ public class  SecurityConfig {
 
                 .anyRequest().authenticated()
             )
+
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
-                .failureUrl("/login?error=true")
                 .successHandler(customAuthenticationSuccessHandler)
-                .defaultSuccessUrl("/", true)
-                .permitAll())
+                .failureUrl("/login?error=true")
+                //.defaultSuccessUrl("/", true) // Deshabilitado para que funcione el manejador personalizado.
+                .permitAll()
+            )
+
             .logout(logout -> logout
-                .addLogoutHandler(customLogoutHandler)
                 .logoutUrl("/logout")
-                //.logoutSuccessUrl("/login?loggedOut=true")
-                .logoutSuccessUrl("/")
-                .permitAll())
-            .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/error"))
-            .build();
+                .addLogoutHandler(customLogoutHandler)
+                //.logoutSuccessUrl("/login?logout=true")
+                .permitAll()
+            )
+
+            .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/error"));
+
+        return http.build();
     }
 
 }

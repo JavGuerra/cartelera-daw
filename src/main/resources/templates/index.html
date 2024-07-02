@@ -7,8 +7,9 @@
 <body class="d-flex flex-column vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="flex-grow-1">
+<div th:replace="~{fragments/cookieWarning :: cookieWarning}"></div>
 
-<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
+    <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
 
     <h1 class="cartelera-h1 my-4">Bienvenido a todos los estrenos<span th:if="${session.selectedCity != '' && error == null}" th:text="| de ${session.selectedCity}|"></span></h1>
 
@@ -67,6 +68,7 @@
 
     </div>
 </div>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

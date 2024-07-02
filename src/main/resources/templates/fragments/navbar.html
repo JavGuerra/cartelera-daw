@@ -1,6 +1,9 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th:fragment="navbar" id="navbarTop" class="container-fluid sticky-top shadow">
+<div th:fragment="navbar">
+
+<div id="navbarTop" class="container-fluid sticky-top shadow">
+
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" th:href="@{/}">
@@ -124,6 +127,8 @@
             });
         });
     </script>
+
+</div>
 
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </div>
