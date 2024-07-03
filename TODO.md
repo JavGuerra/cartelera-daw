@@ -6,7 +6,6 @@ En el caso del desarrollo que nos ocupa, estas son algunas de las funcionalidade
 
 ## Mejoras en la interfaz
 
-* Mostrar notificaciones de aviso de borrado en cines y salas. 
 * Subir las fotos al servidor como alternativa al uso de enlaces a los recursos externos.
 * Implementar filtrado por género.
 * Implementar nuevos filtrados de listados por estados (activo, inactivo, alfabético…)

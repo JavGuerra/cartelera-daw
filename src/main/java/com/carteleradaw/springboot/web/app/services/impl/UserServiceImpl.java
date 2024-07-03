@@ -3,9 +3,11 @@ package com.carteleradaw.springboot.web.app.services.impl;
 import com.carteleradaw.springboot.web.app.entities.User;
 import com.carteleradaw.springboot.web.app.repositories.UserRepository;
 import com.carteleradaw.springboot.web.app.services.IUserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements IUserService {
 
+    private final HttpSession session;
     private final UserRepository userRepo;
 
     @Override
@@ -76,13 +79,49 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public User save(User user) {
         log.info("save {}", user);
-        return userRepo.save(user);
+
+        try {
+            User newUser = userRepo.save(user);
+
+            session.setAttribute("message", "Usuario " + user + " guardado correctamente.");
+            session.setAttribute("messageType", "info");
+
+            return newUser;
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al guardar el usuario: ", e);
+
+            session.setAttribute("message", "El usuario no ha podido guardarse.");
+            session.setAttribute("messageType", "danger");
+
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
-        if (!invalidPosNumber(id) && userRepo.existsById(id)) userRepo.deleteById(id);
+
+        if (invalidPosNumber(id) || !userRepo.existsById(id)) {
+            session.setAttribute("message", "Usuario no encontrado.");
+            session.setAttribute("messageType", "danger");
+            return;
+        }
+
+        try {
+            User user = findById(id).get();
+
+            userRepo.deleteById(id);
+
+            session.setAttribute("message", "Usuario " + user + " borrado correctamente.");
+            session.setAttribute("messageType", "info");
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al borrar el usuario: ", e);
+
+            session.setAttribute("message", "El usuario no ha podido borrarse.");
+            session.setAttribute("messageType", "danger");
+        }
     }
 }

@@ -146,13 +146,9 @@ public class CinemaController {
                 }
             }
 
-            if (cinemaService.existsById(cinema.getId())) {
-                if (cinemaService.findById(cinema.getId()).get().getActive() != cinema.getActive()) {
-                    if (!cinema.getActive()) roomService.deactivateAllByCinemaId(cinema.getId());
-                }
-            }
-
             cinemaService.save(cinema);
+            if (!cinema.getActive()) roomService.deactivateRoomsByCinemaId(cinema.getId());
+
             return "redirect:/cinemas";
         }
     }

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Component
-public class SessionInitializationFilter implements Filter {
+public class SessionFilter implements Filter {
 
     private final IAddressService addressService;
 
@@ -22,6 +22,7 @@ public class SessionInitializationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -36,6 +37,12 @@ public class SessionInitializationFilter implements Filter {
 
             if (session.getAttribute("cookieWarning") == null)
                 session.setAttribute("cookieWarning", true);
+
+            if (session.getAttribute("message") == null)
+                session.setAttribute("message", "");
+
+            if (session.getAttribute("messageType") == null)
+                session.setAttribute("messageType", ""); // "danger", otro cualquiera = "info".
         }
 
         chain.doFilter(request, response);

@@ -71,7 +71,7 @@ public interface IFilmService {
      *  Desactiva una película por el ID.
      * @param id Identificador.
      */
-    void deactivateById(Long id);
+    void deactivateRoomsByFilmId(Long id);
 
     /**
      *  Borra una película por el ID.

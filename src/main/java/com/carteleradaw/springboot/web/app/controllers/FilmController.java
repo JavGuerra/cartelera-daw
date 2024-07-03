@@ -129,8 +129,8 @@ public class FilmController {
             model.addAttribute("returnUrl", "films");
             return "film/film-form";
         } else {
-            if (!film.getActive()) filmService.deactivateById(film.getId());
             filmService.save(film);
+            if (!film.getActive()) filmService.deactivateRoomsByFilmId(film.getId()); // ¿ Y si rooms > 0 ?
             return "redirect:/films";
         }
     }

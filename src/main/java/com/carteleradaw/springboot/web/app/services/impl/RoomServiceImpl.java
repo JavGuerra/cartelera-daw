@@ -1,11 +1,14 @@
 package com.carteleradaw.springboot.web.app.services.impl;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.repositories.RoomRepository;
 import com.carteleradaw.springboot.web.app.services.IRoomService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 @Service
 public class RoomServiceImpl implements IRoomService {
 
+    private final HttpSession session;
     private final RoomRepository roomRepo;
     private CinemaServiceImpl cinemaService;
     private FilmServiceImpl filmService;
@@ -131,54 +135,110 @@ public class RoomServiceImpl implements IRoomService {
     public Room save(Room room) {
         log.info("save {}", room);
 
-        // Si una sala no tiene película, no puede estar activa ni tener fecha de estreno, ni horarios.
-        if (room.getFilm() == null) {
-            room.setActive(false);
-            room.setPremiere(null);
-            room.setSchedules(new ArrayList<>());
-        }
+        String message = "";
 
-        // Si una sala pertenece a un cine que está desactivado, no puede activarse.
-        if (room.getActive() && !room.getCinema().getActive()) room.setActive(false);
-
-        // Si esta sala está activada y el número de sala ya existe en ese cine,
-        // entonces desactivar la otra sala activa.
-        if (room.getActive()) {
-            Optional<Room> optRoom = roomRepo.findRoomByCinemaIdAndRoomNumberAndActiveTrue(
-                    room.getCinema().getId(), room.getRoomNumber());
-            if (optRoom.isPresent()) {
-                Room oldRoom = optRoom.get();
-                oldRoom.setActive(false);
-                roomRepo.save(oldRoom);
+        try {
+            // Si una sala no tiene película, no puede estar activa ni tener fecha de estreno.
+            if (room.getFilm() == null) {
+                room.setActive(false);
+                room.setPremiere(null);
+                // room.setSchedules(new ArrayList<>());
             }
+
+            // Si una sala pertenece a un cine que está desactivado, no puede activarse.
+            if (room.getActive() && !room.getCinema().getActive()) room.setActive(false);
+
+            // Si esta sala está activada y el número de sala ya existe en ese cine,
+            // entonces desactivar la otra sala activa.
+            if (room.getActive()) {
+                Optional<Room> optRoom = roomRepo.findRoomByCinemaIdAndRoomNumberAndActiveTrue(
+                        room.getCinema().getId(), room.getRoomNumber());
+                if (optRoom.isPresent()) {
+                    Room oldRoom = optRoom.get();
+                    oldRoom.setActive(false);
+                    roomRepo.save(oldRoom);
+                    message = " Sala " + room.getRoomNumber() + " alternativa desactivada.";
+                }
+            }
+
+            // Si la sala se ha desactivado, y es la última sala activa del cine, desactivar el cine.
+            if (!room.getActive() && roomRepo.findAllByCinema_IdAndActiveTrue(room.getCinema().getId()).size() <= 1)
+                room.getCinema().setActive(false);
+
+            Room newRoom = roomRepo.save(room);
+
+            session.setAttribute("message", "Sala " + room + " guardada correctamente." + message);
+            session.setAttribute("messageType", "info");
+
+            return newRoom;
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al guardar la sala: ", e);
+
+            session.setAttribute("message", "La sala no ha podido guardarse.");
+            session.setAttribute("messageType", "danger");
+
+            return null;
         }
-
-        // Si la sala se ha desactivado, y es la última sala activa del cine, desactivar el cine.
-        if (!room.getActive() && roomRepo.findAllByCinema_IdAndActiveTrue(room.getCinema().getId()).size() <= 1)
-            room.getCinema().setActive(false);
-
-        return roomRepo.save(room);
     }
 
     @Override
     @Transactional
-    public void deactivateAllByCinemaId(Long id) {
-        log.info("deactivateAllByCinemaId {}", id);
+    public void deactivateRoomsByCinemaId(Long id) {
+        log.info("deactivateRoomsByCinemaId {}", id);
+
         if (invalidPosNumber(id)) return;
-        List<Room> rooms = roomRepo.findAllByCinema_Id(id);
-        for (Room room : rooms) room.setActive(false);
+
+        String message = (String) session.getAttribute("message");
+
+        try {
+            List<Room> rooms = roomRepo.findAllByCinema_Id(id);
+            for (Room room : rooms) room.setActive(false);
+
+            session.setAttribute("message", message + " Salas desactivadas correctamente.");
+            session.setAttribute("messageType", "info");
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al desactivar las salas: ", e);
+
+            session.setAttribute("message", message + " Las salas no ha podido desactivarse.");
+            session.setAttribute("messageType", "danger");
+        }
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
-        if (invalidPosNumber(id) && !roomRepo.existsById(id)) return;
-        // desasociar room de cine
-        Room room = findById(id).get();
-        room.setCinema(null);
-        room.setFilm(null);
-        roomRepo.deleteById(id);
+
+        if (invalidPosNumber(id) && !roomRepo.existsById(id)) {
+            session.setAttribute("message", "Sala no encontrada.");
+            session.setAttribute("messageType", "danger");
+            return;
+        }
+
+        try {
+            Room room = findById(id).get();
+            Cinema cinema = room.getCinema();
+            String cinemaName = cinema.getName();
+
+            room.setCinema(null); // Desasociar room de cine
+            room.setFilm(null);
+
+            roomRepo.deleteById(id);
+
+            // Si la sala se ha borrado, y es la última sala del cine, desactivar el cine.
+            if (room.getRoomNumber() <= 1) cinema.setActive(false);
+
+            session.setAttribute("message", "Sala " + room + " de " + cinemaName + " borrada correctamente.");
+            session.setAttribute("messageType", "info");
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al borrar la sala: ", e);
+
+            session.setAttribute("message", "La sala no ha podido borrarse.");
+            session.setAttribute("messageType", "danger");
+        }
     }
 
     @Override
