@@ -38,6 +38,8 @@
         <div class="col-12 col-md-6 w-md-50">
 
             <form th:if="${error} == null" th:action="@{/films}" method="POST" th:object="${film}" class="bg-white p-sm-3 p-md-5">
+                <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+
                 <input type="hidden" id="id" name="id" th:field="*{id}"/>
 
                 <div class="mb-4">
