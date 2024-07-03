@@ -9,10 +9,9 @@ En el caso del desarrollo que nos ocupa, estas son algunas de las funcionalidade
 * Subir las fotos al servidor como alternativa al uso de enlaces a los recursos externos.
 * Implementar filtrado por género.
 * Implementar nuevos filtrados de listados por estados (activo, inactivo, alfabético…)
-* Implementar un buscador. 
+* Implementar un buscador.
 
 ## Mejoras en la operativa de la aplicación
 
 * Implementar el doble patrón de autenticación de los accesos por contraseña.
-* Activar y desactivar usuarios.
 * Elaborar clases de test.

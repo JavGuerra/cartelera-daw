@@ -77,3 +77,30 @@ a .poster:hover, a .cinema:hover {
     background-size: cover;
     background-position: center;
 }
+
+#zone {
+  display: block;
+  border: none;
+  background: none;
+
+}
+
+#zone:focus {
+  outline: none;
+}
+
+.spinner {
+  margin: 0 auto;
+  border: 5px solid moccasin;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: DarkOrange;
+
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
