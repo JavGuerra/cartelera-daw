@@ -48,3 +48,9 @@ Desarrollado por [**Javier Guerra**](https://javguerra.github.io/)
 ## Licencia
 
 Sobre el código fuente: [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
+
+## Saber más
+
+Artículos informativos elaborados por el autor relacionados con esta aplicación:
+
+- [Notificaciones con Thymeleaft](https://javguerra.github.io/2024-07-03-notificaciones-thymeleaft/)

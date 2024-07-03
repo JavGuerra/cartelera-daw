@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import static com.carteleradaw.springboot.web.app.utils.Utils.stringIsEmpty;
 
 @Controller
-public class messageController {
-
+public class MessageController {
 
     @PostMapping("/message")
     public String messageAlert(@RequestParam(value = "returnUrl", required = false) String returnUrl,

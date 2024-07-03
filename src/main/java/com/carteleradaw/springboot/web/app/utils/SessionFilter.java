@@ -42,7 +42,8 @@ public class SessionFilter implements Filter {
                 session.setAttribute("message", "");
 
             if (session.getAttribute("messageType") == null)
-                session.setAttribute("messageType", ""); // "danger", otro cualquiera = "info".
+                session.setAttribute("messageType", "");
+                // Valores: "danger", otro cualquiera = "info".
         }
 
         chain.doFilter(request, response);
