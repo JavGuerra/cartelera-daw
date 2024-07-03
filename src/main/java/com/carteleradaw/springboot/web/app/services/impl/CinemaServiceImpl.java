@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -87,37 +88,71 @@ public class CinemaServiceImpl implements ICinemaService {
     @Transactional
     public Cinema save(Cinema cinema) {
         log.info("save {}", cinema);
-        Address address = cinema.getAddress();
-        if(!invalidPosNumber(address.getId()) && addressService.existsById(address.getId())) addressService.save(address);
 
-        if (cinema.getActive()) {
-            if (existsById(cinema.getId())) { // ¿existe ya?
-                if (roomRepo.findAllByCinema_Id(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
-            } else cinema.setActive(false);
+        try {
+            Address address = cinema.getAddress();
+
+            if (addressService.existsById(address.getId())) addressService.save(address);
+
+            if (cinema.getActive()) {
+                if (existsById(cinema.getId())) { // ¿existe ya?
+                    if (roomRepo.findAllByCinema_Id(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
+                } else cinema.setActive(false);
+            }
+
+            Cinema newCinema = cinemaRepo.save(cinema);
+
+            session.setAttribute("selectedCity", address.getCity());
+            session.setAttribute("citiesNames", addressService.getCitiesNames());
+
+            session.setAttribute("message", "Cine " + newCinema + " guardado correctamente.");
+            session.setAttribute("messageType", "info");
+
+            return newCinema;
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al guardar el cine: ", e);
+
+            session.setAttribute("message", "El cine no ha podido guardarse.");
+            session.setAttribute("messageType", "danger");
+
+            return null;
         }
-
-        Cinema newCinema = cinemaRepo.save(cinema);
-
-        session.setAttribute("selectedCity", address.getCity());
-        session.setAttribute("citiesNames", addressService.getCitiesNames());
-
-        return newCinema;
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
         log.info("deleteById {}", id);
-        if (invalidPosNumber(id) && !cinemaRepo.existsById(id)) return;
 
-        String city = findById(id).get().getAddress().getCity();
+        if (invalidPosNumber(id) || !cinemaRepo.existsById(id)) {
+            session.setAttribute("message", "Cine no encontrado.");
+            session.setAttribute("messageType", "danger");
+            return;
+        }
 
-        cinemaRepo.deleteById(id); // Borra rooms en cascada.
+        try {
+            Cinema cinema = findById(id).get();
+            String city = cinema.getAddress().getCity();
+            Integer numRooms = cinema.getCountRooms();
+            String message = (numRooms > 0) ? " Salas borradas correctamente." : "";
 
-        // Si ya no hay cines en una ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
-        if (findAllByCity(city, Pageable.unpaged()).getContent().isEmpty()) {
-            session.setAttribute("selectedCity", "");
-            session.setAttribute("citiesNames", addressService.getCitiesNames());
+            cinemaRepo.deleteById(id); // Y borra rooms en cascada.
+
+            // Si ya no hay cines en una ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.
+            if (findAllByCity(city, Pageable.unpaged()).getContent().isEmpty()) {
+                session.setAttribute("selectedCity", "");
+                session.setAttribute("citiesNames", addressService.getCitiesNames());
+            }
+
+            session.setAttribute("message", "Cine " + cinema + " borrado correctamente." + message);
+            session.setAttribute("messageType", "info");
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error al borrar el cine: ", e);
+
+            session.setAttribute("message", "El cine no ha podido borrarse.");
+            session.setAttribute("messageType", "danger");
         }
     }
 }

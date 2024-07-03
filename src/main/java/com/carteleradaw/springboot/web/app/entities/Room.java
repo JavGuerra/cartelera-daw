@@ -87,4 +87,7 @@ public class Room {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    @Override
+    public String toString() { return "sala " + roomNumber; }
 }

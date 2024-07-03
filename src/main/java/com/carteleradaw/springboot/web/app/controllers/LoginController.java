@@ -47,6 +47,8 @@ public class LoginController {
         session.setAttribute("citiesNames", citiesNames);
         if (!citiesNames.contains(selectedCity)) session.setAttribute("selectedCity", "");
 
+        session.setAttribute("message", "");
+
         return "logout";
     }
 }
