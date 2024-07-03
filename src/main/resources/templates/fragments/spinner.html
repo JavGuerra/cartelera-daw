@@ -1,0 +1,15 @@
+<div th:fragment="spinner">
+    <dialog id="zone">
+        <div class="spinner" aria-label="Cargando..."></div>
+    </dialog>
+
+    <script>
+        const zone = document.querySelector('#zone');
+
+        // Empieza cuando se carga el HTML
+        document.addEventListener('DOMContentLoaded', function() { zone.showModal(); });
+
+        // Se detiene cuando se cargan todos los recursos.
+        window.addEventListener('load', function() { zone.close(); });
+    </script>
+</div>
