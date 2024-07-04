@@ -155,9 +155,12 @@ public class RoomServiceImpl implements IRoomService {
                         room.getCinema().getId(), room.getRoomNumber());
                 if (optRoom.isPresent()) {
                     Room oldRoom = optRoom.get();
-                    oldRoom.setActive(false);
-                    roomRepo.save(oldRoom);
-                    message = " Sala " + room.getRoomNumber() + " alternativa desactivada.";
+                    if (!Objects.equals(oldRoom.getId(), room.getId())) {
+                        oldRoom.setActive(false);
+                        roomRepo.save(oldRoom);
+                        message = " Sala " + room.getRoomNumber() + " alternativa desactivada.";
+                        log.info(message);
+                    }
                 }
             }
 
