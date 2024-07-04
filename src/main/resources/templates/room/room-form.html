@@ -47,7 +47,7 @@
 
             <div class="col-12 col-md-6 w-md-50">
 
-                <form th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}" class="bg-white p-sm-3 p-md-5">
+                <form id="form" th:if="${error} == null" th:action="@{/rooms}" method="POST" th:object="${room}" class="bg-white p-sm-3 p-md-5">
                     <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
 
                     <div class="mt-3 mb-3">
@@ -149,7 +149,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg><span class="align-middle">&nbsp;&nbsp;Cancelar</span></a>
-                        <button type="submit" class="btn btn-outline-success" role="button">
+                        <button id="send" type="submit" class="btn btn-outline-success" role="button">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg><span class="align-middle">&nbsp;&nbsp;Guardar</span></button>
@@ -165,6 +165,15 @@
 </div>
 
 </div>
+
+<script>
+    document.getElementById('send').addEventListener('click', function(event) {
+        event.preventDefault();
+        zone.showModal();
+        document.getElementById('form').submit();
+    });
+</script>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

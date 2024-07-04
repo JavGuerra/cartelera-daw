@@ -89,6 +89,8 @@ public class CinemaServiceImpl implements ICinemaService {
     public Cinema save(Cinema cinema) {
         log.info("save {}", cinema);
 
+        String message = "";
+
         try {
             Address address = cinema.getAddress();
 
@@ -96,8 +98,12 @@ public class CinemaServiceImpl implements ICinemaService {
 
             if (cinema.getActive()) {
                 if (existsById(cinema.getId())) { // ¿existe ya?
-                    if (roomRepo.findAllByCinema_Id(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
+                    if (roomRepo.findAllByCinema_IdAndActiveTrue(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
                 } else cinema.setActive(false);
+
+                if (!cinema.getActive()) {
+                    message = " No activado porque no tiene salas activas.";
+                }
             }
 
             Cinema newCinema = cinemaRepo.save(cinema);
@@ -105,7 +111,7 @@ public class CinemaServiceImpl implements ICinemaService {
             session.setAttribute("selectedCity", address.getCity());
             session.setAttribute("citiesNames", addressService.getCitiesNames());
 
-            session.setAttribute("message", "Cine " + newCinema + " guardado correctamente.");
+            session.setAttribute("message", "Cine " + newCinema + " guardado." + message);
             session.setAttribute("messageType", "info");
 
             return newCinema;
@@ -133,9 +139,9 @@ public class CinemaServiceImpl implements ICinemaService {
 
         try {
             Cinema cinema = findById(id).get();
-            String city = cinema.getAddress().getCity();
+            String city = cinema.getCity();
             Integer numRooms = cinema.getCountRooms();
-            String message = (numRooms > 0) ? " Salas borradas correctamente." : "";
+            String message = (numRooms > 0) ? " Salas borradas." : "";
 
             cinemaRepo.deleteById(id); // Y borra rooms en cascada.
 
@@ -145,7 +151,7 @@ public class CinemaServiceImpl implements ICinemaService {
                 session.setAttribute("citiesNames", addressService.getCitiesNames());
             }
 
-            session.setAttribute("message", "Cine " + cinema + " borrado correctamente." + message);
+            session.setAttribute("message", "Cine " + cinema + " borrado." + message);
             session.setAttribute("messageType", "info");
 
         } catch (DataIntegrityViolationException e) {

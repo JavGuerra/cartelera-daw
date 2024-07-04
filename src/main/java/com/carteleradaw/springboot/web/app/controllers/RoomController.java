@@ -71,17 +71,25 @@ public class RoomController {
 
     /**
      * Muestra una sala específica.
+     * @param session Sesión HTTP.
      * @param model Modelo.
      * @param id Identificador.
      * @return Plantilla room-detail.
      */
     @GetMapping("/{id}")
-    public String findById(Model model, @PathVariable Long id) {
+    public String findById(HttpSession session, Model model, @PathVariable Long id) {
 
         model.addAttribute("returnUrl", "rooms");
 
         if (!invalidPosNumber(id) && roomService.existsById(id) && roomService.isVisible(id)) {
-            model.addAttribute("room", roomService.findById(id).get());
+
+            Room room = roomService.findById(id).get();
+
+            // Al mostrar la sala, se selecciona la ciudad.
+            session.setAttribute("selectedCity", room.getCity());
+
+            model.addAttribute("room", room);
+
         } else model.addAttribute("error", "\uD83E\uDD74 Sala no encontrada");
 
         return "room/room-detail";
@@ -145,7 +153,7 @@ public class RoomController {
             Page<Room> rooms = roomService.findAllByCinemaId(id, paging);
 
             if (!rooms.isEmpty()) {
-                String city = cinemaService.findById(id).get().getAddress().getCity();
+                String city = cinemaService.findById(id).get().getCity();
                 PageInfo pageInfo = pageInfoComponent.createFromPage(rooms);
                 // Al seleccionar las exhibiciones de un cine, se selecciona la ciudad de ese cine.
                 session.setAttribute("selectedCity", city);

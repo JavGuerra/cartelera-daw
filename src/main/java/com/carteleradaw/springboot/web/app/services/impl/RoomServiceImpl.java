@@ -29,6 +29,7 @@ public class RoomServiceImpl implements IRoomService {
 
     private final HttpSession session;
     private final RoomRepository roomRepo;
+    private AddressServiceImpl addressService;
     private CinemaServiceImpl cinemaService;
     private FilmServiceImpl filmService;
 
@@ -145,8 +146,12 @@ public class RoomServiceImpl implements IRoomService {
                 // room.setSchedules(new ArrayList<>());
             }
 
-            // Si una sala pertenece a un cine que está desactivado, no puede activarse.
-            if (room.getActive() && !room.getCinema().getActive()) room.setActive(false);
+            // Si una sala pertenece a un cine que está desactivado, activar el cine.
+            if (room.getActive() && !room.getCinema().getActive()) {
+                room.getCinema().setActive(true);
+                message = " Cine " + room.getCinema() + " activado.";
+                log.info(message);
+            }
 
             // Si esta sala está activada y el número de sala ya existe en ese cine,
             // entonces desactivar la otra sala activa.
@@ -155,9 +160,12 @@ public class RoomServiceImpl implements IRoomService {
                         room.getCinema().getId(), room.getRoomNumber());
                 if (optRoom.isPresent()) {
                     Room oldRoom = optRoom.get();
-                    oldRoom.setActive(false);
-                    roomRepo.save(oldRoom);
-                    message = " Sala " + room.getRoomNumber() + " alternativa desactivada.";
+                    if (!Objects.equals(oldRoom.getId(), room.getId())) {
+                        oldRoom.setActive(false);
+                        roomRepo.save(oldRoom);
+                        message = " Sala " + room.getRoomNumber() + " alternativa desactivada.";
+                        log.info(message);
+                    }
                 }
             }
 
@@ -165,9 +173,16 @@ public class RoomServiceImpl implements IRoomService {
             if (!room.getActive() && roomRepo.findAllByCinema_IdAndActiveTrue(room.getCinema().getId()).size() <= 1)
                 room.getCinema().setActive(false);
 
+            // Si el cine está activo, y la ciudad es otra, se selecciona la ciudad.
+            if (room.getCinema().getActive() && session.getAttribute("selectedCity") != room.getCity()) {
+                session.setAttribute("citiesNames", addressService.getCitiesNames());
+                session.setAttribute("selectedCity", room.getCity());
+            }
+
             Room newRoom = roomRepo.save(room);
 
-            session.setAttribute("message", "Sala " + room + " guardada correctamente." + message);
+            session.setAttribute("message",
+                    "Sala " + room.getRoomNumber()  + " de cine " + room.getCinema().getName() +  " guardada." + message);
             session.setAttribute("messageType", "info");
 
             return newRoom;
@@ -192,16 +207,18 @@ public class RoomServiceImpl implements IRoomService {
         String message = (String) session.getAttribute("message");
 
         try {
-            List<Room> rooms = roomRepo.findAllByCinema_Id(id);
-            for (Room room : rooms) room.setActive(false);
+            if (!roomRepo.findAllByCinema_IdAndActiveTrue(id).isEmpty()) {
+                List<Room> rooms = roomRepo.findAllByCinema_IdAndActiveTrue(id);
+                for (Room room : rooms) room.setActive(false);
 
-            session.setAttribute("message", message + " Salas desactivadas correctamente.");
-            session.setAttribute("messageType", "info");
+                session.setAttribute("message", message + " Salas desactivadas.");
+                session.setAttribute("messageType", "info");
+            }
 
         } catch (DataIntegrityViolationException e) {
             log.error("Error al desactivar las salas: ", e);
 
-            session.setAttribute("message", message + " Las salas no ha podido desactivarse.");
+            session.setAttribute("message", message + " Las salas no han podido desactivarse.");
             session.setAttribute("messageType", "danger");
         }
     }
@@ -230,7 +247,7 @@ public class RoomServiceImpl implements IRoomService {
             // Si la sala se ha borrado, y es la última sala del cine, desactivar el cine.
             if (room.getRoomNumber() <= 1) cinema.setActive(false);
 
-            session.setAttribute("message", "Sala " + room + " de " + cinemaName + " borrada correctamente.");
+            session.setAttribute("message", "Sala " + room.getRoomNumber() + " de cine " + cinemaName + " borrada.");
             session.setAttribute("messageType", "info");
 
         } catch (DataIntegrityViolationException e) {

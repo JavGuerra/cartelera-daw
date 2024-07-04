@@ -119,9 +119,10 @@
     </nav>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
             var selectElement = document.getElementById('cities');
             selectElement.addEventListener('change', function() {
+                zone.showModal();
                 document.getElementById('myForm').submit();
             });
         });

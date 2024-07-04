@@ -16,15 +16,15 @@ La planificación y codificación se han llevado a cabo usando **Trello** y **Gi
 
 Además de los requisitos para el MVP, la app implementa:
 
-- Segurización de rutas
-- Registro de usuarios
+- Segurización de rutas.
+- Registro de usuarios.
 - Validaciones de formularios
-- Automatizaciones
-- Documentación con JavaDoc
-- Implementación de Logs
-- Notificaciones
-- Aviso de cookies
-- Spinner loader
+- Automatizaciones, como el selector inteligente de cines, y otros.
+- Documentación con JavaDoc.
+- Implementación de Logs.
+- Notificaciones.
+- Aviso de cookies.
+- Spin loader.
 
 ## Indicaciones de instalación
 

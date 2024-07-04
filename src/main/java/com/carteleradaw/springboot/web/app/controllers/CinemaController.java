@@ -67,12 +67,13 @@ public class CinemaController {
 
     /**
      * Muestra un cine específico.
+     * @param session Sesión HTTP.
      * @param model Modelo.
      * @param id Identificador.
      * @return Plantilla cinema-detail.
      */
     @GetMapping("/{id}")
-    public String findById(Model model, @PathVariable Long id) {
+    public String findById(HttpSession session, Model model, @PathVariable Long id) {
 
         model.addAttribute("returnUrl", "cinemas");
 
@@ -80,6 +81,9 @@ public class CinemaController {
 
             Cinema cinema = cinemaService.findById(id).get();
             List<Room> rooms = roomService.findAllByCinemaId(id, Pageable.unpaged()).getContent();
+
+            // Al mostrar el cine, se selecciona la ciudad.
+            session.setAttribute("selectedCity", cinema.getCity());
 
             model.addAttribute("cinema", cinema);
             model.addAttribute("rooms", rooms);

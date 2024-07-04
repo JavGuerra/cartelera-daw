@@ -74,7 +74,7 @@ public class AddressServiceImpl implements IAddressService {
             session.setAttribute("selectedCity", address.getCity());
             session.setAttribute("citiesNames", getCitiesNames());
 
-            session.setAttribute("message", "Dirección " + address + " guardada correctamente.");
+            session.setAttribute("message", "Dirección " + address + " guardada.");
             session.setAttribute("messageType", "info");
 
             return newAddress;
@@ -113,7 +113,7 @@ public class AddressServiceImpl implements IAddressService {
                 session.setAttribute("citiesNames", getCitiesNames());
             }
 
-            session.setAttribute("message", "Dirección " + address + " borrada correctamente.");
+            session.setAttribute("message", "Dirección " + address + " borrada.");
             session.setAttribute("messageType", "info");
 
         } catch (DataIntegrityViolationException e) {
