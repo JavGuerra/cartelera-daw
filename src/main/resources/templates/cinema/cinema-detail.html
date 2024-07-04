@@ -33,8 +33,15 @@
             <img th:src="${cinema.image!= ''? cinema.image : '../img/noCinema.png'}" class="d-block cinema-info rounded shadow" th:alt="${cinema.name}">
 
             <div class="btn-group my-3">
-                <a class="btn btn-outline-primary btn-sm" title="Ver cines"
+                <a th:if="${cinema.getCountRooms() > 0}"
+                   class="btn btn-sm btn-outline-primary" title="Ver cartelera"
                    th:href="@{/rooms/cinema/{id}(id=${cinema.id})}" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                        <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                    </svg><span class="align-middle">&nbsp;&nbsp;Cartelera</span></a>
+                <a th:unless="${cinema.getCountRooms() > 0}"
+                   class="btn btn-sm btn-outline-secondary disabled" title="Opción de cartelera desactivada"
+                   th:href="@{/rooms/cinema/{id}(id=${cinema.id})}" aria-disabled="true" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                         <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
                     </svg><span class="align-middle">&nbsp;&nbsp;Cartelera</span></a>

@@ -47,7 +47,7 @@
 
             <div class="mb-5">
                 <div class="my-1">
-                    <small th:text="|Sala ${room.roomNumber}|" class="badge text-secondary bg-white mx-1"></small>
+                    <small th:text="|Sala ${room.roomNumber}|" class="badge text-bg-secondary mx-1"></small>
                     <small th:if="${room.film != null}" th:text="${room.film?.classification?: ''}" class="badge text-secondary bg-white mx-1"></small>
                     <small th:if="${room.film != null}" th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}" class="ms-1 me-2"></small>
                     <a title="Cartelera" th:if="${room.film != null}" th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">

@@ -63,9 +63,14 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public Integer getNextRoomNumber() {
+    public Integer getNextRoomNumber(Long cinemaId) {
+
         Set<Integer> existingRoomNumbers = new HashSet<>();
-        for (Room room : roomRepo.findAll()) {
+
+        List<Room> rooms = invalidPosNumber(cinemaId) ?
+                roomRepo.findAll() : roomRepo.findAllByCinema_Id(cinemaId);
+
+        for (Room room : rooms) {
             Integer roomNumber = Integer.valueOf(room.getRoomNumber());
             existingRoomNumbers.add(roomNumber);
         }
