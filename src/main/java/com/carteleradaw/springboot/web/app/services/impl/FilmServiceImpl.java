@@ -96,7 +96,7 @@ public class FilmServiceImpl implements IFilmService {
         try {
         Film newFilm = filmRepo.save(film);
 
-        session.setAttribute("message", "Película " + film + " guardada correctamente.");
+        session.setAttribute("message", "Película " + film + " guardada.");
         session.setAttribute("messageType", "info");
 
         return newFilm;
@@ -130,7 +130,7 @@ public class FilmServiceImpl implements IFilmService {
                 // room.setSchedules(new ArrayList<>());
             }
 
-            session.setAttribute("message", message + " Salas desactivadas correctamente.");
+            session.setAttribute("message", message + " Salas desactivadas.");
             session.setAttribute("messageType", "info");
 
         } catch (DataIntegrityViolationException e) {
@@ -167,7 +167,7 @@ public class FilmServiceImpl implements IFilmService {
                 room.setActive(false);
             }
 
-            session.setAttribute("message", "Película " + film + " borrada correctamente.");
+            session.setAttribute("message", "Película " + film + " borrada.");
             session.setAttribute("messageType", "info");
 
         } catch (DataIntegrityViolationException e) {

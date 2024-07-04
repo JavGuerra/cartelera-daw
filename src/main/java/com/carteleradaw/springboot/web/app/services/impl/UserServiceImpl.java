@@ -83,7 +83,7 @@ public class UserServiceImpl implements IUserService {
         try {
             User newUser = userRepo.save(user);
 
-            session.setAttribute("message", "Usuario " + user + " guardado correctamente.");
+            session.setAttribute("message", "Usuario " + user + " guardado.");
             session.setAttribute("messageType", "info");
 
             return newUser;
@@ -114,7 +114,7 @@ public class UserServiceImpl implements IUserService {
 
             userRepo.deleteById(id);
 
-            session.setAttribute("message", "Usuario " + user + " borrado correctamente.");
+            session.setAttribute("message", "Usuario " + user + " borrado.");
             session.setAttribute("messageType", "info");
 
         } catch (DataIntegrityViolationException e) {

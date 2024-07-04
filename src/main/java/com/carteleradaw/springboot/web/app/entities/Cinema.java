@@ -77,6 +77,10 @@ public class Cinema {
         return (int) rooms.stream().filter(Room::getActive).count();
     }
 
+    public String getCity() {
+        return this.getAddress().getCity();
+    }
+
     @Override
     public String toString() {
         return name + " - " + cif;
