@@ -1,5 +1,6 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
+import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
@@ -178,10 +179,16 @@ public class RoomController {
     public String createForm(@RequestParam(required = false) Long id, Model model) {
 
         Room room = new Room();
-        if (id != null && !invalidPosNumber(id) && cinemaService.existsById(id))
+        Long cinemaId = null;
+
+        if (id != null && !invalidPosNumber(id) && cinemaService.existsById(id)) {
             room.setCinema(cinemaService.findById(id).get());
+            cinemaId = id;
+        }
+
+        Integer nextRoomNumber = roomService.getNextRoomNumber(cinemaId);
+
         List<LocalTime> schedulesList = roomService.generateSchedulesList(startTime, interval);
-        Integer nextRoomNumber = roomService.getNextRoomNumber();
 
         model.addAttribute("room", room);
         model.addAttribute("nextRoomNumber", String.valueOf(nextRoomNumber));

@@ -33,17 +33,21 @@
             <img th:src="${cinema.image!= ''? cinema.image : '../img/noCinema.png'}" class="d-block cinema-info rounded shadow" th:alt="${cinema.name}">
 
             <div class="btn-group my-3">
-                <a class="btn btn-outline-primary btn-sm" title="Ver cines"
-                   th:href="@{/rooms/cinema/{id}(id=${cinema.id})}" role="button">
+                <a th:href="@{/rooms/cinema/{id}(id=${cinema.id})}" role="button"
+                   th:attrappend="aria-disabled=${cinema.getCountRooms() > 0? '' : 'true'}" class="btn btn-sm"
+                   th:classappend="${cinema.getCountRooms() > 0? 'btn-outline-primary' : 'btn-outline-secondary disabled'}"
+                   th:title="${cinema.getCountRooms() > 0? 'Ver cartelera' : 'Opción de cartelera desactivada'}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                         <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
                     </svg><span class="align-middle">&nbsp;&nbsp;Cartelera</span></a>
+
                 <a class="btn btn-outline-success btn-sm" title="Editar cines"
                    th:href="@{/cinemas/{id}/edit(id=${cinema.id})}"
                    sec:authorize="isAuthenticated()" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                     </svg><span class="align-middle">&nbsp;&nbsp;Editar</span></a>
+
                 <a class="btn btn-outline-danger btn-sm" title="Borrar cines"
                    th:href="@{/cinemas/{id}/delete(id=${cinema.id})}"
                    sec:authorize="isAuthenticated()" role="button">

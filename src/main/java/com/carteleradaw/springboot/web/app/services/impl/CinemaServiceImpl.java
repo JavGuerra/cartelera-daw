@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -108,8 +109,10 @@ public class CinemaServiceImpl implements ICinemaService {
 
             Cinema newCinema = cinemaRepo.save(cinema);
 
-            session.setAttribute("selectedCity", address.getCity());
-            session.setAttribute("citiesNames", addressService.getCitiesNames());
+            if (!Objects.equals(address.getCity(), (String) session.getAttribute("selectedCity"))) {
+                session.setAttribute("citiesNames", addressService.getCitiesNames());
+                session.setAttribute("selectedCity", address.getCity());
+            }
 
             session.setAttribute("message", "Cine " + newCinema + " guardado." + message);
             session.setAttribute("messageType", "info");

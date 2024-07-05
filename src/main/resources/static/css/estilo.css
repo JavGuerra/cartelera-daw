@@ -24,18 +24,22 @@ footer {
     font-size: 3em;
 }
 
-.cartelera-h1, th {
-    color: Olive;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
+th {
+    font-size: 1.4em;
+    text-align: center;
 }
 
-.cartelera-h2, th {
-    font-size: x-large;
-    text-align: center;
+.cartelera-h1, th {
+    color: Olive !important;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 .cartelera-btn {
     font-size: 15px;
+}
+
+tr:hover td {
+    background-color: LemonChiffon;
 }
 
 td, .card-title, .card-text, .list-group-item, .form-label {
@@ -70,6 +74,12 @@ a .poster:hover, a .cinema:hover {
 .user {
     width: 256px;
     height: 256px;
+    background-image: url('../img/noUser.png');
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
     background-image: url('../img/noUser.png');
 }
 
