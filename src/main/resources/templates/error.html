@@ -10,22 +10,22 @@
 <div th:replace="~{fragments/messageAlert :: messageAlert}"></div>
 <div th:replace="~{fragments/cookieWarning :: cookieWarning}"></div>
 
-<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
+<div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow">
 
     <h1 class="text-danger my-4" th:text="|Error ${status}|"></h1>
 
     <h2 class="text-danger-emphasis my-3" th:text="${message}"></h2>
 
-    <span lass="mt-3" th:text="|Exception: ${exception}|"></span>
+    <span class="mt-3" th:text="|Exception: ${exception}|"></span>
 
-    <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+    <div class="accordion accordion-flush mt-4" id="accordionError">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     Trazado
                 </button>
             </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionError">
                 <div class="accordion-body" th:text="${trace}"></div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                     Errores en cadena
                 </button>
             </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionError">
                 <div class="accordion-body" th:text="${errors}"></div>
             </div>
         </div>

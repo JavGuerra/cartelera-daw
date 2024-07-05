@@ -38,6 +38,10 @@ th {
     font-size: 15px;
 }
 
+tr:hover td {
+    background-color: LemonChiffon;
+}
+
 td, .card-title, .card-text, .list-group-item, .form-label {
     font-size: 18px;
     text-align: center;

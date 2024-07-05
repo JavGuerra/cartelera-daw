@@ -37,10 +37,8 @@ public class  SecurityConfig {
             .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
 
             .authorizeHttpRequests(authRequest -> authRequest
-                .requestMatchers(HttpMethod.GET,"/", "/legal", "/privacy", "/login", "/error",
+                .requestMatchers(HttpMethod.GET,"/", "/legal", "/privacy", "/login", "/help", "/error",
                         "/css/**", "/js/**", "/img/**", "/webjars/**", "/auth/**", "/favicon.ico").permitAll()
-
-                .requestMatchers(HttpMethod.GET,"/help").authenticated()
 
                 .requestMatchers(HttpMethod.POST,"/setCity", "/cookie", "/message").permitAll()
 
@@ -82,7 +80,8 @@ public class  SecurityConfig {
                 .permitAll()
             )
 
-            .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/error"));
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                    .accessDeniedPage("/error"));
 
         return http.build();
     }
