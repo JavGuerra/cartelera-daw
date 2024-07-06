@@ -192,7 +192,7 @@ public class RoomServiceImpl implements IRoomService {
 
             return newRoom;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar la sala: ", e);
 
             session.setAttribute("message", "La sala no ha podido guardarse.");
@@ -220,7 +220,7 @@ public class RoomServiceImpl implements IRoomService {
                 session.setAttribute("messageType", "info");
             }
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al desactivar las salas: ", e);
 
             session.setAttribute("message", message + " Las salas no han podido desactivarse.");
@@ -255,7 +255,7 @@ public class RoomServiceImpl implements IRoomService {
             session.setAttribute("message", "Sala " + room.getRoomNumber() + " de cine " + cinemaName + " borrada.");
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar la sala: ", e);
 
             session.setAttribute("message", "La sala no ha podido borrarse.");

@@ -15,7 +15,7 @@
 
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
 
-    <h1 class="cartelera-h1 mt-4">Películas<span th:if="${session.selectedCity != '' && error == null}" th:text="| de ${session.selectedCity}|"></span></h1>
+    <h1 class="cartelera-h1 mt-4">Películas<span th:if="${session.selectedCity != '' && error == null}" th:text="| en ${session.selectedCity}|"></span></h1>
 
     <h2 th:if="${error != null || (#lists.isEmpty(films) || #lists.isEmpty(films.content))}"
         th:text="${error}" role="alert" class="col mt-3 alert alert-danger"></h2>

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Component
@@ -29,21 +30,35 @@ public class SessionFilter implements Filter {
         HttpSession session = httpRequest.getSession(true);
 
         if (session!= null) {
+            // Gestión de ciudad
             if (session.getAttribute("selectedCity") == null)
                 session.setAttribute("selectedCity", "");
 
             if (session.getAttribute("citiesNames") == null)
                 session.setAttribute("citiesNames", addressService.getCitiesNames());
 
+            // Gestión de cookie
             if (session.getAttribute("cookieWarning") == null)
                 session.setAttribute("cookieWarning", true);
 
+            // Gestión de notificaciones
             if (session.getAttribute("message") == null)
                 session.setAttribute("message", "");
 
             if (session.getAttribute("messageType") == null)
                 session.setAttribute("messageType", "");
                 // Valores: "danger", otro cualquiera = "info".
+
+            if (session.getAttribute("messageActivated") == null)
+                session.setAttribute("messageActivated", false);
+
+            if ((boolean) session.getAttribute("messageActivated")) {
+                session.setAttribute("message", "");
+                session.setAttribute("messageActivated", false);
+            }
+
+            if (!Objects.equals((String) session.getAttribute("message"), ""))
+                session.setAttribute("messageActivated", true);
         }
 
         chain.doFilter(request, response);

@@ -16,8 +16,12 @@
 <div class="container mt-5 p-2 p-md-3 p-lg-4 bg-white bg-opacity-75 rounded-4 shadow text-center">
 
     <h1 class="cartelera-h1 mt-4">
-        <span sec:authorize="isAnonymous()">Cartelera<span th:if="${session.selectedCity != '' && error == null}"th:text="| de ${session.selectedCity}|"></span></span>
-        <span sec:authorize="isAuthenticated()">Salas<span th:if="${session.selectedCity != '' && error == null}" th:text="| de ${session.selectedCity}|"></span></span>
+        <span sec:authorize="isAnonymous()">Cartelera<span th:if="${session.selectedCity != '' && error == null}" th:text="| en ${session.selectedCity}|"></span></span>
+        <span sec:authorize="isAuthenticated()">Salas<span th:if="${session.selectedCity != '' && error == null}" th:text="| en ${session.selectedCity}|"></span></span>
+        <small th:if="${cinemaList != null and error == null and !#lists.isEmpty(rooms) and !#lists.isEmpty(rooms.content)}"
+               th:text="| - Cine «${rooms.content[0].cinema.name}»|"></small>
+        <small th:if="${filmList != null and error == null and !#lists.isEmpty(rooms) and !#lists.isEmpty(rooms.content)}"
+               th:text="| - Película ${rooms.content[0].film}|"></small>
     </h1>
 
     <h2 th:if="${error != null || (#lists.isEmpty(rooms) || #lists.isEmpty(rooms.content))}"
@@ -50,10 +54,16 @@
                     <small th:text="|Sala ${room.roomNumber}|" class="badge text-bg-secondary mx-1"></small>
                     <small th:if="${room.film != null}" th:text="${room.film?.classification?: ''}" class="badge text-secondary bg-white mx-1"></small>
                     <small th:if="${room.film != null}" th:text="${'⭐'.repeat(room.film?.rating!= null? room.film.rating.intValue() : 0)}" class="ms-1 me-2"></small>
-                    <a title="Cartelera" th:if="${room.film != null}" th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">
+
+                    <a th:if="${room.film != null && filmList == null}" title="Cartelera" th:href="@{/rooms/film/{id}(id=${room.film.id})}" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                             <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
                         </svg></a>
+                    <span th:unless="${room.film != null && filmList == null}" title="Cartelera desactivada" aria-disabled="true" class="mx-1 text-body-tertiary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                            <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                        </svg>
+                    </span>
                 </div>
                 <a th:if="${room.film != null}" th:href="@{/rooms/{id}(id=${room.id})}" class="text-decoration-none">
                     <h6 th:text="${room.film}" class="mb-0"></h6>

@@ -153,7 +153,7 @@ public class CinemaController {
             cinemaService.save(cinema);
             if (!cinema.getActive()) roomService.deactivateRoomsByCinemaId(cinema.getId());
 
-            return "redirect:/cinemas";
+            return "redirect:/cinemas/" + cinema.getId();
         }
     }
 

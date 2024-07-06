@@ -101,7 +101,7 @@ public class FilmServiceImpl implements IFilmService {
 
         return newFilm;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar la película: ", e);
 
             session.setAttribute("message", "La película no ha podido guardarse.");
@@ -136,7 +136,7 @@ public class FilmServiceImpl implements IFilmService {
                 session.setAttribute("messageType", "info");
             }
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al desactivar las salas: ", e);
 
             session.setAttribute("message", message + " Las salas no ha podido desactivarse.");
@@ -173,7 +173,7 @@ public class FilmServiceImpl implements IFilmService {
             session.setAttribute("message", "Película " + film + " borrada.");
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar la película: ", e);
 
             session.setAttribute("message", "La película no ha podido borrarse.");

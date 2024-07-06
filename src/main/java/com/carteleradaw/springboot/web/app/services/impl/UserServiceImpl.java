@@ -88,7 +88,7 @@ public class UserServiceImpl implements IUserService {
 
             return newUser;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar el usuario: ", e);
 
             session.setAttribute("message", "El usuario no ha podido guardarse.");
@@ -117,7 +117,7 @@ public class UserServiceImpl implements IUserService {
             session.setAttribute("message", "Usuario " + user + " borrado.");
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar el usuario: ", e);
 
             session.setAttribute("message", "El usuario no ha podido borrarse.");

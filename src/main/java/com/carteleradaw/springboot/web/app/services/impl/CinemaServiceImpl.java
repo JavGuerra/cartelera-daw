@@ -119,7 +119,7 @@ public class CinemaServiceImpl implements ICinemaService {
 
             return newCinema;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar el cine: ", e);
 
             session.setAttribute("message", "El cine no ha podido guardarse.");
@@ -157,7 +157,7 @@ public class CinemaServiceImpl implements ICinemaService {
             session.setAttribute("message", "Cine " + cinema + " borrado." + message);
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar el cine: ", e);
 
             session.setAttribute("message", "El cine no ha podido borrarse.");
