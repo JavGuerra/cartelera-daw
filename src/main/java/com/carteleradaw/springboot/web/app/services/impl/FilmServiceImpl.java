@@ -121,17 +121,20 @@ public class FilmServiceImpl implements IFilmService {
         String message = (String) session.getAttribute("message");
 
         try {
-            // Desasociar film de rooms.
             List<Room> rooms = roomRepository.findAllByFilm_Id(id);
-            for (Room room : rooms) {
-                room.setFilm(null);
-                room.setPremiere(null);
-                room.setActive(false);
-                // room.setSchedules(new ArrayList<>());
-            }
 
-            session.setAttribute("message", message + " Salas desactivadas.");
-            session.setAttribute("messageType", "info");
+            if (!rooms.isEmpty()) {
+                // Desasociar film en rooms.
+                for (Room room : rooms) {
+                    room.setFilm(null);
+                    room.setPremiere(null);
+                    room.setActive(false);
+                    // room.setSchedules(new ArrayList<>());
+                }
+
+                session.setAttribute("message", message + " Salas desactivadas.");
+                session.setAttribute("messageType", "info");
+            }
 
         } catch (DataIntegrityViolationException e) {
             log.error("Error al desactivar las salas: ", e);

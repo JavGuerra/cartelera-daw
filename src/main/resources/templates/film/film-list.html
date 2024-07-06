@@ -25,8 +25,8 @@
         <div th:each="film: ${films}" class="col d-flex flex-column align-items-center">
 
             <div class="mb-2">
-                <span sec:authorize="isAuthenticated()" th:if="${!#lists.isEmpty(film.rooms) and session.selectedCity == ''}" class="badge text-bg-primary align-middle mx-1">En salas</span>
-                <span sec:authorize="isAuthenticated()" th:if="${#lists.isEmpty(film.rooms) and session.selectedCity == ''}" class="badge text-bg-warning align-middle mx-1">Sin salas</span>
+                <span sec:authorize="isAuthenticated()" th:if="${!#lists.isEmpty(film.rooms)}" class="badge text-bg-primary align-middle mx-1">En salas</span>
+                <span sec:authorize="isAuthenticated()" th:if="${#lists.isEmpty(film.rooms)}" class="badge text-bg-warning align-middle mx-1">Sin salas</span>
                 <span sec:authorize="isAuthenticated()" th:if="${film.active}" class="badge text-bg-success align-middle mx-1">En exhibición</span>
                 <span sec:authorize="isAuthenticated()" th:if="${!film.active}" class="badge text-bg-danger align-middle mx-1">Sin exhibición</span>
                 <a title="Editar" sec:authorize="isAuthenticated()" th:href="@{/films/{id}/edit(id=${film.id})}" role="button" class="mx-1">
@@ -43,7 +43,7 @@
             </div>
 
             <a th:href="@{/films/{id}(id=${film.id})}" class="text-decoration-none">
-                <img th:if="${film == null or film.poster ==null or film.poster == ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded border border-4 border-white">
+                <img th:if="${film == null or film.poster == null or film.poster == ''}" src="img/noFilm.png" alt="Sin película" class="d-block poster rounded border border-4 border-white">
                 <img th:if="${film.poster != null and film.poster != ''}" th:src="${film.poster}" th:alt="${film.title}" class="d-block poster rounded border border-4 border-white">
             </a>
 
@@ -52,10 +52,17 @@
                     <small th:text="${film?.classification?: ''}" class="badge text-secondary bg-white me-1"></small>
                     <small th:if="${film?.duration}" th:text="${film.duration} + ' min'" class="badge text-secondary bg-white me-1"></small>
                     <small th:if="${film.rating!= null}" th:text="${'⭐' * film.rating.intValue()}" class="me-2"></small>
-                    <a sec:authorize="isAuthenticated()" title="Cartelera" th:if="${!#lists.isEmpty(film.rooms) and session.selectedCity == ''}" th:href="@{/rooms/film/{id}(id=${film.id})}" role="button" class="mx-1">
+
+                    <a th:if="${!#lists.isEmpty(film.rooms)}" title="Cartelera" th:href="@{/rooms/film/{id}(id=${film.id})}" role="button" class="mx-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                             <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
                         </svg></a>
+                    <span th:unless="${!#lists.isEmpty(film.rooms)}" title="Cartelera desactivada" aria-disabled="true" class="mx-1 text-body-tertiary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                            <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                        </svg>
+                    </span>
+
                 </div>
                 <a th:href="@{/films/{id}(id=${film.id})}" class="text-decoration-none my-1">
                     <h6 th:text="${film}"></h6>
