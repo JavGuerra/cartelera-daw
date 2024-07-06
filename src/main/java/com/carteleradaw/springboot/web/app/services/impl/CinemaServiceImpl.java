@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -119,7 +118,7 @@ public class CinemaServiceImpl implements ICinemaService {
 
             return newCinema;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar el cine: ", e);
 
             session.setAttribute("message", "El cine no ha podido guardarse.");
@@ -157,7 +156,7 @@ public class CinemaServiceImpl implements ICinemaService {
             session.setAttribute("message", "Cine " + cinema + " borrado." + message);
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar el cine: ", e);
 
             session.setAttribute("message", "El cine no ha podido borrarse.");

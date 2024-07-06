@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.bridge.IMessage;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -101,7 +99,7 @@ public class FilmServiceImpl implements IFilmService {
 
         return newFilm;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar la película: ", e);
 
             session.setAttribute("message", "La película no ha podido guardarse.");
@@ -121,19 +119,22 @@ public class FilmServiceImpl implements IFilmService {
         String message = (String) session.getAttribute("message");
 
         try {
-            // Desasociar film de rooms.
             List<Room> rooms = roomRepository.findAllByFilm_Id(id);
-            for (Room room : rooms) {
-                room.setFilm(null);
-                room.setPremiere(null);
-                room.setActive(false);
-                // room.setSchedules(new ArrayList<>());
+
+            if (!rooms.isEmpty()) {
+                // Desasociar film en rooms.
+                for (Room room : rooms) {
+                    room.setFilm(null);
+                    room.setPremiere(null);
+                    room.setActive(false);
+                    // room.setSchedules(new ArrayList<>());
+                }
+
+                session.setAttribute("message", message + " Salas desactivadas.");
+                session.setAttribute("messageType", "info");
             }
 
-            session.setAttribute("message", message + " Salas desactivadas.");
-            session.setAttribute("messageType", "info");
-
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al desactivar las salas: ", e);
 
             session.setAttribute("message", message + " Las salas no ha podido desactivarse.");
@@ -170,7 +171,7 @@ public class FilmServiceImpl implements IFilmService {
             session.setAttribute("message", "Película " + film + " borrada.");
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar la película: ", e);
 
             session.setAttribute("message", "La película no ha podido borrarse.");

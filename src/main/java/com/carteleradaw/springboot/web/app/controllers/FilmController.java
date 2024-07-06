@@ -131,7 +131,8 @@ public class FilmController {
         } else {
             filmService.save(film);
             if (!film.getActive()) filmService.deactivateRoomsByFilmId(film.getId()); // ¿ Y si rooms > 0 ?
-            return "redirect:/films";
+
+            return "redirect:/films/" + film.getId();
         }
     }
 

@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
@@ -79,7 +78,7 @@ public class AddressServiceImpl implements IAddressService {
 
             return newAddress;
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al guardar la dirección: ", e);
 
             session.setAttribute("message", "La dirección no ha podido guardarse.");
@@ -116,7 +115,7 @@ public class AddressServiceImpl implements IAddressService {
             session.setAttribute("message", "Dirección " + address + " borrada.");
             session.setAttribute("messageType", "info");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
             log.error("Error al borrar la dirección: ", e);
 
             session.setAttribute("message", "La dirección no ha podido borrarse.");

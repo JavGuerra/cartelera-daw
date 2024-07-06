@@ -29,7 +29,7 @@ th {
     text-align: center;
 }
 
-.cartelera-h1, th {
+.cartelera-h1, h2, th {
     color: Olive !important;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }

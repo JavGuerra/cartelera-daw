@@ -34,11 +34,14 @@
                  th:alt="${(film.poster!= null and film.poster!= '')? film.title : 'Sin imagen'}">
 
             <div class="btn-group my-3">
-                <a class="btn btn-outline-primary btn-sm" title="Ver películas"
-                   th:href="@{/rooms/film/{id}(id=${film.id})}" role="button">
+                <a th:href="@{/rooms/film/{id}(id=${film.id})}" role="button"
+                   th:attrappend="aria-disabled=${!#lists.isEmpty(film.rooms)? '' : 'true'}" class="btn btn-sm"
+                   th:classappend="${!#lists.isEmpty(film.rooms)? 'btn-outline-primary' : 'btn-outline-secondary disabled'}"
+                   th:title="${!#lists.isEmpty(film.rooms)? 'Ver cartelera' : 'Opción de cartelera desactivada'}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                         <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
                     </svg><span class="align-middle">&nbsp;&nbsp;Cartelera</span></a>
+
                 <a class="btn btn-outline-success btn-sm" title="Editar película"
                    th:href="@{/films/{id}/edit(id=${film.id})}"
                    sec:authorize="isAuthenticated()" role="button">

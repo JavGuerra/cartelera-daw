@@ -1,6 +1,5 @@
 package com.carteleradaw.springboot.web.app.controllers;
 
-import com.carteleradaw.springboot.web.app.entities.Cinema;
 import com.carteleradaw.springboot.web.app.entities.Room;
 import com.carteleradaw.springboot.web.app.services.ICinemaService;
 import com.carteleradaw.springboot.web.app.services.IFilmService;
@@ -124,6 +123,7 @@ public class RoomController {
                 model.addAttribute("page", pageInfo);
                 model.addAttribute("rooms", rooms);
                 model.addAttribute("entity", "salas");
+                model.addAttribute("filmList", true);
 
             } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Película sin salas");
             else model.addAttribute("error", "\uD83E\uDD74 Película no encontrada");
@@ -162,6 +162,7 @@ public class RoomController {
                 model.addAttribute("page", pageInfo);
                 model.addAttribute("rooms", rooms);
                 model.addAttribute("entity", "salas");
+                model.addAttribute("cinemaList", true);
 
             } else if (isAuth()) model.addAttribute("error", "\uD83E\uDD74 Cine sin salas");
             else model.addAttribute("error", "\uD83E\uDD74 Cine no encontrado");
@@ -247,7 +248,7 @@ public class RoomController {
             return "room/room-form";
         } else {
             roomService.save(room);
-            return "redirect:/rooms";
+            return "redirect:/rooms/" + room.getId();
         }
     }
 
