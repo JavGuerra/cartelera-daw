@@ -15,21 +15,21 @@ import java.util.Optional;
  */
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
-    @Query("SELECT c from Cinema c WHERE c.address.id = :id")
-    Cinema findByAddressId(@Param("id") Long id);
+    // @Query("SELECT c FROM Cinema c WHERE c.address.id = :id")
+    Cinema findByAddress_Id(@Param("id") Long addressId);
 
-    @Query("SELECT c from Cinema c WHERE c.active = true")
-    Page<Cinema> findAllByActiveTrue(Pageable paging);
-
-    @Query("SELECT c from Cinema c WHERE upper(c.cif) = upper(:cif)")
+    // @Query("SELECT c FROM Cinema c WHERE upper(c.cif) = upper(:cif)")
     Optional<Cinema> findByCifIgnoreCase(@Param("cif") String cif);
 
-    @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
-    Page<Cinema> findAllByCityIgnoreCase(@Param("city") String city, Pageable paging);
+    // @Query("SELECT * FROM Cinema WHERE active = true")
+    List<Cinema> findAllByActiveIsTrue();
 
-    @Query("SELECT c FROM Cinema c WHERE c.active = true")
-    List<Cinema> findAllByCinemaAndActiveTrue();
+    // @Query("SELECT * FROM Cinema WHERE active = true")
+    Page<Cinema> findAllByActiveIsTrue(Pageable paging);
 
-    @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND c.active = true")
-    Page<Cinema> findAllByCityIgnoreCaseAndActiveTrue(@Param("city") String city, Pageable paging);
+    // @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city)")
+    Page<Cinema> findAllByAddressCityIgnoreCase(@Param("city") String city, Pageable paging);
+
+    // @Query("SELECT c FROM Cinema c JOIN c.address a WHERE upper(a.city) = upper(:city) AND c.active = true")
+    Page<Cinema> findAllByAddressCityIgnoreCaseAndActiveIsTrue(@Param("city") String city, Pageable paging);
 }

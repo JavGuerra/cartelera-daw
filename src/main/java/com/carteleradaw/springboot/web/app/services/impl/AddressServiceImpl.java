@@ -103,7 +103,7 @@ public class AddressServiceImpl implements IAddressService {
             Address address = findById(id).get();
             String city = address.getCity();
 
-            if (cinemaRepo.findByAddressId(id) != null) cinemaRepo.findByAddressId(id).setAddress(null);
+            if (cinemaRepo.findByAddress_Id(id) != null) cinemaRepo.findByAddress_Id(id).setAddress(null);
             addressRepo.deleteById(id);
 
             // Si ya no hay direcciones con esta ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.

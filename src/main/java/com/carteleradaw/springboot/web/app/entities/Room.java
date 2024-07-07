@@ -34,9 +34,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(value = 1, message = "{Room.roomnumber.min}")
-    @Digits(integer = 2, fraction = 0, message = "{Room.roomnumber.digits}")
-    private Byte roomNumber; // Único, pero para cada cine.
+    private Integer roomNumber; // Único, pero para cada cine.
 
     @Min(value = 1, message = "{Room.capacity.min}")
     @Digits(integer = 4, fraction = 0, message = "{Room.capacity.digits}")

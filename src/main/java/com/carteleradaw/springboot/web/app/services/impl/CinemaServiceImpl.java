@@ -36,7 +36,7 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public List<Cinema> findAll() {
         if (isAuth()) return cinemaRepo.findAll();
-        else return cinemaRepo.findAllByCinemaAndActiveTrue();
+        else return cinemaRepo.findAllByActiveIsTrue();
     }
 
     @Override
@@ -79,9 +79,9 @@ public class CinemaServiceImpl implements ICinemaService {
     @Override
     public Page<Cinema> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        if (stringIsEmpty(city)) return (isAuth()) ? cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveTrue(paging);
+        if (stringIsEmpty(city)) return (isAuth()) ? cinemaRepo.findAll(paging) : cinemaRepo.findAllByActiveIsTrue(paging);
         return (isAuth()) ?
-                cinemaRepo.findAllByCityIgnoreCase(city, paging) : cinemaRepo.findAllByCityIgnoreCaseAndActiveTrue(city, paging);
+                cinemaRepo.findAllByAddressCityIgnoreCase(city, paging) : cinemaRepo.findAllByAddressCityIgnoreCaseAndActiveIsTrue(city, paging);
     }
 
     @Override
