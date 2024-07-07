@@ -37,6 +37,9 @@ public class Address {
     @Pattern(regexp = URL_PATTERN, message = "{Address.map.pattern}")
     private String map;
 
+    @OneToOne(mappedBy = "address")
+    private Cinema cinema;
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -6,10 +6,17 @@
     <script>
         const zone = document.querySelector('#zone');
 
-        // Empieza cuando se carga el HTML
-        document.addEventListener('DOMContentLoaded', function() { zone.showModal(); });
+        let domContentLoadedCallback = function() {
+            zone.showModal();
+            document.removeEventListener('DOMContentLoaded', domContentLoadedCallback);
+        };
 
-        // Se detiene cuando se cargan todos los recursos.
-        window.addEventListener('load', function() { zone.close(); });
+        let loadCallback = function() {
+            zone.close();
+            window.removeEventListener('load', loadCallback);
+        };
+
+        document.addEventListener('DOMContentLoaded', domContentLoadedCallback);
+        window.addEventListener('load', loadCallback);
     </script>
 </div>

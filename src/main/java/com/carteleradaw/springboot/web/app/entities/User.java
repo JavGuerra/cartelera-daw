@@ -19,7 +19,6 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.URL_PATTERN;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Builder
 @Entity
 @Table(name = "users", indexes = {

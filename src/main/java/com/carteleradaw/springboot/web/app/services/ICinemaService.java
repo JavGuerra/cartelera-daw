@@ -33,7 +33,7 @@ public interface ICinemaService {
     boolean existsById(Long id);
 
     /**
-     * Obtiene, opcionalmente, una dirección por su ID.
+     * Obtiene, opcionalmente, un cine por su ID.
      * @param id Identificador.
      * @return Opcionalmente, el cine solicitado.
      */

@@ -87,10 +87,10 @@
                                 </svg><span class="align-middle">&nbsp;&nbsp;Sitio web</span></a>
                         </li>
 
-                        <li th:if="!${#lists.isEmpty(rooms)}" class="list-group-item mt-3">
+                        <li th:if="${cinema.getCountRooms() > 0}" class="list-group-item mt-3">
                             <strong th:text="|${cinema.getCountRooms()} salas:|"></strong></li>
 
-                        <li th:if="!${#lists.isEmpty(rooms)}" class="list-group-item" th:each="room: ${rooms}">
+                        <li th:if="${cinema.getCountRooms() > 0}" th:each="room: ${rooms}" class="list-group-item">
                             <a class="btn btn-sm btn-light cartelera-btn"
                                th:href="@{/rooms/{id}(id=${room.id})}">
                                 <span th:text="|Sala ${room.roomNumber}|"></span>
