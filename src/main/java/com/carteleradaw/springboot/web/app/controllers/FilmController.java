@@ -68,7 +68,6 @@ public class FilmController {
      */
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
-        // List<Film> filmOpt = filmService.findByIdWithGenre(id);
 
         model.addAttribute("returnUrl", "films");
 

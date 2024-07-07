@@ -42,7 +42,7 @@ public class FilmServiceImpl implements IFilmService {
     @Override
     public List<Film> findAllActive() {
         log.info("findAllActive");
-        return filmRepo.findAllByActiveTrue();
+        return filmRepo.findAllByActiveIsTrue();
     }
 
     @Override
@@ -71,20 +71,10 @@ public class FilmServiceImpl implements IFilmService {
     @Override
     public Page<Film> findAllByCity(String city, Pageable paging) {
         log.info("findAllByCity {}", city);
-        if (stringIsEmpty(city)) return (isAuth()) ? filmRepo.findAll(paging) : filmRepo.findAllByActiveTrue(paging);
+        if (stringIsEmpty(city)) return (isAuth()) ? filmRepo.findAll(paging) : filmRepo.findAllByActiveIsTrue(paging);
         return (isAuth()) ?
-                filmRepo.findAllByCityIgnoreCaseInFilms(city, paging) : filmRepo.findAllByCityIgnoreCaseInFilmsAndActiveTrue(city, paging);
+                filmRepo.findAllByRoomsCinemaAddressCityIgnoreCase(city, paging) : filmRepo.findAllByRoomsCinemaAddressCityIgnoreCaseAndActiveIsTrue(city, paging);
     }
-
-//    @Override
-//    public List<Film> findAllByGenre(String genre) {
-//        log.info("findAllByGenre {}", genre);
-//        if (stringIsEmpty(genre)) {
-//            return this.findAll();
-//        } else {
-//            return filmRepo.findByGenreInFilms(genre);
-//        }
-//    }
 
     @Override
     @Transactional
@@ -145,22 +135,22 @@ public class FilmServiceImpl implements IFilmService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
-        log.info("deleteById {}", id);
+    public void deleteById(Long filmId) {
+        log.info("deleteById {}", filmId);
 
-        if (invalidPosNumber(id) || !filmRepo.existsById(id)) {
+        if (invalidPosNumber(filmId) || !filmRepo.existsById(filmId)) {
             session.setAttribute("message", "Película no encontrada.");
             session.setAttribute("messageType", "danger");
             return;
         }
 
         try {
-            Film film = filmRepo.findById(id).get();
+            Film film = filmRepo.findById(filmId).get();
 
-            filmRepo.deleteById(id);
+            filmRepo.deleteById(filmId);
 
             // Desasociar film de rooms.
-            List<Room> rooms = roomRepository.findAllByFilm_Id(id);
+            List<Room> rooms = roomRepository.findAllByFilm_Id(filmId);
             for (Room room : rooms) {
                 room.setFilm(null);
                 room.setPremiere(null);

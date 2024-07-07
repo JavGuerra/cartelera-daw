@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.carteleradaw.springboot.web.app.utils.Utils.*;
 
@@ -81,6 +82,7 @@ public class CinemaController {
 
             Cinema cinema = cinemaService.findById(id).get();
             List<Room> rooms = roomService.findAllByCinemaId(id, Pageable.unpaged()).getContent();
+            //Set<Room> rooms = cinema.getRooms();
 
             // Al mostrar el cine, se selecciona la ciudad.
             session.setAttribute("selectedCity", cinema.getCity());

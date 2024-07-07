@@ -98,7 +98,7 @@ public class CinemaServiceImpl implements ICinemaService {
 
             if (cinema.getActive()) {
                 if (existsById(cinema.getId())) { // ¿existe ya?
-                    if (roomRepo.findAllByCinema_IdAndActiveTrue(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
+                    if (roomRepo.findAllByCinema_IdAndActiveIsTrue(cinema.getId()).isEmpty()) cinema.setActive(false); // ¿sin salas?
                 } else cinema.setActive(false);
 
                 if (!cinema.getActive()) {

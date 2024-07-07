@@ -57,27 +57,27 @@ public interface IRoomService {
 
     /**
      * Obtiene la lista de salas de un cine por el ID del cine.
-     * @param id Identificador.
+     * @param cinemaId Identificador.
      * @param paging número y tamaño de página para paginación.
      * @return Lista de salas de un cine.
      */
-    Page<Room> findAllByCinemaId(Long id, Pageable paging);
+    Page<Room> findAllByCinemaId(Long cinemaId, Pageable paging);
 
     /**
      * Obtiene la lista de salas de una película por el ID de la película.
-     * @param id Identificador.
+     * @param filmId Identificador.
      * @return Lista de salas de una película.
      */
-    List<Room> findAllByFilmId(Long id);
+    List<Room> findAllByFilmId(Long filmId);
 
     /**
      * Obtiene la lista de las salas de una ciudad que exhiben la misma película.
-     * @param id Identificador.
+     * @param filmId Identificador.
      * @param city Ciudad seleccionada.
      * @param paging número y tamaño de página para paginación.
      * @return Lista de salas que contienen la misma película en la ciudad.
      */
-    Page<Room> findAllByFilmAndCity(Long id, String city, Pageable paging);
+    Page<Room> findAllByFilmAndCity(Long filmId, String city, Pageable paging);
     /**
      * Obrtiene la lista de salas con películas distintas por orden de estreno.
      * @param city ciudad seleccionada.
@@ -94,9 +94,9 @@ public interface IRoomService {
 
     /**
      * Desactiva las salas por el Id del Cine.
-     * @param id identificador.
+     * @param cinemaId identificador.
      */
-    void deactivateRoomsByCinemaId(Long id);
+    void deactivateRoomsByCinemaId(Long cinemaId);
 
     /**
      * Borra una sala por el ID.

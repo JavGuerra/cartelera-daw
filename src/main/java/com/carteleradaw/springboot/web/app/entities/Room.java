@@ -22,7 +22,6 @@ import static com.carteleradaw.springboot.web.app.utils.Utils.FormatDate;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Builder
 @Entity
 @Table(indexes = {

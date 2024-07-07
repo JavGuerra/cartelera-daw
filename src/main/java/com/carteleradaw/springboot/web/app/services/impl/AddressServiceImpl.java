@@ -56,7 +56,7 @@ public class AddressServiceImpl implements IAddressService {
     public Set<String> getCitiesNames() {
         log.info("citiesNames");
         Set<String> citiesNames = new HashSet<>();
-        List<Address> addresses = isAuth() ? addressRepo.findAll() : addressRepo.findAllByCinemaActiveTrue();
+        List<Address> addresses = isAuth() ? addressRepo.findAll() : addressRepo.findAllByCinemaActiveIsTrue();
         for (Address address : addresses) citiesNames.add(address.getCity());
         return citiesNames;
     }
@@ -103,7 +103,7 @@ public class AddressServiceImpl implements IAddressService {
             Address address = findById(id).get();
             String city = address.getCity();
 
-            if (cinemaRepo.findByAddress_Id(id) != null) cinemaRepo.findByAddress_Id(id).setAddress(null);
+            if (cinemaRepo.findByAddressId(id) != null) cinemaRepo.findByAddressId(id).setAddress(null);
             addressRepo.deleteById(id);
 
             // Si ya no hay direcciones con esta ciudad, entonces cambiar selectedCity y actualizar lista de ciudades.

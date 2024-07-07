@@ -89,10 +89,8 @@ a .poster:hover, a .cinema:hover {
 }
 
 #zone {
-  display: block;
   border: none;
   background: none;
-
 }
 
 #zone:focus {

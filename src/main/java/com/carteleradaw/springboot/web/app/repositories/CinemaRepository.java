@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
     @Query("SELECT c from Cinema c WHERE c.address.id = :id")
-    Cinema findByAddress_Id(@Param("id") Long id);
+    Cinema findByAddressId(@Param("id") Long id);
 
     @Query("SELECT c from Cinema c WHERE c.active = true")
     Page<Cinema> findAllByActiveTrue(Pageable paging);
