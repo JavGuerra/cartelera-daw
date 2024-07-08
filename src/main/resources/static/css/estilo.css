@@ -47,6 +47,10 @@ td, .card-title, .card-text, .list-group-item, .form-label {
     text-align: center;
 }
 
+.table-group-divider {
+    color: olive;
+}
+
 .poster {
     width: 215px;
     height: 320px;
@@ -78,8 +82,8 @@ a .poster:hover, a .cinema:hover {
 }
 
 .avatar {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background-image: url('../img/noUser.png');
 }
 
