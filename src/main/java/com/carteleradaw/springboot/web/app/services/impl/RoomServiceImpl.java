@@ -153,14 +153,14 @@ public class RoomServiceImpl implements IRoomService {
             // Si esta sala está activada y el número de sala ya existe en ese cine,
             // entonces desactivar la otra sala activa.
             if (room.getActive()) {
-                Optional<Room> optRoom = roomRepo.findFirstByCinema_IdAndRoomNumberAndActiveIsTrue(
+                Optional<Room> optRoom = roomRepo.findByCinema_IdAndRoomNumberAndActiveIsTrue(
                         room.getCinema().getId(), room.getRoomNumber());
                 if (optRoom.isPresent()) {
                     Room oldRoom = optRoom.get();
-                    if (!Objects.equals(oldRoom.getId(), room.getId())) {
+                    if ((!Objects.equals(room.getId(), oldRoom.getId())) && oldRoom.getActive()) {
                         oldRoom.setActive(false);
                         roomRepo.save(oldRoom);
-                        message = " Sala " + room.getRoomNumber() + " alternativa desactivada.";
+                        message = " Sala " + oldRoom.getRoomNumber() + " alternativa desactivada.";
                         log.info(message);
                     }
                 }
@@ -186,7 +186,7 @@ public class RoomServiceImpl implements IRoomService {
             Room newRoom = roomRepo.save(room);
 
             session.setAttribute("message",
-                    "Sala " + room.getRoomNumber()  + " de cine " + room.getCinema().getName() +  " guardada." + message);
+                    "Sala " + room.getRoomNumber()  + " de cine " + newRoom.getCinema().getName() +  " guardada." + message);
             session.setAttribute("messageType", "info");
 
             return newRoom;

@@ -36,7 +36,7 @@
                         <th scope="col">Opciones</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-group-divider">
                     <tr th:each="user: ${users}">
                         <td>
                             <img th:src="${user.image!= ''? user.image : '../img/noUser.png'}"
@@ -46,7 +46,7 @@
                         <td th:text="${user.name}"></td>
                         <td th:text="${user.surname}"></td>
                         <td th:text="${user.email}"></td>
-                        <td class="text-nowrap">
+                        <td class="text-nowrap w-auto">
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-outline-primary" title="Ver usuario"
                                    th:href="@{/users/{id}(id=${user.id})}" role="button">

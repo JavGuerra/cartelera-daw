@@ -24,7 +24,7 @@ Además de los requisitos para el MVP, la app implementa:
 - Implementación de Logs.
 - Notificaciones.
 - Aviso de cookies.
-- Spin loader.
+- Spinner loader.
 
 ## Indicaciones de instalación
 
@@ -55,3 +55,4 @@ Sobre el código fuente: [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
 Artículos informativos elaborados por el autor relacionados con esta aplicación:
 
 - [Notificaciones con Thymeleaft](https://javguerra.github.io/2024-07-03-notificaciones-thymeleaft/)
+- [Spinner loader en Thymeleaft](https://javguerra.github.io/2024-07-08-loader-thymeleaft/)

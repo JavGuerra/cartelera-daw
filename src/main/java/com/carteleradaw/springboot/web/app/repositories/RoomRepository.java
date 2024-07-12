@@ -57,5 +57,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllByCinema_IdAndActiveIsTrue(@Param("id") Long cinemaId);
 
     // @Query("SELECT r FROM Room r WHERE r.cinema.id = :id AND r.roomNumber = :roomNumber AND r.active = true")
-    Optional<Room> findFirstByCinema_IdAndRoomNumberAndActiveIsTrue(@Param("id") Long cinemaId, @Param("roomNumber") Integer roomNumber);
+    Optional<Room> findByCinema_IdAndRoomNumberAndActiveIsTrue(@Param("id") Long cinemaId, @Param("roomNumber") Integer roomNumber);
 }
