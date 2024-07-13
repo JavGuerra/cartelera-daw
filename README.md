@@ -56,3 +56,4 @@ Artículos informativos elaborados por el autor relacionados con esta aplicació
 
 - [Notificaciones con Thymeleaft](https://javguerra.github.io/2024-07-03-notificaciones-thymeleaft/)
 - [Spinner loader en Thymeleaft](https://javguerra.github.io/2024-07-08-loader-thymeleaft/)
+- [Logout personalizado con Spring Security](https://javguerra.github.io/2024-07-13-logout-spring-security/)
