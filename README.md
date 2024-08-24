@@ -54,6 +54,6 @@ Sobre el código fuente: [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
 
 Artículos informativos elaborados por el autor relacionados con esta aplicación:
 
-- [Notificaciones con Thymeleaft](https://javguerra.github.io/blog/notificaciones-thymeleaft/)
-- [Spinner loader en Thymeleaft](https://javguerra.github.io/blog/loader-thymeleaft/)
-- [Logout personalizado con Spring Security](https://javguerra.github.io/blog/logout-spring-security/)
+- [Notificaciones con Thymeleaft](https://javguerra.github.io/blog/notificaciones-thymeleaft/)  
+- [Spinner loader en Thymeleaft](https://javguerra.github.io/blog/loader-thymeleaft/)  
+- [Logout personalizado con Spring Security](https://javguerra.github.io/blog/logout-spring-security/)  
