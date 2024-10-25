@@ -8,7 +8,7 @@ Junio 2024
 
 Empleando **Java** y el framework **Spring**, se ha llevado a cabo la planificación e implementación de una aplicación web que permite a los usuarios listar cines, salas de cine y sus películas asociadas, y capacita a los usuarios registrados para modificar, mediante formularios, cada una de las entidades mencionadas.
 
-En su desarrollo se ha empleado **Spring security**, **Hibernate**, **Tymeleaft** y **Bootstrap**. Se ha codificado usando **IntelliJ IDEA**. El despliegue se ha realizado en **Railway.app**.
+En su desarrollo se ha empleado **Spring security**, **Hibernate**, **Tymeleaft** y **Bootstrap**. Se ha codificado usando **IntelliJ IDEA**. El despliegue se ha realizado en **Railway.app** usando **Docker** y **CI/CD**.
 
 La planificación y codificación se han llevado a cabo usando **Trello** y **GitHub**.
 
