@@ -5,7 +5,7 @@
         <p th:if="${page?.totalPages gt 1}"
            th:text="${page.numberOfElements} + ' ' + ${entity} + ', de la ' + ${page.startElement}
            + ' a la ' + ${page.endElement} + ', de ' + ${page.totalElements} +  ' ' + ${entity} + '.'"></p>
-        <p th:unless="${page?.totalPages gt 1}" th:text="${page.numberOfElements} +  ' ' + ${entity} + '.'"></p>
+        <p th:unless="${page?.totalPages gt 1}" th:text="${page.numberOfElements} +  ' ' + ${entity}"></p>
     </div>
 
     <nav th:if="${page?.totalPages gt 1}" class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
