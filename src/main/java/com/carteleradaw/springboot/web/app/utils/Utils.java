@@ -1,6 +1,7 @@
 package com.carteleradaw.springboot.web.app.utils;
 
 import com.carteleradaw.springboot.web.app.entities.User;
+import lombok.experimental.UtilityClass;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,8 @@ import java.util.Optional;
 /**
  * Utilidades para la aplicación.
  */
-public abstract class Utils {
+@UtilityClass
+public class Utils {
 
     // Cinco dígitos o vacío
     public static final String POSTAL_CODE_PATTERN = "^(\\d{5})?$";
